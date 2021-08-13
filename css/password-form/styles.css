@@ -1,0 +1,253 @@
+body {
+    background-color: rgb(242 248 248);
+    margin: 0 auto;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    place-items: center;
+    box-shadow: 0px 1px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    background: white;
+    flex-wrap: wrap;
+}
+
+header img {
+    width: 200px;
+    height: 60px;
+    padding-top: 0.25rem;
+}
+
+#form-outer-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 5rem auto;
+    height: 100%;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+}
+
+#login-inner-container, #form-inner-container {
+    width: 50vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#login-inner-container {
+    flex-direction: row;
+    justify-content: space-between;
+    height: auto;
+    padding: 2rem;
+    background: #f4f8fe;
+    width: 500px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    padding: 0.25rem;
+    font-family: 'Indie Flower', cursive;
+    letter-spacing: 0.2rem;
+}
+
+.login-header-title {
+    text-align: center;
+    padding: 0.25rem;
+    color: rgb(28, 101, 197);
+    font-size: 25px;
+}
+
+#login-user-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 0.5px 1px rgb(0 0 0 / 0%), 0px 10px 30px rgb(0 0 0 / 22%);
+    background: white;
+    padding-bottom: 0.5rem;
+}
+
+.username-container, .password-outer-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.username-container label, .password-outer-container label {
+    font-weight: 600;
+}
+
+.username, .password {
+    background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+    border-radius: 6px;
+}
+
+.password {
+    width: 94%;
+}
+
+.username:focus, .password:focus {
+    outline: none;
+}
+
+#separator {
+    align-items: center;
+    border-bottom: 1px solid #dadde1;
+    display: flex;
+    text-align: center;
+}
+
+.search-account-btn {
+    background-color: #1877f2;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 36px;
+    margin-left: 8px;
+    font-weight: bold;
+    padding: 0 20px;
+    cursor: pointer;
+    color: white;
+}
+
+.search-account-btn:hover {
+    background-color: #216fdb;
+}
+
+.cancel-btn {
+    background-color: #e4e6eb;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 36px;
+    margin-left: 8px;
+    font-weight: bold;
+    color: #4b4f56;
+    padding: 0 20px;
+    cursor: pointer;
+}
+    
+#search-account-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px;
+}
+
+#validated-user-container {
+    display: none;
+}
+
+#error-value-login {
+    border-bottom: 1px solid #ff0037;
+}
+
+.fa-eye, .fa-eye-slash {
+    position: relative;
+    right: 10px;
+    float: right;
+    bottom: 35px;
+}
+
+.fa-eye:hover, .fa-eye-slash {
+    cursor: pointer;
+}
+
+#update-password-btn-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.update-password-account-btn {
+    background-color: #1877f2;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 36px;
+    margin-left: 8px;
+    font-weight: bold;
+    padding: 0 20px;
+    cursor: pointer;
+    color: white;
+}
+
+.error-value-section {
+    display: none;
+    color: red;
+    font-size: 13.5px;
+}
+
+.error-value-section a {
+    color: blue;
+}
+
+.update-password-error-section {
+    display: none;
+    color: red;
+    font-size: 13.5px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+  
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+  
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+footer {
+    height: auto;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 0;
+}
+
+/* .footer-dashboard {
+    display: flex;
+    place-items: center;
+    flex-direction: column;
+    justify-content: center;
+} */
+
+.footer-dashboard p {
+    text-align: center;
+    font-family: system-ui;
+}
+
+
+@media only screen and (max-width: 426px) {
+
+    header img {
+        width: 150px;
+    }
+}

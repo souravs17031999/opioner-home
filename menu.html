@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/dashboard/styles.css">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="sign-up-modal" class="modal">
+            <div class="modal-content">
+                <div id="modal-header">
+                    <p class="modal-header-image-upload">You seemed to not have a profile pic ?</p> 
+                    <span id="close" class="close-sign-up-modal">&times;</span>
+                </div>
+                <div id="upload-image-wrapper">
+                    <button class="upload-image-btn">Upload a file</button>
+                    <input type="file" name="myfile" class="upload-btn" accept=".png,.jpg,.jpeg">
+                </div>
+                <div id="loader-container">
+                    <div class="loader"></div>
+                </div>
+                <div class="success-lottie"><img src="images/success-lottie.gif"></div>
+                <div id=submit-reg-form>
+                    <button type="submit" id="sign-up-user" class="upload-btn">Upload Pic</button>
+                </div>
+            </div>
+        </div> 
+        <div id="notify-push-modal" class="modal">
+            <div class="modal-content">
+                <div id="modal-header">
+                    <p class="modal-header-image-upload">Want reminders ? we can help you</p> 
+                    <span id="close" class="close-notify-modal">&times;</span>
+                </div>
+                <div id="modal-description">
+                    <label class="container">Email
+                        <input type="checkbox" value="email" required checked="true">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Phone
+                        <input type="checkbox" value="phone" required checked="true">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div id="modal-footer">
+                    <input type="text" class="notify-phone" placeholder="your phone with code" required>
+                    <input type="text" class="notify-email" placeholder="enter your email" required>
+                    <p class="subtitle-note-modal">* We collect your phone, email for your better experience, promise won't spam you !
+                    Currently, we only send one reminder per day in Morning 09:00 IST until you unsubscribe.</p>
+                    <div class="modal-loader"></div>
+                    <button type="submit" class="notify-push-btn">Remind Me</button>
+                </div>
+            </div>
+        </div>
+        <div id="unsubscribe-notify-modal" class="modal">
+            <div class="modal-content">
+                <div id="modal-header">
+                    <p class="modal-header-image-upload">Want to unsubscribe the notifications ?</p>
+                    <span id="close" class="close-unsubscribe-notify-modal">&times;</span>
+                </div>
+                <div id="modal-loader" class="modal-loader"></div>
+                <div id="decision-action-section">
+                    <button type="submit" class="unsubscribe-yes-btn">YES</button>
+                    <button type="submit" class="unsubscribe-no-btn">NO</button>
+                </div>
+            </div>
+        </div>
+        <div id="update-data-modal">
+            <div class="modal-content">
+                <div id="modal-header">
+                    <p class="modal-header-image-upload">Change task status here</p> 
+                    <span id="close" class="close-update-data-modal">&times;</span>
+                </div>
+                <div id="modal-dropdown">
+                    <select name="tags" id="tags">
+                        <option class="tags-item" value="Todo">Todo</option>
+                        <option class="tags-item" value="Doing">Doing</option>
+                        <option class="tags-item" value="Done">Done</option>
+                    </select>
+                </div>
+                <div id="modal-footer">
+                    <button type="submit" class="update-status-btn">Update status</button>
+                </div>
+            </div>
+        </div> 
+        <header>
+            <a href="menu.html"><img src="images/logo-taskly.png" id="logo-taskly"></a>
+            <h1 class="welcome-header-name"></h1>
+            <img class="profile-pic" src="" onerror="this.onerror=null;this.src='images/avatar.gif';">
+            <div class="panel-outer-container">
+                <div class="panel-container-items">
+                    <div class="menu-dropdown-container">
+                        <i class="menu-dropdown"></i>
+                    </div>
+                </div>
+                <div class="dropdown-items-outer-container">
+                    <div class="dropdown-items-inner-container">
+                        <div class="dropdown-content-container">
+                            <div class="dropdown-items">
+                                <div class="logout-btn-outer-container">
+                                    <div class="logout-btn-container">
+                                        <div class="logout-btn-icon-container">
+                                            <div class="logout-btn-icon">
+                                                <i class="logout-icon"></i>
+                                            </div>
+                                        </div>
+                                        <div class="logout-text-container">
+                                            <div class="logout-text-section">
+                                                Log Out
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <button class="logout-btn" type="submit">Logout</button> -->
+        </header>   
+        <section id="form-outer-container">
+            <section id="form-inner-container">
+                <div id="header">
+                    <h1>Your tasks</h1>
+                    <button class="clear-btn"><i class="fas fa-minus-circle"></i></button>
+                </div>
+                <div id="user-input-panel">
+                    <input placeholder="enter item to add" class="user-added-input"></input>
+                    <button class="add-item-btn"><i class="fas fa-plus"></i></button>
+                </div>
+            </section>
+        </section>
+        <section id="task-container">
+            <!-- Dynamic divs for tasks -->
+        </section>
+        <section class="empty-list-prompt-section">
+            <div class="empty-list-text">
+                <p>
+                    No tasks ? Why not start by creating one , it's as simple as one click away !
+                </p>
+            </div>
+        </section>
+        <footer>
+            <div class="footer-dashboard">
+                <p>We are currently offering all services free ! You are our very first users.</p>
+                <p>Secret for you, our reminders feature is what people mostly talks about ! Try it out</p>
+                <p>© 2021 Copyright: Sourav Kumar</p>
+            </div>
+        </footer>
+        <script src="js/config.js" defer></script>
+        <script src="js/menu.js" defer></script>
+
+    </body>
+</html>
