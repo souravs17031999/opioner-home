@@ -580,8 +580,8 @@ function subscribeUserToNotification(e) {
     let userEmail = document.querySelector(".notify-email").value
     let task_id = e.currentTarget.getAttribute("task-id")
 
-    let isEmailChecked = e.currentTarget.parentElement.parentElement.children[1].children[0].children[0].checked
-    let isPhoneChecked = e.currentTarget.parentElement.parentElement.children[1].children[1].children[0].checked
+    let isEmailChecked = e.currentTarget.parentElement.parentElement.children[1].children[0].children[0].checked ? 1 : 0
+    let isPhoneChecked = e.currentTarget.parentElement.parentElement.children[1].children[1].children[0].checked ? 1 : 0
 
     isValidationFailed = false 
     if(isEmailChecked && userEmail === "") {
