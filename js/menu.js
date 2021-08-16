@@ -161,7 +161,7 @@ function handleClearBtn() {
     removeItemFromList(dataForAPI)
 }
 
-function insertDivMenuItem(item) {
+function insertDivMenuItem(item, isInitialPageLoad) {
 
     if(item.description != null && item.id != null) {
         taskInnerContainer = document.getElementById("task-container")
@@ -202,7 +202,17 @@ function insertDivMenuItem(item) {
         document.getElementById(item.id).lastElementChild.children[2].addEventListener('click', handlePushNotifyModal)
         document.getElementById(item.id).lastElementChild.children[3].addEventListener('click', handleUnsubscribeNotifyModal)
 
+        if(!initialPageLoad) {
+            let rect = document.getElementById(item.id).getBoundingClientRect();
+            window.scrollTo({
+                top: rect.top,
+                left: rect.left,
+                behavior: 'smooth'
+            })
+        }
+
     }
+    
     insertEmptyPromptOnEmptyList();
 }
 
@@ -240,7 +250,7 @@ function showUserLists(data) {
 
     data["task"].forEach(function(item){
         
-        insertDivMenuItem(item)
+        insertDivMenuItem(item, isInitialPageLoad=true)
         
     });
 
@@ -341,7 +351,7 @@ function insertUserLists(itemData) {
             if(itemData["update_flag"]) {
                 updateDivMenuItem(itemData)
             } else {
-                insertDivMenuItem({"id": data["id"], "description": itemData["item"], "status": data["status_tag"]})
+                insertDivMenuItem({"id": data["id"], "description": itemData["item"], "status": data["status_tag"]}, initialPageLoad=false)
             }
         } else {
             alert(`No data found, ERROR: ", ${data["message"]}`)
