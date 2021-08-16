@@ -357,13 +357,13 @@ header {
 }
 
 .task-bucket-footer {
-    display: none;
+    display: flex;
     justify-content: space-evenly;
 }
 
-.task-bucket:hover .task-bucket-footer {
+/* .task-bucket:hover .task-bucket-footer {
     display: flex;
-}
+} */
 
 .push-notify-btn, .unsubscribe-notify-btn {
     background: linear-gradient(to right, #ffa602 0%, #f3cc85 100%);
