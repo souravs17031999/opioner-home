@@ -104,7 +104,7 @@ function handleOnClickSubmitBtn(e) {
     insertUserLists(dataForAPI)
 
     document.querySelector(".user-added-input").value = ""
-    document.querySelector(".user-added-input").focus()
+    // document.querySelector(".user-added-input").focus()
 
 }
 
