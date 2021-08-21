@@ -48,15 +48,17 @@ var tagColorMap = {
 function initialPageLoad() {
     // load modal if signed up new user flow
     if(localStorage.getItem("new-user")) {
-        modal = document.getElementById("sign-up-modal")
-        modal.style.display = "block";
-        localStorage.removeItem("new-user")
-        document.querySelector(".close-sign-up-modal").addEventListener('click', closeSignUpModal)
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+
+        setTimeout(showUploadProfileModal, 5000);
+        // modal = document.getElementById("sign-up-modal")
+        // modal.style.display = "block";
+        localStorage.removeItem("new-user");
+        // document.querySelector(".close-sign-up-modal").addEventListener('click', closeSignUpModal)
+        // window.onclick = function(event) {
+        //     if (event.target == modal) {
+        //         modal.style.display = "none";
+        //     }
+        // }
     }
     document.querySelector(".menu-dropdown-container").addEventListener('click', handleMenuDropdownPanel)
     document.querySelector(".logout-btn-container").addEventListener('click', handleLogoutUserClick)

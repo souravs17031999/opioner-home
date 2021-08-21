@@ -59,6 +59,7 @@ function handleOnLogin(e) {
     })
     .catch((error) => {
         console.log(error)
+        document.querySelector(".modal-loader").style.display = "none"
         alert(error)
     })
 
@@ -158,13 +159,7 @@ function handleOnSignUp(e) {
         method: 'POST',
         body: JSON.stringify(credentials),
     })
-    .then(response => {
-        if(response.status === 403) {
-            showErrorOnSignup();
-            return;
-        }
-        return response.json()
-    })
+    .then(response => response.json())
     .then(data => {
         if(data["status"] == "success") {
             document.querySelector(".modal-loader-signup").style.display = "none"
@@ -177,11 +172,14 @@ function handleOnSignUp(e) {
             localStorage.setItem("new-user", true)
             window.location.href = "menu.html"
         } else {
+            document.querySelector(".modal-loader-signup").style.display = "none"
             alert(`Error creating New User, ERROR: ", ${data["message"]}`)
         }
     })
     .catch((error) => {
         console.log(error)
+        document.querySelector(".modal-loader-signup").style.display = "none"
+        alert(error)
     })
     
 }
