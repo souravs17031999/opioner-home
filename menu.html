@@ -48,16 +48,17 @@
                         <input type="checkbox" value="email" required checked="true">
                         <span class="checkmark"></span>
                     </label>
-                    <label class="container">Phone
+                    <label class="container" id="hide-phone-box">Phone
                         <input type="checkbox" value="phone" required>
                         <span class="checkmark"></span>
                     </label>
                 </div>
                 <div id="modal-footer">
-                    <input type="text" maxlength="10" class="notify-phone" placeholder="enter your phone" required>
+                    <input type="text" maxlength="10" class="notify-phone" placeholder="enter your phone">
                     <input type="text" class="notify-email" placeholder="enter your email" required>
                     <p class="subtitle-note-modal">* We collect your phone, email for your better experience, promise won't spam you !
-                    Currently, we only send one reminder per day in Morning 09:00 IST until you unsubscribe.</p>
+                    Currently, we send one reminder daily until you unsubscribe.</p>
+                    <p class="subtitle-note-modal" style="margin-top: -10px;">* Soon, you will be getting reminders on phone as well.</p>
                     <div class="modal-loader"></div>
                     <button type="submit" class="notify-push-btn">Remind Me</button>
                 </div>

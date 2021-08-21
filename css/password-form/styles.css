@@ -244,7 +244,81 @@ footer {
     font-family: system-ui;
 }
 
+/*Loader for modals*/
+.modal-loader,
+.modal-loader:before,
+.modal-loader:after, 
+.modal-loader-signup, 
+.modal-loader-signup:before, 
+.modal-loader-signup:after {
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation: load-modal-anime 1.8s infinite ease-in-out;
+    animation: load-modal-anime 1.8s infinite ease-in-out;
+}
+.modal-loader, .modal-loader-signup {
+    color: #2196f3;
+    font-size: 6px;
+    margin: 2px auto;
+    position: relative;
+    text-indent: -9999em;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+.modal-loader:before,
+.modal-loader:after, 
+.modal-loader-signup:before, 
+.modal-loader-signup:after {
+    content: '';
+    position: absolute;
+    top: 0;
+}
+.modal-loader:before, .modal-loader-signup:before {
+    left: -3.5em;
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+.modal-loader:after, .modal-loader-signup:after {
+    left: 3.5em;
+}
 
+.modal-loader, .modal-loader-signup {
+    display: none;
+}
+
+.modal-loader:before, .modal-loader-signup:before {
+    color: red;
+}
+
+.modal-loader::after, .modal-loader-signup:after {
+    color: yellow;
+}
+@-webkit-keyframes load-modal-anime {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+@keyframes load-modal-anime {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
 @media only screen and (max-width: 426px) {
 
     header img {

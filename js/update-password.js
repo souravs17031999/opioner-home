@@ -23,6 +23,8 @@ function handleSearchAccountBtn(e) {
     }
 
     document.querySelector(".error-value-section").style.display = "none";
+
+    document.querySelector(".modal-loader").style.display = "block"
     let dataForAPI = {"username": username}
     
     url = configTestEnv["userServiceHost"] + "/user/fetch-user-status"
@@ -35,12 +37,15 @@ function handleSearchAccountBtn(e) {
         if(data["status"] == "success") {
             document.querySelector("#show-first-auth-container").style.display = "none";
             document.querySelector("#validated-user-container").style.display = "block";
+            document.querySelector(".modal-loader").style.display = "none"
         } else {
+            document.querySelector(".modal-loader").style.display = "none"
             document.querySelector(".error-value-section").style.display = "block";
         }
     })
     .catch((error) => {
         console.log(error)
+        document.querySelector(".modal-loader").style.display = "none"
         alert(error)
     })    
 }

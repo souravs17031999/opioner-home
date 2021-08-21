@@ -496,6 +496,14 @@ footer {
     height: 30px;
 }
 
+.notify-phone {
+    display: none;
+}
+
+#hide-phone-box {
+    display: none;
+}
+
 .unsubscribe-yes-btn:hover, .unsubscribe-no-btn:hover, .notify-push-btn:hover {
     transform: translateY(2px);
 }
