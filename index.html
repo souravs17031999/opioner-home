@@ -23,9 +23,7 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <header>
-            <a href="index.html"><img src="images/logo-taskly.png" id="logo-taskly"></a>
-        </header>   
+        <custom-single-header link-src="index.html" image-src="images/logo-taskly.png"></custom-single-header>
         <h1>MAKE YOUR DAY PRODUCTIVE WITH US</h1>
         <div id="sign-up-modal" class="modal">
             <div class="modal-content">
@@ -99,14 +97,11 @@
                 </div>
             </section>
         </section>
-        <footer>
-            <div class="footer-dashboard">
-                <p>We are currently offering all services free ! You are our very first users.</p>
-                <p>Secret for you, our reminders feature is what people mostly talks about ! Try it out</p>
-                <p>© 2021 Copyright: Sourav Kumar</p>
-            </div>
-        </footer>
+        <custom-footer></custom-footer>
         <script src="js/config.js" defer></script>
         <script src="js/login.js" defer></script>
+        <script src="js/data/footerData.js" defer></script>
+        <script src="js/components/customSingleHeader.js" defer></script>
+        <script src="js/components/customFooter.js" defer></script>
     </body>
 </html>
