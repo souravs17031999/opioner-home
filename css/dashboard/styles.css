@@ -142,7 +142,8 @@ h1 {
 }
 
 #update-data-modal {
-    display: none; 
+    display: none;
+    animation: fadein 0.5s;
     position: fixed; 
     z-index: 1;
     left: 0;
@@ -152,6 +153,15 @@ h1 {
     overflow: auto; 
     background-color: rgb(0,0,0); 
     background-color: rgba(0,0,0,0.4); 
+}
+
+@keyframes fadein {
+	from {
+		opacity:0;
+	}
+	to {
+		opacity:1;
+	}
 }
   
 .modal-content {
@@ -477,6 +487,15 @@ footer {
 
 #notify-push-modal {
     height: auto;
+    animation: fadein 0.5s;
+}
+
+#unsubscribe-notify-modal {
+    animation: fadein 0.5s;
+}
+
+#sign-up-modal {
+    animation: fadein 0.5s;
 }
 
 .notify-push-btn, .unsubscribe-yes-btn, .unsubscribe-no-btn {

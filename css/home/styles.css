@@ -539,6 +539,19 @@ footer {
   }
 }
 
+#sign-up-modal {
+    animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+	from {
+		opacity:0;
+	}
+	to {
+		opacity:1;
+	}
+}
+
 @media only screen and (max-width: 768px) {
 
     #form-inner-container {
