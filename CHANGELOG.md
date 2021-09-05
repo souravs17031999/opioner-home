@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - add third party 0Auth 2.0 integration for google, facebook, twitter etc.
 - add phone notifications feature
-- add Home page (except login page)
+- user can share their tasks acheivements on facebook, twitter etc..
+
+## [1.0.1] - 2021-09-05
+
+### Added
+
+- Added Home page completely using reusable components
 
 ## [1.0.0] - 2021-09-03
 
