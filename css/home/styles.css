@@ -293,7 +293,7 @@ form input::placeholder {
 #sign-up-user {
     height: 36px;
     overflow: hidden;
-    background: linear-gradient(to right, #87f480 0%, #37c226 100%);
+    background: linear-gradient(to right, #63f15a 0%, #37c226 100%);
     border: none;
     border-radius: 50px;
     color: #fff;
@@ -585,6 +585,32 @@ footer {
 	to {
 		opacity:1;
 	}
+}
+
+.home-nav-links a {
+    color: hsl(209, 34%, 30%);
+    font-size: 1rem;
+    text-transform: capitalize;
+    letter-spacing: 0.1rem;
+    display: block;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s linear;
+    text-decoration: none;
+}
+
+.home-nav-links a:hover {
+    background: hsl(205, 86%, 81%);
+    color: hsl(205, 78%, 60%);
+    border-radius: 6px;
+    /* padding-left: 1.5rem; */
+}
+
+.nav-links-container {
+    display: flex;
+    place-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 @media only screen and (max-width: 768px) {

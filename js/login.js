@@ -8,8 +8,10 @@ for(let btn of btns) {
     }
 }
 
-document.querySelector(".fas").addEventListener('click', toggleShowPasswordOnLogin)
-document.querySelector(".far").addEventListener('click', toggleShowPasswordOnSignup)
+document.querySelector(".fas").addEventListener('click', toggleShowPasswordOnLogin);
+document.querySelector(".far").addEventListener('click', toggleShowPasswordOnSignup);
+
+document.querySelectorAll(".home-nav-links a")[1].addEventListener('click', showSignUpModal);
 
 function handleOnLogin(e) {
 
@@ -68,6 +70,9 @@ function handleOnLogin(e) {
 function showSignUpModal(e) {
 
     e.preventDefault()
+
+    clearEmptyErrorValue();
+    
     modal = document.getElementById("sign-up-modal")
     modal.style.display = "block"
     document.querySelector(".sign-up-close").addEventListener('click', closeSignUpModal)
