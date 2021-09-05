@@ -397,7 +397,7 @@ function removeItemFromList(itemData) {
 function fetchUserData() {
 
     url = configTestEnv["userServiceHost"] + "/user/fetch-user-data?"
-    url += `user_id=${localStorage.getItem("user-id")}`
+    url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1}`
     fetch(url, {
         method: 'GET',
     })
