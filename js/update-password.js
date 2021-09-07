@@ -10,6 +10,9 @@ for(let btn of btns) {
     }
 }
 
+document.querySelectorAll(".home-nav-links a")[0].href = "/taskly-home/login.html";
+document.querySelectorAll(".home-nav-links a")[1].href = "/taskly-home/login.html";
+
 var username;
 document.querySelector(".fa-eye").addEventListener('click', toggleShowPassword)
 
