@@ -58,7 +58,7 @@ class customLandingIntroSection extends HTMLElement {
     }
   
     static get observedAttributes() {
-      return ["item-section-id", "reverse"];
+      return ["item-section-id"];
     }
   
     attributeChangedCallback(name, oldValue, newValue) {

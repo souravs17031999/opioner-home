@@ -50,7 +50,7 @@ class loginContainer extends HTMLElement {
                     <h1 class="login-header-title">Sign in</h1>
                     <div class="username-container">
                         <label>Username</label>
-                        <input class="username" oninput="handleOnChangeInput(event)" autofocus required></input>
+                        <input class="username" oninput="handleOnChangeInput(event)" required></input>
                     </div>
                     <div class="password-outer-container">
                         <label>Password</label>

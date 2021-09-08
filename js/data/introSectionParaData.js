@@ -3,15 +3,17 @@ introSectionParaData = {
         "items": ["Best task manager - efficient and just right for you !", "create your task in just a click"],
         "src" : "images/task-creation.gif",
         "styles" : {
-            "para": "background:linear-gradient(45deg, #a2f0f4, transparent);"
+            "para": "background:linear-gradient(45deg, #a2f0f4, transparent);",
+            "container": "gap:10px;"
         }
     },
     "1": {
         "items": ["Everything at one place : edit, delete, modify", "You can subsbcribe to get the notifications"],
-        "src" : "images/actions.gif",
+        "src" : "images/actions.jpg",
         "styles" : {
             "para" :"background:linear-gradient(45deg, transparent, #a2a8f4);",
-            "container": "flex-direction:row-reverse;"
+            "container": "flex-direction:row-reverse; gap:20px;",
+            "pic": "    width: 250px;height: 350px;border-radius: 10px;box-shadow: 0px 5px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);"
         }
     },
     "2": {
