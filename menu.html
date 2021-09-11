@@ -97,28 +97,61 @@
         </div> 
         <header>
             <a href="menu.html"><img src="images/logo-taskly.png" id="logo-taskly"></a>
-            <h1 class="welcome-header-name"></h1>
+            <!-- <h1 class="welcome-header-name"></h1> -->
             <img class="profile-pic" src="" onerror="this.onerror=null;this.src='images/avatar.gif';">
-            <div class="panel-outer-container">
-                <div class="panel-container-items">
-                    <div class="menu-dropdown-container">
-                        <i class="menu-dropdown"></i>
+
+            <div id="dropdown-panel-root-container-section">
+                <div class="panel-outer-container">
+                    <div class="panel-container-items">
+                        <div class="menu-dropdown-container">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge"></span>
+                        </div>
+                    </div>
+                    <div class="dropdown-items-outer-container-notification" id="dropdown-items-outer-container-notification">
+                        <div class="dropdown-items-inner-container">
+                            <div class="dropdown-content-container-notification">
+                                <div class="dropdown-items-notification">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="dropdown-items-outer-container">
-                    <div class="dropdown-items-inner-container">
-                        <div class="dropdown-content-container">
-                            <div class="dropdown-items">
-                                <div class="logout-btn-outer-container">
-                                    <div class="logout-btn-container">
-                                        <div class="logout-btn-icon-container">
-                                            <div class="logout-btn-icon">
-                                                <i class="logout-icon"></i>
+                <div class="panel-outer-container">
+                    <div class="panel-container-items">
+                        <div class="menu-dropdown-container">
+                            <i class="menu-dropdown"></i>
+                        </div>
+                    </div>
+                    <div class="dropdown-items-outer-container">
+                        <div class="dropdown-items-inner-container">
+                            <div class="dropdown-content-container">
+                                <div class="dropdown-items">
+                                    <div class="dropdown-btn-outer-container">
+                                        <div class="dropdown-btn-container">
+                                            <div class="dropdown-btn-icon-container">
+                                                <div class="dropdown-btn-icon">
+                                                    <i class="fas fa-chart-line"></i>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-text-container">
+                                                <div class="dropdown-text-section">
+                                                    Show Progress
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="logout-text-container">
-                                            <div class="logout-text-section">
-                                                Log Out
+                                    </div>
+                                    <div class="dropdown-btn-outer-container">
+                                        <div class="dropdown-btn-container">
+                                            <div class="dropdown-btn-icon-container">
+                                                <div class="dropdown-btn-icon">
+                                                    <i class="dropdown-icon"></i>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-text-container">
+                                                <div class="dropdown-text-section">
+                                                    Log Out
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +161,8 @@
                     </div>
                 </div>
             </div>
-            <!-- <button class="logout-btn" type="submit">Logout</button> -->
+
+            <!-- <button class="dropdown-btn" type="submit">dropdown</button> -->
         </header>   
         <section id="form-outer-container">
             <section id="form-inner-container">
@@ -154,6 +188,7 @@
         </section>
         <custom-footer></custom-footer>
         <script src="js/config.js" defer></script>
+        <script src="js/data/eventsTrackingData.js" defer></script>
         <script src="js/menu.js" defer></script>
         <script src="js/data/footerData.js" defer></script>
         <script src="js/components/customFooter.js" defer></script>

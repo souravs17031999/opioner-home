@@ -16,8 +16,8 @@ if(btns.length > 0) {
             btn.addEventListener('click', handleOnClickRemoveBtn)
         } else if(btn.classList.contains("clear-btn")) {
             btn.addEventListener('click', handleClearBtn)
-        } else if(btn.classList.contains("logout-btn")) {
-            btn.addEventListener('click', handleLogoutUserClick)
+        } else if(btn.classList.contains("dropdown-btn")) {
+            btn.addEventListener('click', handlelogoutUserClick)
         } else if(btn.classList.contains("upload-btn")) {
             btn.addEventListener('click', handleUploadProfile)
         } else if(btn.classList.contains("notify-push-btn")) {
@@ -60,12 +60,20 @@ function initialPageLoad() {
         //     }
         // }
     }
-    document.querySelector(".menu-dropdown-container").addEventListener('click', handleMenuDropdownPanel)
-    document.querySelector(".logout-btn-container").addEventListener('click', handleLogoutUserClick)
+    document.querySelectorAll(".menu-dropdown-container")[0].addEventListener('click', handleNotificationDropdownPanel)
+    document.querySelectorAll(".menu-dropdown-container")[1].addEventListener('click', handleMenuDropdownPanel)
+    // rendering menu panel dropdown
+    document.querySelectorAll(".dropdown-btn-container")[0].addEventListener('click', handleShowProgress)
+    document.querySelectorAll(".dropdown-btn-container")[1].addEventListener('click', handlelogoutUserClick)
+    // document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', handleShowNotifications)
 
     fetchUserData();
     fetchUserLists();
+    fetchUnreadCountForNotifications();
 }
+
+let notificationDropdownRef = document.getElementsByClassName("dropdown-items-notification")[0];
+let dropDownContentContainerNotification = document.getElementsByClassName("dropdown-content-container-notification")[0];
 
 function handleOnClickSubmitBtn(e) {
 
@@ -142,7 +150,7 @@ function clearEmptyErrorValue() {
     document.getElementsByClassName("empty-error-value")[0].remove()
 }
 
-function handleLogoutUserClick(e) {
+function handlelogoutUserClick(e) {
     localStorage.clear()
     window.location.href = "index.html"
 }
@@ -422,7 +430,7 @@ function fetchUserData() {
 
 function setUserDataInContext(userData) {
 
-    document.querySelector(".welcome-header-name").innerHTML = `Welcome ${userData["user_data"]["firstname"]}`
+    // document.querySelector(".welcome-header-name").innerHTML = `Welcome ${userData["user_data"]["firstname"]}`
 
     firstname = userData["user_data"]["firstname"]
 
@@ -504,6 +512,7 @@ function handleUploadProfile(e) {
             clearProgressBar();
             setTimeout(closeSignUpModal, 3000);
             fetchUserData();
+            handleInitiateNotification({"user_id": localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1,"event_type": userEventsTrackingData[0].ename, "event_description": userEventsTrackingData[0].etext})
         } else {
             alert(`Uploading of profile failed, ERROR: ", ${data["message"]}`)
         }
@@ -562,6 +571,7 @@ function showUploadProfileModal() {
     document.querySelector(".success-lottie").style.display = "none"
     window.onclick = function(event) {
         if (event.target == modal) {
+            console.log(event.target)
             modal.style.display = "none";
         }
     }
@@ -623,6 +633,7 @@ function subscribeUserToNotification(e) {
         if(data["status"] == "success") {
             resetPushNotifyForTask(true);
             closeNotifyModal();
+            handleInitiateNotification({"user_id": localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1,"event_type": userEventsTrackingData[1].ename, "event_description": userEventsTrackingData[1].etext})
         } else {
             alert(`PUSH REMINDERS FAILED, ERROR: ", ${data["message"]}`)
         }
@@ -670,6 +681,8 @@ function unsubscribeUserToNotification(e) {
         if(data["status"] == "success") {
             resetPushNotifyForTask(false);
             closeUnsubscribeNotifyModal();
+            handleInitiateNotification({"user_id": localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1,"event_type": userEventsTrackingData[2].ename, "event_description": userEventsTrackingData[2].etext})
+
         } else {
             alert(`STOP REMINDERS FAILED, ERROR: ", ${data["message"]}`)
         }
@@ -703,4 +716,201 @@ function resetPushNotifyForTask(isNotified) {
 
 function handleMenuDropdownPanel() {
     document.querySelector(".dropdown-items-outer-container").classList.toggle("show-panel")
+    if(document.querySelector(".dropdown-items-outer-container-notification").classList.contains("show-panel")) {
+        document.querySelector(".dropdown-items-outer-container-notification").classList.remove("show-panel")
+        resetDropdownPanel();
+    }
+}
+
+function handleNotificationDropdownPanel() {
+    
+    if(document.querySelector(".dropdown-items-outer-container-notification").classList.contains("show-panel")) {
+        document.querySelector(".dropdown-items-outer-container-notification").classList.remove("show-panel")  
+
+        resetDropdownPanel();
+
+    } else {
+        document.querySelector(".dropdown-items-outer-container-notification").classList.add("show-panel");
+        if(document.querySelector(".dropdown-items-outer-container").classList.contains("show-panel")) {
+            document.querySelector(".dropdown-items-outer-container").classList.remove("show-panel")
+        }
+
+        fetchUserNotifications(false);          
+    }
+
+}
+
+function resetDropdownPanel() {
+
+    notificationDropdownRef.innerHTML = ''
+    document.getElementsByClassName("dropdown-panel-footer")[0].remove(); 
+}
+
+function fetchUserNotifications(allFlag) {
+    
+    let url = configTestEnv["notificationServiceHost"] + "/notification/fetch-notifications?"
+    url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1}`
+    url += `&all_flag=${allFlag}`
+    fetch(url, {
+        method: 'GET',
+    })
+    .then(response => {
+        return response.json()})
+    .then(data => {
+        if(data["status"] == "success") {
+            renderAllNotifications(data);
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+
+}
+
+function renderAllNotifications(notificationData) {
+
+    for(let item of notificationData.data) {
+
+        let tempDropdownContainer = document.createElement("div");
+        tempDropdownContainer.classList.add("dropdown-btn-outer-container");
+        tempDropdownContainer.innerHTML = `
+        <div class="dropdown-btn-container-notification">
+            <div class="dropdown-btn-icon-container">
+                <div class="dropdown-btn-icon">
+                    ${eventTypeImageMap[item.event_type]}
+                </div>
+            </div>
+            <div class="dropdown-text-container">
+                <div class="dropdown-text-section">
+                    ${item.event_description}
+                </div>
+            </div>
+        </div>
+        `
+
+        if(!item.read_flag) {
+            let notifyDiv = document.createElement("div")
+            notifyDiv.classList.add("notify-alert-container")
+            notifyDiv.innerHTML = 
+            `
+            <span class="alert-notify"></span>
+            `
+            tempDropdownContainer.children[0].appendChild(notifyDiv)
+        }
+        
+        tempDropdownContainer.setAttribute("event-id", item.id);
+        tempDropdownContainer.addEventListener('click', updateNotificationStatus);
+        notificationDropdownRef.appendChild(tempDropdownContainer);
+
+    }
+    
+    if(notificationData.see_all) {
+        let seeMoreContainer = document.createElement("div");
+        seeMoreContainer.classList.add("dropdown-panel-footer");
+
+        seeMoreContainer.innerHTML = 
+        `
+        <p>See all</p>
+        `
+        dropDownContentContainerNotification.appendChild(seeMoreContainer);
+        seeMoreContainer.addEventListener('click', showAllNotificationsForUser);
+    }
+
+    // if(!allFlag) {
+    //     document.getElementsByClassName("dropdown-panel-footer")[0].style.display = "flex"; 
+    //     document.getElementsByClassName("dropdown-panel-footer")[0].addEventListener('click', showAllNotificationsForUser) 
+    // } else {
+    //     document.getElementsByClassName("dropdown-panel-footer")[0].style.display = "none"; 
+    // }
+    
+}
+
+function updateNotificationStatus(e) {
+
+    if(e.currentTarget.children[0].children[2] != undefined) {
+        e.currentTarget.children[0].children[2].style.display = "none";
+    }
+    
+    let dataForAPI = {"user_id": localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1, "event_id": e.currentTarget.getAttribute("event-id")}
+    
+    url = configTestEnv["notificationServiceHost"] + "/notification/update-status-notifications"
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(dataForAPI), 
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data["status"] == "success") {
+            fetchUnreadCountForNotifications();
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        alert(error)
+    })    
+
+}
+
+function handleShowProgress() {
+
+
+
+}
+
+function showAllNotificationsForUser(e) {
+    
+    resetDropdownPanel();
+    fetchUserNotifications(true);
+}
+
+function fetchUnreadCountForNotifications() {
+
+    let url = configTestEnv["notificationServiceHost"] + "/notification/unread-count-notifications?"
+    url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1}`
+    fetch(url, {
+        method: 'GET',
+    })
+    .then(response => {
+        return response.json()})
+    .then(data => {
+        if(data["status"] == "success") {
+            updateNotificationsInContext(data["unread_count"]);
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+
+}
+
+function updateNotificationsInContext(unreadCount) {
+    if(unreadCount > 0) {
+        document.title = `(${unreadCount}) Taskly | Dashboard`
+        document.getElementsByClassName("notification-badge")[0].style.display = "block";
+        document.getElementsByClassName("notification-badge")[0].innerText = unreadCount;
+    } else if(unreadCount === 0) {
+        document.title = "Taskly | Dashboard";
+        document.getElementsByClassName("notification-badge")[0].style.display = "none";
+        document.getElementsByClassName("notification-badge")[0].innerText = '';
+    }
+}
+
+function handleInitiateNotification(dataForAPI) {
+
+    url = configTestEnv["notificationServiceHost"] + "/notification/insert-notification"
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(dataForAPI), 
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data["status"] == "success") {
+            fetchUnreadCountForNotifications();
+        } 
+    })
+    .catch((error) => {
+        console.log(error)
+        alert(error)
+    })    
+
 }
