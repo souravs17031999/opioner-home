@@ -1,9 +1,11 @@
 // fetch all the previously stored data as soon as page loads
 
 
-window.onload = initialPageLoad
+window.onload = initialLoadForProfilePage
 
 btns = document.querySelectorAll("button")
+
+var loggedInUsername, loggedInUserEmailId;
 
 // assign all the event handlers to each btn available
 if(btns.length > 0) {
@@ -36,6 +38,8 @@ document.querySelectorAll("#close").forEach((item) => {
         item.addEventListener('click', closeUpdateDataModal)
     } else if(item.classList.contains("close-unsubscribe-notify-modal")) {
         item.addEventListener('click', closeUnsubscribeNotifyModal)
+    } else if(item.classList.contains("close-edit-update-data-modal")) {
+        item.addEventListener('click', closeEditUpdateBucketModal)
     }
 })
 
@@ -45,31 +49,24 @@ var tagColorMap = {
     "Done": "linear-gradient(to Right, #19f639, #c5ffc1)"
 }
 
-function initialPageLoad() {
+function initialLoadForProfilePage() {
     // load modal if signed up new user flow
     if(localStorage.getItem("new-user")) {
 
         setTimeout(showUploadProfileModal, 5000);
-        // modal = document.getElementById("sign-up-modal")
-        // modal.style.display = "block";
         localStorage.removeItem("new-user");
-        // document.querySelector(".close-sign-up-modal").addEventListener('click', closeSignUpModal)
-        // window.onclick = function(event) {
-        //     if (event.target == modal) {
-        //         modal.style.display = "none";
-        //     }
-        // }
     }
     document.querySelectorAll(".menu-dropdown-container")[0].addEventListener('click', handleNotificationDropdownPanel)
     document.querySelectorAll(".menu-dropdown-container")[1].addEventListener('click', handleMenuDropdownPanel)
     // rendering menu panel dropdown
-    document.querySelectorAll(".dropdown-btn-container")[0].addEventListener('click', handleShowProgress)
-    document.querySelectorAll(".dropdown-btn-container")[1].addEventListener('click', handlelogoutUserClick)
+    document.querySelectorAll(".dropdown-btn-container")[0].addEventListener('click', handleMyProfileClickAction)
+    document.querySelectorAll(".dropdown-btn-container")[1].addEventListener('click', handleShowProgress)
+    document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', handlelogoutUserClick)
     // document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', handleShowNotifications)
 
     fetchUserData();
     fetchUserLists();
-    fetchUnreadCountForNotifications();
+    fetchUnreadCountForNotifications(customPageName="Taskly | Dashboard");
 }
 
 let notificationDropdownRef = document.getElementsByClassName("dropdown-items-notification")[0];
@@ -91,30 +88,19 @@ function handleOnClickSubmitBtn(e) {
         }
         return;
     }
-    let shouldUpdate = false;
 
     buttonId = e.currentTarget.getAttribute("index")
-    if(buttonId !== null && buttonId >= 0) {
-        shouldUpdate = true;
-        
-    }
 
     if(document.getElementsByClassName("empty-error-value").length > 0) {
         document.getElementsByClassName("empty-error-value")[0].remove()
     } 
     
     let dataForAPI = {"item": userInputValue, "user_id": localStorage.getItem("user-id")}
-    if(shouldUpdate) {
-        dataForAPI["update_flag"] = 1
-        dataForAPI["id"] = buttonId
-    } else {
-        dataForAPI["update_flag"] = 0
-    }
+    dataForAPI["update_flag"] = 0
     
     insertUserLists(dataForAPI)
 
     document.querySelector(".user-added-input").value = ""
-    // document.querySelector(".user-added-input").focus()
 
 }
 
@@ -137,9 +123,7 @@ function handleOnClickEditBtn(e) {
 
 function handleOnClickRemoveBtn(e) {
 
-    deleteItem = e.currentTarget.parentElement.parentElement
-
-    // // localStorage.removeItem(deleteItem.getAttribute("id"))
+    deleteItem = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement
 
     let dataForAPI = {"user_id": localStorage.getItem("user-id"), "id": deleteItem.getAttribute("id"), "all_flag": 0}
 
@@ -161,7 +145,6 @@ function handleClearBtn() {
     menuItems = document.querySelectorAll(".menu-item")
     console.log(menuItems)
     menuItems.forEach(function(item) {
-        // localStorage.removeItem(item.getAttribute("id"))
         listIds += `${item.getAttribute("id")},`
         item.remove()
     })
@@ -171,48 +154,55 @@ function handleClearBtn() {
     removeItemFromList(dataForAPI)
 }
 
-function insertDivMenuItem(item, isInitialPageLoad) {
+function insertDivMenuItem(item, initialLoadForProfilePage) {
 
     if(item.description != null && item.id != null) {
         taskInnerContainer = document.getElementById("task-container")
         divMenuItem = document.createElement("div")
         divMenuItem.classList.add("task-bucket")
         divMenuItem.setAttribute("id", `${item.id}`)
+        divMenuItem.setAttribute("is_reminder_set", `${item.is_reminder_set}`)
+        divMenuItem.setAttribute("privacy_status", `${item.privacy_status}`)
+        divMenuItem.setAttribute("status", `${item.status}`)
 
         divMenuItem.innerHTML = `
                 <div class="task-bucket-header">
                     <i class="fas fa-calendar-check"></i>
                     <p class="status-tag">${item.status}</p>
+                    <div class="task-item-options">
+                        <svg width="24" height="24" viewBox="0 0 24 24" role="presentation" class="svg-task-item-popup">
+                            <g fill="currentColor" fill-rule="evenodd">
+                                <circle cx="5" cy="12" r="2"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                                <circle cx="19" cy="12" r="2"></circle>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="task-bucket-sidenav" style="display:none;">
+                    <div class="sidenav-outer-container">
+                        <div class="sidenav-outer-shadow-box">
+                            <div class="sidenav-inner-container">
+                                <div class="sidenav-items-options">Edit</div>
+                                <div class="sidenav-items-options">Delete</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="task-bucket-description">
                     <p>${item.description}</p>
                 </div>
-                <div class="task-bucket-footer">
-                    <button class="edit-item-btn"><i class="fas fa-edit"></i></button>
-                    <button class="remove-item-btn"><i class="fas fa-trash"></i></button>
-                    <button class="push-notify-btn"><i class="far fa-bell"></i></button>
-                    <button class="unsubscribe-notify-btn"><i class="far fa-bell-slash"></i></button>
-                </div>
         `
         taskInnerContainer.appendChild(divMenuItem)
-        // formInnerContainer.lastChild.setAttribute("id", item.id)
-        divMenuItem.children[0].children[1].style.background = tagColorMap[item.status]
-        if(item["is_reminder_set"]) {
-            divMenuItem.children[0].children[0].style.display = "block"
-            divMenuItem.children[0].children[1].style.left = "15px"
-            document.getElementById(item.id).lastElementChild.children[3].style.display = "block"
-            document.getElementById(item.id).lastElementChild.children[2].style.display = "none"
-        } else {
-            document.getElementById(item.id).lastElementChild.children[2].style.display = "block"
-            document.getElementById(item.id).lastElementChild.children[3].style.display = "none"
-        }
-        divMenuItem.children[0].children[1].addEventListener('click', handleStatusTagChange)
-        document.getElementById(item.id).lastElementChild.children[0].addEventListener('click', handleOnClickEditBtn)
-        document.getElementById(item.id).lastElementChild.children[1].addEventListener('click', handleOnClickRemoveBtn)
-        document.getElementById(item.id).lastElementChild.children[2].addEventListener('click', handlePushNotifyModal)
-        document.getElementById(item.id).lastElementChild.children[3].addEventListener('click', handleUnsubscribeNotifyModal)
 
-        if(!initialPageLoad) {
+        divMenuItem.children[0].children[1].style.background = tagColorMap[item.status]
+
+        divMenuItem.children[0].children[2].addEventListener('click', openPopupOptionsOnClick)
+
+        divMenuItem.children[1].children[0].children[0].children[0].children[0].addEventListener('click', handleEditBucketDataModal)
+        divMenuItem.children[1].children[0].children[0].children[0].children[1].addEventListener('click', handleOnClickRemoveBtn)
+
+        if(!initialLoadForProfilePage) {
             let rect = document.getElementById(item.id).getBoundingClientRect();
             window.scrollTo({
                 top: rect.top,
@@ -227,18 +217,13 @@ function insertDivMenuItem(item, isInitialPageLoad) {
 }
 
 function updateDivMenuItem(item) {
-
-    menuItem = document.getElementById(`${item.id}`)
-    menuItem.children[1].children[0].innerText = item.item
-    document.getElementsByClassName("add-item-btn")[0].setAttribute("index", "-1")
-
-    let btns = document.getElementsByClassName("remove-item-btn")
-    for(let btn of btns) {
-        btn.disabled = false   
-        btn.style.cursor = "pointer"
-    }
-    document.getElementsByClassName("add-item-btn")[0].children[0].classList.remove("fa-pen-square")
-    document.getElementsByClassName("add-item-btn")[0].children[0].classList.add("fa-plus")
+    let taskBucketContainer = document.getElementById(item.id)
+    taskBucketContainer.children[2].children[0].innerText = item['item']
+    taskBucketContainer.children[0].children[1].innerText = item['status']
+    taskBucketContainer.children[0].children[1].style.background = tagColorMap[item['status']]
+    taskBucketContainer.setAttribute("privacy_status", item['privacy_status'])
+    taskBucketContainer.setAttribute("is_reminder_set", item['reminder_set'])
+    taskBucketContainer.setAttribute("status", item['status'])
 
 }
 
@@ -260,7 +245,7 @@ function showUserLists(data) {
 
     data["task"].forEach(function(item){
         
-        insertDivMenuItem(item, isInitialPageLoad=true)
+        insertDivMenuItem(item, initialLoadForProfilePage=true)
         
     });
 
@@ -290,23 +275,6 @@ function handlePushNotifyModal(e) {
             document.querySelector(".notify-push-btn").removeAttribute("task-id") 
             document.querySelector(".notify-email").style.borderColor = "#3c1bc0"
             document.querySelector(".notify-phone").style.borderColor = "#3c1bc0"
-            modal.style.display = "none";
-        }
-    }
-}
-
-function handleStatusTagChange(e) {
-
-    let modal = document.getElementById("update-data-modal")
-    modal.style.display = "block";
-    document.getElementById("tags").value = e.currentTarget.innerText
-
-    let taskId = e.currentTarget.parentElement.parentElement.getAttribute("id")
-    document.querySelector(".update-status-btn").addEventListener('click', updateUserStatus)
-    document.querySelector(".update-status-btn").setAttribute("task-id", taskId)
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            document.querySelector(".update-status-btn").removeAttribute("task-id")
             modal.style.display = "none";
         }
     }
@@ -351,6 +319,10 @@ function insertEmptyPromptOnEmptyList() {
 
 function insertUserLists(itemData) {
     url = configTestEnv["productServiceHost"] + "/product/upsert-task"
+    // loader if updating flow 
+    if(itemData["update_flag"]) {
+        document.querySelectorAll(".modal-loader")[2].style.display = "flex";
+    }
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(itemData),
@@ -359,9 +331,13 @@ function insertUserLists(itemData) {
     .then(data => {
         if(data["status"] == "success") {
             if(itemData["update_flag"]) {
+                document.querySelectorAll(".modal-loader")[2].style.display = "none";
+                document.querySelectorAll(".success-lottie")[1].style.display = "flex"
                 updateDivMenuItem(itemData)
+                setTimeout(closeEditUpdateBucketModal, 2000);
+                resetAllPopup();
             } else {
-                insertDivMenuItem({"id": data["id"], "description": itemData["item"], "status": data["status_tag"]}, initialPageLoad=false)
+                insertDivMenuItem({"id": data["id"], "description": itemData["item"], "status": data["status_tag"], "privacy_status": "private", "is_reminder_set": false}, initialPageLoad=false)
             }
         } else {
             alert(`No data found, ERROR: ", ${data["message"]}`)
@@ -430,9 +406,10 @@ function fetchUserData() {
 
 function setUserDataInContext(userData) {
 
-    // document.querySelector(".welcome-header-name").innerHTML = `Welcome ${userData["user_data"]["firstname"]}`
 
     firstname = userData["user_data"]["firstname"]
+    loggedInUsername = userData["user_data"]["username"]
+    loggedInUserEmailId = userData["user_data"]["email"]
 
     let userAvatarImage = document.querySelector(".profile-pic")
 
@@ -442,8 +419,9 @@ function setUserDataInContext(userData) {
     }
     userAvatarImage.addEventListener('click', showUploadProfileModal)
 
-    document.querySelector(".notify-phone").value = userData["user_data"]["phone"]
-    document.querySelector(".notify-email").value = userData["user_data"]["email"]
+    if (document.querySelectorAll(".notify-email")[1] != undefined) {
+        document.querySelectorAll(".notify-email")[1].value = userData["user_data"]["email"]
+    }
 }
 
 function updateUserStatus(e) {
@@ -492,7 +470,7 @@ function handleUploadProfile(e) {
     e.preventDefault()
     file = document.querySelector(".upload-btn").files[0]
     if(file === undefined) {
-        console.log("NO FILE SELECTED, CANNOT PROCEED FOR UPLOADING !")
+        alert("NO FILE SELECTED, CANNOT PROCEED FOR UPLOADING !")
         return;
     }
     const formData = new FormData();
@@ -549,17 +527,17 @@ function closeUpdateDataModal() {
 function resetNotifyPushOnUpdateStatus() {
     let task_id = document.querySelector(".update-status-btn").getAttribute("task-id")
     let selectedTaskItem = document.getElementById(task_id)
-    selectedTaskItem.children[0].children[0].style.display = "none"
-    selectedTaskItem.children[0].children[1].style.left = "250px"
-
-    document.getElementById(task_id).lastElementChild.children[2].style.display = "block"
-    document.getElementById(task_id).lastElementChild.children[3].style.display = "none"
 }
 
 function closeUnsubscribeNotifyModal() {
     document.querySelector("#modal-loader").style.display = "none";
     document.querySelector(".unsubscribe-yes-btn").removeAttribute("task-id")
     document.getElementById("unsubscribe-notify-modal").style.display = "none";
+}
+
+function closeEditUpdateBucketModal() {
+    document.querySelectorAll(".success-lottie")[1].style.display = "flex"
+    document.getElementById("edit-task-bucket-data-modal").style.display = "none";
 }
 
 function showUploadProfileModal() {
@@ -571,28 +549,26 @@ function showUploadProfileModal() {
     document.querySelector(".success-lottie").style.display = "none"
     window.onclick = function(event) {
         if (event.target == modal) {
-            console.log(event.target)
             modal.style.display = "none";
         }
     }
 }
 
 function handleCheckBox(e) {
-
     let checkbox = e.currentTarget.parentElement.children[0].checked
-    let checkboxValue = e.currentTarget.parentElement.children[0].value 
 
-    if(!checkbox && checkboxValue === "phone") {
-        document.querySelector(".notify-phone").style.display = "block"
+    if(checkbox) {
+        document.getElementsByClassName("notify-email")[1].style.display = "block"
+    } else {
+        document.getElementsByClassName("notify-email")[1].style.display = "none"
     }
-    if(!checkbox && checkboxValue === "email") {
-        document.querySelector(".notify-email").style.display = "block"
-    }
-    if(checkbox && checkboxValue === "email") {
-        document.querySelector(".notify-email").style.display = "none"
-    }
-    if(checkbox && checkboxValue === "phone") {
-        document.querySelector(".notify-phone").style.display = "none"
+}
+
+function handleEmailInput(e) {
+    if(e.currentTarget.value === "") {
+        e.currentTarget.style.border="2px solid #ff0037"
+    } else {
+        e.currentTarget.style.border="2px solid #3c1bc0"
     }
 }
 
@@ -815,45 +791,44 @@ function renderAllNotifications(notificationData) {
         dropDownContentContainerNotification.appendChild(seeMoreContainer);
         seeMoreContainer.addEventListener('click', showAllNotificationsForUser);
     }
-
-    // if(!allFlag) {
-    //     document.getElementsByClassName("dropdown-panel-footer")[0].style.display = "flex"; 
-    //     document.getElementsByClassName("dropdown-panel-footer")[0].addEventListener('click', showAllNotificationsForUser) 
-    // } else {
-    //     document.getElementsByClassName("dropdown-panel-footer")[0].style.display = "none"; 
-    // }
     
 }
 
 function updateNotificationStatus(e) {
 
+    // mark the notification as read by removing the blue dot alert / icon and toggle the class so that API call only goes when
+    // not already read 
     if(e.currentTarget.children[0].children[2] != undefined) {
         e.currentTarget.children[0].children[2].style.display = "none";
+    
+        let dataForAPI = {"user_id": localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1, "event_id": e.currentTarget.getAttribute("event-id")}
+        
+        url = configTestEnv["notificationServiceHost"] + "/notification/update-status-notifications"
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(dataForAPI), 
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data["status"] == "success") {
+                fetchUnreadCountForNotifications(customPageName="Taskly | Dashboard");
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            alert(error)
+        })    
     }
-    
-    let dataForAPI = {"user_id": localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1, "event_id": e.currentTarget.getAttribute("event-id")}
-    
-    url = configTestEnv["notificationServiceHost"] + "/notification/update-status-notifications"
-    fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(dataForAPI), 
-    })
-    .then(response => response.json())
-    .then(data => {
-        if(data["status"] == "success") {
-            fetchUnreadCountForNotifications();
-        }
-    })
-    .catch((error) => {
-        console.log(error)
-        alert(error)
-    })    
 
+}
+
+function handleMyProfileClickAction(e) {
+    window.location.href = "profile.html"
 }
 
 function handleShowProgress() {
 
-
+    // Todo
 
 }
 
@@ -863,7 +838,7 @@ function showAllNotificationsForUser(e) {
     fetchUserNotifications(true);
 }
 
-function fetchUnreadCountForNotifications() {
+function fetchUnreadCountForNotifications(customPageName) {
 
     let url = configTestEnv["notificationServiceHost"] + "/notification/unread-count-notifications?"
     url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1}`
@@ -874,7 +849,7 @@ function fetchUnreadCountForNotifications() {
         return response.json()})
     .then(data => {
         if(data["status"] == "success") {
-            updateNotificationsInContext(data["unread_count"]);
+            updateNotificationsInContext(data["unread_count"], customPageName);
         }
     })
     .catch((error) => {
@@ -883,13 +858,13 @@ function fetchUnreadCountForNotifications() {
 
 }
 
-function updateNotificationsInContext(unreadCount) {
+function updateNotificationsInContext(unreadCount, customPageName) {
     if(unreadCount > 0) {
-        document.title = `(${unreadCount}) Taskly | Dashboard`
+        document.title = `(${unreadCount}) ${customPageName}`
         document.getElementsByClassName("notification-badge")[0].style.display = "block";
         document.getElementsByClassName("notification-badge")[0].innerText = unreadCount;
     } else if(unreadCount === 0) {
-        document.title = "Taskly | Dashboard";
+        document.title = `${customPageName}`;
         document.getElementsByClassName("notification-badge")[0].style.display = "none";
         document.getElementsByClassName("notification-badge")[0].innerText = '';
     }
@@ -913,4 +888,89 @@ function handleInitiateNotification(dataForAPI) {
         alert(error)
     })    
 
+}
+
+function openPopupOptionsOnClick(e) {
+    let currentPopup = e.currentTarget.parentElement.parentElement.children[1]
+    if (currentPopup.style.display === "none") {
+        currentPopup.style.display = "block";
+        closeOtherPopupOptionsMenus(e.currentTarget.parentElement.parentElement.getAttribute("id"));
+    } else {
+        currentPopup.style.display = "none";
+    }
+}
+
+function closeOtherPopupOptionsMenus(selected_id) {
+    document.querySelectorAll(".task-bucket").forEach((item) => {
+        if(item.getAttribute("id") != selected_id) {
+            item.children[1].style.display = 'none';
+        }
+    })
+}
+
+function handleEditBucketDataModal(e) {
+
+    //close the last success lottie on load
+    document.querySelectorAll(".success-lottie")[1].style.display = "none";
+
+    let modal = document.getElementById("edit-task-bucket-data-modal")
+    modal.style.display = "block";
+    let taskBucketContainer = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement
+    let taskDescription = taskBucketContainer.children[2].children[0].innerText
+    let taskStatus = taskBucketContainer.getAttribute("status")
+    let taskPrivacyStatus = taskBucketContainer.getAttribute("privacy_status")
+    let isReminderSet = taskBucketContainer.getAttribute("is_reminder_set") === "true" ? true : false
+
+    modal.children[0].children[1].children[1].value = taskDescription
+    modal.children[0].children[2].children[1].children[0].children[0].checked = isReminderSet 
+    modal.children[0].children[4].children[0].value = taskPrivacyStatus
+    modal.children[0].children[6].children[0].value = taskStatus
+    modal.children[0].children[9].children[0].setAttribute('task-id', taskBucketContainer.getAttribute('id'))
+    modal.children[0].children[9].children[0].addEventListener('click', handleUpdateTaskBucketDataBtn)
+
+    // show or hide input email on load of edit/update data modal
+    if(isReminderSet) {
+        document.getElementsByClassName("notify-email")[1].style.display = "block"
+    } else {
+        document.getElementsByClassName("notify-email")[1].style.display = "none"
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            resetAllPopup();
+        }
+    }
+
+}
+
+function handleUpdateTaskBucketDataBtn(e) {
+
+    let taskId = e.currentTarget.getAttribute("task-id");
+    let modal = e.currentTarget.parentElement.parentElement.parentElement    
+
+    // CHECK IF CHECKBOX IS ENABLED, THEN EMAIL SHOULD BE FILLED 
+    if (modal.children[0].children[2].children[1].children[0].children[0].checked && modal.children[0].children[2].children[1].children[1].value === "") {
+        console.log("========= EMPTY EMAIL OF USER FOUND, CAN'T PROCEED FURTHER ========");
+        return;
+    }
+
+    let dataForAPI = {"id": taskId,"user_id": localStorage.getItem("user-id"), 
+                    "item": modal.children[0].children[1].children[1].value, 
+                    "privacy_status": modal.children[0].children[4].children[0].value, 
+                    "reminder_set": modal.children[0].children[2].children[1].children[0].children[0].checked, 
+                    "status": modal.children[0].children[6].children[0].value,
+                    "update_flag": true}
+    
+    if(dataForAPI["reminder_set"]) {
+        dataForAPI["email"] = modal.children[0].children[2].children[1].children[1].value
+    }
+
+    insertUserLists(dataForAPI)
+}
+
+function resetAllPopup() {
+    document.querySelectorAll(".task-bucket").forEach((item) => {
+            item.children[1].style.display = 'none';
+    })
 }

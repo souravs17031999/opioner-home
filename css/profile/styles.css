@@ -141,7 +141,7 @@ h1 {
     background-color: rgba(0,0,0,0.4); 
 }
 
-#update-data-modal {
+#update-data-modal, #edit-task-bucket-data-modal {
     display: none;
     animation: fadein 0.5s;
     position: fixed; 
@@ -164,7 +164,7 @@ h1 {
 	}
 }
   
-.modal-content {
+.modal-content, .modal-content-data-update {
     background-color: #fefefe;
     margin: 15% auto; 
     padding: 20px;
@@ -172,6 +172,15 @@ h1 {
     width: 20%; 
     border-radius: 8px;
     transition: all 0.5s ease-in;
+}
+
+.modal-content-data-update {
+    width: 35%;
+}
+
+.modal-edit-form-input {
+    width: 70%;
+    font-size: 18px;
 }
 
 #modal-header {
@@ -191,6 +200,11 @@ h1 {
 
 #modal-header p {
     text-align: center;
+}
+
+#modal-edit-form {
+    display: flex;
+    justify-content: space-between;
 }
 
 #form-block-separator {
@@ -318,10 +332,10 @@ header {
 }
 
 .task-bucket {
-    height: 300px;
+    height: 250px;
     border-radius: 30px;
     transition: all 0.3s linear;
-    width: 300px;
+    width: 400px;
     background: radial-gradient(#fbc1cc, #fa99b2);
     box-shadow: 2px 6px 10px -1px rgb(171 88 219 / 50%);
 }
@@ -339,12 +353,12 @@ header {
 .status-tag {
     border-radius: 10px;
     width: 60px;
-    left: 250px;
-    position: relative;
     background: rgb(12, 241, 12);
     padding: 0.25rem;
     cursor: pointer;
     text-align: center;
+    position: relative;
+    bottom: 20px;
 }
 
 .status-tag:active {
@@ -355,8 +369,7 @@ header {
 .fa-calendar-check {
     position: relative;
     left: 10px;
-    color: #2737b0;
-    display: none;
+    color: gray;
 }
 
 .task-bucket-description {
@@ -369,6 +382,67 @@ header {
 .task-bucket-footer {
     display: flex;
     justify-content: space-evenly;
+}
+
+.task-item-options {
+    position: relative;
+    right: 10px;
+}
+
+.task-item-options:hover {
+    background: rgba(9, 30, 66, 0.08);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.task-bucket-sidenav {
+    z-index: 400;
+}
+
+.sidenav-outer-container {
+    transform: translate(220px, -20px) translate(90%, 0px);
+    position: absolute;
+    margin-right: -9999px;
+}
+
+.sidenav-inner-container {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    width: 115px;
+    max-height: calc(100vh - 60px);
+}
+
+.sidenav-outer-shadow-box {
+    box-sizing: border-box;
+    overflow-y: hidden;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    min-width: 100px;
+    overflow-x: hidden;
+    border-bottom-left-radius: 8px;
+    background-color: #FFFFFF;
+    box-shadow: 0 12px 28px 0 rgb(0 0 0 / 20%), 0 2px 4px 0 rgb(0 0 0 / 10%), inset 0 0 0 1px rgb(255 255 255 / 50%);
+}
+
+.sidenav-items-options {
+    transition: all 0.3s linear;
+    padding: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.sidenav-items-options:hover {
+    background: #e4e6eb;
+}
+
+.svg-task-item-popup {
+    color: gray;
+}
+
+.svg-task-item-popup:hover, .svg-task-item-popup:active {
+    color: black;
 }
 
 /* .task-bucket:hover .task-bucket-footer {
@@ -514,6 +588,7 @@ footer {
 .notify-email, .notify-phone {
     width: 100%;
     height: 30px;
+    display: none;
 }
 
 .notify-phone {
@@ -528,7 +603,7 @@ footer {
     transform: translateY(2px);
 }
 
-.update-status-btn {
+.update-status-btn, .update-edit-update-data-btn {
     height: 36px;
     background: linear-gradient(to right, #87f480 0%, #37c226 100%);
     border: none;
@@ -542,7 +617,11 @@ footer {
     transition: all 0.3s linear;
 }
 
-.update-status-btn:hover {
+.update-edit-update-data-btn {
+    width: 50%;
+}
+
+.update-status-btn:hover, .update-edit-update-data-btn:hover {
     transform: translateY(2px);
 }
 
@@ -553,14 +632,15 @@ footer {
     border-radius: 6px;
 }
 
-#tags {
+#tags, #reminder-tags, #privacy-tags {
     border: 3px solid #6464e8;
-    background: linear-gradient(to Right, #a2b0f0, #eff0f8);
+    background: linear-gradient(to Right, #cbd4fe, #dce0ff);
     width: 50%;
     outline-color: white;
     overflow:auto;
     border-radius: 6px;
 }
+
 
 select > option {
     background: pink;
@@ -569,6 +649,10 @@ select > option {
 #tags:hover, #tags:active {
     outline: none;
 } 
+
+#reminder-tags:hover, #privacy-tags:hover {
+    outline: none;
+}
 
 option {
   background-color: #f9f9f9;
@@ -1072,6 +1156,12 @@ header a img {
 
 @media only screen and (max-width: 426px) {
 
+
+    .profile-pic {
+        width: 45px;
+        height: 45px;
+    }
+
     .modal-content {
         margin: 30% auto;
         width: 80%;
@@ -1110,9 +1200,21 @@ header a img {
         font-size: 15px;
     }
 
+    .task-bucket {
+        width: 350px;
+    }
+    .sidenav-outer-container {
+        transform: translate(150px, -20px) translate(90%, 0px);
+    }
+
 }
 
 @media only screen and (max-width: 376px) {
+
+    .profile-pic {
+        width: 40px;
+        height: 40px;
+    }
 
     header {
         flex-wrap: wrap;
@@ -1128,4 +1230,26 @@ header a img {
     .notify-alert-container {
         margin-left: -76%;
     }
+    .task-bucket {
+        width: 280px;
+    }
+    .sidenav-outer-container {
+        transform: translate(95px, -20px) translate(90%, 0px);
+    }
+}
+
+@media only screen and (max-width: 321px) {
+
+    .profile-pic {
+        width: 30px;
+        height: 30px;
+    }
+
+    .task-bucket {
+        width: 250px;
+    }
+    .sidenav-outer-container {
+        transform: translate(50px, -20px) translate(90%, 0px);
+    }
+
 }

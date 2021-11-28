@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Taskly | Home</title>
+        <meta name="description" content="">
+        <meta name="description" content="Best task manager - easy and efficient just right for you">
+        <meta name="keywords" content="Taskly, task manager, todo lists, taskly board, taskly bucket lists">
+        <meta name="author" content="Sourav Kumar">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="og:image" content="https://github.com/souravs17031999/taskly-home/blob/531cd4ae5e0c58abbda23a777ca02eb5e2a49273/images/logo-taskly.png">
+        <meta property="og:description" content="Best task manager - easy and efficient just right for you">
+        <link rel="icon" type="image/png" href="images/favicon.png"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap&family=Ubuntu:ital,wght@1,300" rel="stylesheet">
+        <link rel="stylesheet" href="css/home/styles.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/profile/styles.css">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="sign-up-modal" class="modal">
+            <div class="modal-content">
+                <div id="modal-header">
+                    <p class="modal-header-image-upload">You seemed to not have a profile pic ?</p> 
+                    <span id="close" class="close-sign-up-modal">&times;</span>
+                </div>
+                <div id="upload-image-wrapper">
+                    <button class="upload-image-btn">Upload a file</button>
+                    <input type="file" name="myfile" class="upload-btn" accept=".png,.jpg,.jpeg">
+                </div>
+                <div id="loader-container">
+                    <div class="loader"></div>
+                </div>
+                <div class="success-lottie"><img src="images/success-lottie.gif"></div>
+                <div id=submit-reg-form>
+                    <button type="submit" id="sign-up-user" class="upload-btn">Upload Pic</button>
+                </div>
+            </div>
+        </div> 
+        <header>
+            <a href="home.html"><img src="images/logo-taskly.png" id="logo-taskly"></a>
+            <img class="profile-pic" src="" onerror="this.onerror=null;this.src='images/avatar.gif';">
+
+            <div id="dropdown-panel-root-container-section">
+                <div class="panel-outer-container">
+                    <div class="panel-container-items">
+                        <div class="menu-dropdown-container">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge"></span>
+                        </div>
+                    </div>
+                    <div class="dropdown-items-outer-container-notification" id="dropdown-items-outer-container-notification">
+                        <div class="dropdown-items-inner-container">
+                            <div class="dropdown-content-container-notification">
+                                <div class="dropdown-items-notification">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-outer-container">
+                    <div class="panel-container-items">
+                        <div class="menu-dropdown-container">
+                            <i class="menu-dropdown"></i>
+                        </div>
+                    </div>
+                    <div class="dropdown-items-outer-container">
+                        <div class="dropdown-items-inner-container">
+                            <div class="dropdown-content-container">
+                                <div class="dropdown-items">
+                                    <div class="dropdown-btn-outer-container">
+                                        <div class="dropdown-btn-container">
+                                            <div class="dropdown-btn-icon-container">
+                                                <div class="dropdown-btn-icon">
+                                                    <i class="dropdown-icon"></i>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-text-container">
+                                                <div class="dropdown-text-section">
+                                                    My profile
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-btn-outer-container">
+                                        <div class="dropdown-btn-container">
+                                            <div class="dropdown-btn-icon-container">
+                                                <div class="dropdown-btn-icon">
+                                                    <i class="fas fa-chart-line"></i>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-text-container">
+                                                <div class="dropdown-text-section">
+                                                    Show Progress
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-btn-outer-container">
+                                        <div class="dropdown-btn-container">
+                                            <div class="dropdown-btn-icon-container">
+                                                <div class="dropdown-btn-icon">
+                                                    <i class="dropdown-icon"></i>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-text-container">
+                                                <div class="dropdown-text-section">
+                                                    Log Out
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </header>  
+        <custom-editable-task-creator></custom-editable-task-creator>
+        <section id="public-feeds">
+            <!-- dynamic feeds -->
+        </section>
+        <div class="modal-loader"></div>
+        <custom-footer></custom-footer> 
+        <script src="js/config.js" defer></script>
+        <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+        <script src="js/data/headerData.js" defer></script>
+        <script src="js/data/footerData.js" defer></script>
+        <script src="js/data/eventsTrackingData.js" defer></script>
+        <script src="js/components/customSingleHeader.js" defer></script>
+        <script src="js/components/customEditableTaskCreator.js" defer></script>
+        <script src="js/components/customFooter.js" defer></script>
+        <script src="js/profile.js" defer></script>
+        <script src="js/home.js" defer></script>
+    </body>
+</html>

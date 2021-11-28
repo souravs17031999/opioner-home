@@ -52,7 +52,7 @@ function handleOnLogin(e) {
     .then(data => {
         if(data["status"] == "success") {
             document.querySelector(".modal-loader").style.display = "none"
-            window.location.href = "menu.html"
+            window.location.href = "home.html"
             localStorage.setItem("user-id", data["user_data"]["user_id"])
         } else {
             document.querySelector(".modal-loader").style.display = "none"
@@ -175,7 +175,7 @@ function handleOnSignUp(e) {
 
             localStorage.setItem("user-id", data["user_data"]["user_id"])
             localStorage.setItem("new-user", true)
-            window.location.href = "menu.html"
+            window.location.href = "home.html"
         } else {
             document.querySelector(".modal-loader-signup").style.display = "none"
             alert(`Error creating New User, ERROR: ", ${data["message"]}`)
