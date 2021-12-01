@@ -233,9 +233,7 @@ function deleteDivMenuItem(item) {
     if(deleteItem != null) {
         deleteItem.remove()
     }
-    if(document.getElementsByClassName("menu-item").length === 0) {
-        document.getElementsByClassName("clear-btn")[0].style.display = "none";
-    }
+
     insertEmptyPromptOnEmptyList();
 
 }
@@ -860,11 +858,11 @@ function fetchUnreadCountForNotifications(customPageName) {
 
 function updateNotificationsInContext(unreadCount, customPageName) {
     if(unreadCount > 0) {
-        document.title = `(${unreadCount}) ${customPageName}`
+        document.title = `(${unreadCount}) ${customPageName == undefined ? "Taskly" : customPageName}`
         document.getElementsByClassName("notification-badge")[0].style.display = "block";
         document.getElementsByClassName("notification-badge")[0].innerText = unreadCount;
     } else if(unreadCount === 0) {
-        document.title = `${customPageName}`;
+        document.title = `${customPageName == undefined ? "Taskly" : customPageName}`;
         document.getElementsByClassName("notification-badge")[0].style.display = "none";
         document.getElementsByClassName("notification-badge")[0].innerText = '';
     }
@@ -951,7 +949,7 @@ function handleUpdateTaskBucketDataBtn(e) {
 
     // CHECK IF CHECKBOX IS ENABLED, THEN EMAIL SHOULD BE FILLED 
     if (modal.children[0].children[2].children[1].children[0].children[0].checked && modal.children[0].children[2].children[1].children[1].value === "") {
-        console.log("========= EMPTY EMAIL OF USER FOUND, CAN'T PROCEED FURTHER ========");
+        alert("EMPTY EMAIL OF USER FOUND, CAN'T PROCEED FURTHER");
         return;
     }
 

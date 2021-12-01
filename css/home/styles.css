@@ -23,6 +23,7 @@
     border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999))) / 8px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #ffffff;
+    animation: fadein 1.5s;
 }
 
 #dynamic-feeds-outer-header {
