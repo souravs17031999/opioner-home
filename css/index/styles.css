@@ -669,7 +669,8 @@ footer {
         font-size: 15px;
     }
     header img {
-        width: 150px;
+        width: 130px !important;
+        height: 60px !important;
     }
 
 

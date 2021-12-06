@@ -6,7 +6,7 @@ headerData = {
             },
             "image" : {
                 "imgSrc": "images/logo-home.png", 
-                "styles" : "height: 80px;padding-top: 0.25rem;width:200px;" 
+                "styles" : "height: 80px;padding-top: 0.25rem;width:230px;" 
             }
         },
         "navLinks": {
