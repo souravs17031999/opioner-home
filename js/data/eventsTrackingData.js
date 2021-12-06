@@ -20,6 +20,6 @@ var userEventsTrackingData = {
     }, 
     "3": {
         "ename": "update_event", 
-        "etext_1": "Welcome to taskly ! Create your first task now, it’s just a click away"
+        "etext_1": "Welcome to Opioner ! Create your first post now, it’s just a click away"
     }
 }

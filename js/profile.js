@@ -62,7 +62,7 @@ function initialLoadForProfilePage() {
 
     fetchUserData();
     fetchUserLists();
-    fetchUnreadCountForNotifications(customPageName="Opioner | Dashboard");
+    fetchUnreadCountForNotifications(customPageName="Opioner | My profile");
 }
 
 let notificationDropdownRef = document.getElementsByClassName("dropdown-items-notification")[0];
@@ -696,7 +696,7 @@ function updateNotificationStatus(e) {
         .then(response => response.json())
         .then(data => {
             if(data["status"] == "success") {
-                fetchUnreadCountForNotifications(customPageName="Opioner | Dashboard");
+                fetchUnreadCountForNotifications(customPageName="Opioner | My profile");
             }
         })
         .catch((error) => {
