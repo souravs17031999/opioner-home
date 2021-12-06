@@ -14,7 +14,7 @@ function initialLoadForFeedPage() {
     document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', handlelogoutUserClick)
 
     fetchUserData();
-    fetchUnreadCountForNotifications(customPageName="Taskly | Home");
+    fetchUnreadCountForNotifications(customPageName="Opioner | Home");
     loadAllPublicFeeds();
 
     // load all btns eventlisteners

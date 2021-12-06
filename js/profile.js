@@ -62,7 +62,7 @@ function initialLoadForProfilePage() {
 
     fetchUserData();
     fetchUserLists();
-    fetchUnreadCountForNotifications(customPageName="Taskly | Dashboard");
+    fetchUnreadCountForNotifications(customPageName="Opioner | Dashboard");
 }
 
 let notificationDropdownRef = document.getElementsByClassName("dropdown-items-notification")[0];
@@ -696,7 +696,7 @@ function updateNotificationStatus(e) {
         .then(response => response.json())
         .then(data => {
             if(data["status"] == "success") {
-                fetchUnreadCountForNotifications(customPageName="Taskly | Dashboard");
+                fetchUnreadCountForNotifications(customPageName="Opioner | Dashboard");
             }
         })
         .catch((error) => {
@@ -745,11 +745,11 @@ function fetchUnreadCountForNotifications(customPageName) {
 
 function updateNotificationsInContext(unreadCount, customPageName) {
     if(unreadCount > 0) {
-        document.title = `(${unreadCount}) ${customPageName == undefined ? "Taskly" : customPageName}`
+        document.title = `(${unreadCount}) ${customPageName == undefined ? "Opioner" : customPageName}`
         document.getElementsByClassName("notification-badge")[0].style.display = "block";
         document.getElementsByClassName("notification-badge")[0].innerText = unreadCount;
     } else if(unreadCount === 0) {
-        document.title = `${customPageName == undefined ? "Taskly" : customPageName}`;
+        document.title = `${customPageName == undefined ? "Opioner" : customPageName}`;
         document.getElementsByClassName("notification-badge")[0].style.display = "none";
         document.getElementsByClassName("notification-badge")[0].innerText = '';
     }
