@@ -105,29 +105,11 @@
                     <p> Task description:</p>
                     <input class="modal-edit-form-input" type="text">
                 </div>
-                <div class="modal-dropdown-container">
-                    <p>Notifications:</p>
-                    <div id="modal-description">
-                        <label class="container">Email
-                            <input id="checkbox-input" type="checkbox" value="email" onchange="handleCheckBox(event)" required>
-                            <span class="checkmark"></span>
-                        </label>
-                        <input type="text" class="notify-email" placeholder="enter your email" oninput="handleEmailInput(event)" required>
-                    </div>
-                </div>
                 <p>Privacy status:</p>
                 <div id="modal-dropdown">
                     <select name="privacy-tags" id="privacy-tags">
                         <option class="tags-item" value="private">private</option>
                         <option class="tags-item" value="public">public</option>
-                    </select>
-                </div>
-                <p>Task status:</p>
-                <div id="modal-dropdown">
-                    <select name="tags" id="tags">
-                        <option class="tags-item" value="Todo">Todo</option>
-                        <option class="tags-item" value="Doing">Doing</option>
-                        <option class="tags-item" value="Done">Done</option>
                     </select>
                 </div>
                 <div class="modal-loader"></div>
@@ -138,7 +120,7 @@
             </div>
         </div> 
         <header>
-            <a href="home.html"><img src="images/logo-taskly.png" id="logo-taskly"></a>
+            <a href="home.html"><img src="images/logo-home.png" id="logo-taskly"></a>
             <img class="profile-pic" src="" onerror="this.onerror=null;this.src='images/avatar.gif';">
 
             <div id="dropdown-panel-root-container-section">

@@ -46,8 +46,28 @@
                 </div>
             </div>
         </div> 
+        <div id="notify-push-modal" class="modal">
+            <div class="modal-content">
+                <div id="modal-header">
+                    <p class="modal-header-image-upload">Subscribe to Creator</p> 
+                    <span id="close" class="close-notify-modal">&times;</span>
+                </div>
+                <div id="modal-description">
+                    <label class="container">Email
+                        <input id="checkbox-input" type="checkbox" value="email" onchange="handleCheckBox(event)" required>
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div id="modal-footer">
+                    <input type="text" class="notify-email" placeholder="enter your email" oninput="handleEmailInput(event)" required>
+                    <p class="subtitle-note-modal">You will get timely notifications when this creator posts new opinions</p>
+                    <div class="modal-loader"></div>
+                    <button type="submit" class="notify-push-btn">Subscribe</button>
+                </div>
+            </div>
+        </div>
         <header>
-            <a href="home.html"><img src="images/logo-taskly.png" id="logo-taskly"></a>
+            <a href="home.html"><img src="images/logo-home.png" id="logo-taskly"></a>
             <img class="profile-pic" src="" onerror="this.onerror=null;this.src='images/avatar.gif';">
 
             <div id="dropdown-panel-root-container-section">

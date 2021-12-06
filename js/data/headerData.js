@@ -5,8 +5,8 @@ headerData = {
                 "linkSrc": "index.html",
             },
             "image" : {
-                "imgSrc": "images/logo-taskly.png", 
-                "styles" : "height: 60px;padding-top: 0.25rem;width:200px;" 
+                "imgSrc": "images/logo-home.png", 
+                "styles" : "height: 80px;padding-top: 0.25rem;width:200px;" 
             }
         },
         "navLinks": {

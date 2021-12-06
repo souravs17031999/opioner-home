@@ -11,6 +11,7 @@ class customSingleHeader extends HTMLElement {
         link.href = headerData.items.logo.link.linkSrc
         let image = document.createElement("img");
         image.src = headerData.items.logo.image.imgSrc
+        image.style.cssText = headerData.items.logo.image.styles
         link.appendChild(image);
 
         headerRef.appendChild(link);

@@ -20,6 +20,15 @@ function initialLoadForFeedPage() {
     // load all btns eventlisteners
     document.getElementsByClassName("add-item-public-btn")[0].addEventListener('click', insertUserPublicFeed);
 
+    btns = document.querySelectorAll("button")
+    if(btns.length > 0) {
+        for(let btn of btns) {
+            if(btn.classList.contains("notify-push-btn")) {
+                btn.addEventListener('click', subscribeUserToNotification)
+            }
+        }
+    }
+
     // infinite scrolling loading 10 items at a time, each time user reaches the end of page
     window.addEventListener('scroll', () => {
 
@@ -30,7 +39,6 @@ function initialLoadForFeedPage() {
         } = document.documentElement;
 
         if (scrollTop + clientHeight >= scrollHeight - 10 && !allFetched) {
-            console.log("===== loading more feeds ....")
             pageQuery += 1
             loadAllPublicFeeds(page=pageQuery, size=10)
         }
@@ -108,7 +116,8 @@ function renderFeedsForUser(feedData, shouldInsertSingleFeed) {
                         <div class="render-sidenav-outer-container">
                             <div class="sidenav-outer-shadow-box">
                                 <div class="sidenav-inner-container">
-                                    <div class="sidenav-items-options-for-feed">Block</div>
+                                    <div class="sidenav-items-options-for-feed">${feed.has_subscribed ? "Unsubscribe to creator" : "Subscribe to creator"}</div>
+                                    <div class="sidenav-items-options-for-feed">${feed.is_flagged ? "Unreport" : "Report"}</div>
                                 </div>
                             </div>
                         </div>
@@ -158,7 +167,9 @@ function renderFeedsForUser(feedData, shouldInsertSingleFeed) {
 
             feedItemContainer.children[0].children[2].addEventListener('click', handlePopUpForFeedItems)
             // handle btns for feed popups
-            feedItemContainer.children[1].children[0].children[0].children[0].children[0].addEventListener('click', handleBlockBtnForFeed)            
+            feedItemContainer.children[1].children[0].children[0].children[0].children[0].addEventListener('click', handleSubscribeBtnForFeed)    
+            feedItemContainer.children[1].children[0].children[0].children[0].children[1].addEventListener('click', handleBlockBtnForFeed)            
+        
 
         }
     
@@ -203,7 +214,8 @@ function renderFeedsForUser(feedData, shouldInsertSingleFeed) {
                         <div class="render-sidenav-outer-container">
                             <div class="sidenav-outer-shadow-box">
                                 <div class="sidenav-inner-container">
-                                    <div class="sidenav-items-options-for-feed">Block</div>
+                                    <div class="sidenav-items-options-for-feed">${feed.has_subscribed ? "Unsubscribe to creator" : "Subscribe to creator"}</div>
+                                    <div class="sidenav-items-options-for-feed">${feed.is_flagged ? "Unreport" : "Report"}</div>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +264,8 @@ function renderFeedsForUser(feedData, shouldInsertSingleFeed) {
         }
 
         feedItemContainer.children[0].children[2].addEventListener('click', handlePopUpForFeedItems)
-        feedItemContainer.children[1].children[0].children[0].children[0].children[0].addEventListener('click', handleBlockBtnForFeed)
+        feedItemContainer.children[1].children[0].children[0].children[0].children[0].addEventListener('click', handleSubscribeBtnForFeed)    
+        feedItemContainer.children[1].children[0].children[0].children[0].children[1].addEventListener('click', handleBlockBtnForFeed)
 
         let iter = 0
         document.querySelectorAll(".dynamic-feeds-outer-container").forEach((item) => {
@@ -329,6 +342,7 @@ function handleClickOnCmtBtn(e) {
         // API call for rendering comments
         url = configTestEnv["productServiceHost"] + "/product/fetch-all-comments?"
         url += `list_id=${e.currentTarget.parentElement.parentElement.getAttribute("list-id")}`
+        url += `&user_id=${parseInt(localStorage.getItem("user-id"))}`
         
         fetch(url, {
             method: 'GET',
@@ -367,7 +381,7 @@ function handleClickOnCmtBtn(e) {
                                         <div class="render-comment-sidenav-outer-container">
                                             <div class="sidenav-outer-shadow-box">
                                                 <div class="sidenav-inner-container">
-                                                    <div class="sidenav-items-options-for-comments">Flag</div>
+                                                    <div class="sidenav-items-options-for-comments">${item.is_flagged ? "Unflag" : "Flag"}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -590,21 +604,48 @@ function handlePopUpForComments(e) {
 }
 
 function handleBlockBtnForFeed(e) {
-    console.log(e.currentTarget)
+
+    let feedItemContainer = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement
+    let list_id = feedItemContainer.getAttribute("list-id")
+    let iter_id = feedItemContainer.getAttribute("iter-id")
+    let dataForAPI = {"user_id": parseInt(localStorage.getItem("user-id")), "list_id": list_id}
+    
+    url = configTestEnv["productServiceHost"] + "/product/feed/flag"
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(dataForAPI), 
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data["status"] == "success") {
+            alert(data["message"])
+            updatePopUpOptionForReport(data, iter_id);
+            resetPopUps();
+        } else {
+            alert(`Reporting feed FAILED, ERROR: ", ${data["message"]}`)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        alert(error)
+    })    
+
 }
 
 function FlagCommentByUser(e) {
+
+    let cmtBlockInContext = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
     
+    let feedItemContainer = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+
     let dataForAPI = {
         "user_id": localStorage.getItem("user-id"), 
-        "list_id": e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("list-id"),
+        "list_id": feedItemContainer.getAttribute("list-id"),
         "update_flag": 1,
         "comment_text": e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement.children[2].innerText,
         "is_flagged": 1,
         "comment_id": e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("comment-id")
     }
-
-    e.currentTarget.style.display = 'none';
 
     url = configTestEnv["productServiceHost"] + "/product/upsert-comments"
     fetch(url, {
@@ -614,7 +655,14 @@ function FlagCommentByUser(e) {
     .then(response => response.json())
     .then(data => {
         if(data["status"] == "success") {
-            alert("Comment is successfully flagged by the user !")
+            if(data["flagged_status"] == "FALSE") {
+                alert(data["message"])
+            } 
+            else if(data["flagged_status"] == "TRUE") {
+                alert(data["message"])
+            }
+            updatePopUpOptionsAfterFlag(data, cmtBlockInContext)
+            resetPopUps();
         } else {
             console.log(`ERROR: ", ${data["message"]}`)
         }
@@ -623,4 +671,158 @@ function FlagCommentByUser(e) {
         console.log(error)
         alert(error)
     })    
+}
+
+function closeNotifyModal() {
+
+    document.querySelector(".modal-loader").style.display = "none";
+    document.getElementById("notify-push-modal").style.display = "none";
+    document.querySelector(".notify-email").style.borderColor = "#3c1bc0"
+}
+
+function handleCheckBox(e) {
+    let checkbox = e.currentTarget.checked
+
+    if(checkbox) {
+        document.getElementsByClassName("notify-email")[0].style.display = "block"
+    } else {
+        document.getElementsByClassName("notify-email")[0].style.display = "none"
+    }
+}
+
+function handleEmailInput(e) {
+    if(e.currentTarget.value === "") {
+        e.currentTarget.style.border="2px solid #ff0037"
+    } else {
+        e.currentTarget.style.border="2px solid #3c1bc0"
+    }
+}
+
+function handleSubscribeBtnForFeed(e) {
+
+    if(e.currentTarget.innerText === "Unsubscribe to creator") {
+        let feedItemContainer = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement
+        unsubscribeUserToNotification(feedItemContainer);
+        return;
+    }
+    let modal = document.getElementById("notify-push-modal")
+    modal.style.display = "block";
+
+    document.querySelectorAll("#close")[1].addEventListener('click', closeNotifyModal)
+    let feedItemContainer = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement
+    let list_id = feedItemContainer.getAttribute("list-id")
+    let iter_id = feedItemContainer.getAttribute("iter-id")
+    document.querySelector(".notify-push-btn").setAttribute("list-id", list_id) 
+    document.querySelector(".notify-push-btn").setAttribute("iter-id", iter_id) 
+    document.querySelector(".notify-email").value = loggedInUserEmailId === undefined ? "" : loggedInUserEmailId
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            document.querySelector(".notify-push-btn").removeAttribute("list-id") 
+            document.querySelector(".notify-push-btn").removeAttribute("iter-id") 
+            document.querySelector(".notify-email").style.borderColor = "#3c1bc0"
+            modal.style.display = "none";
+            resetPopUps();
+        }
+    }
+}
+
+function unsubscribeUserToNotification(feedItemContainer) {
+
+    let list_id = feedItemContainer.getAttribute("list-id")
+    let iter_id = feedItemContainer.getAttribute("iter-id")
+
+    let dataForAPI = {"user_id": localStorage.getItem("user-id"), "list_id": list_id}
+    
+    url = configTestEnv["userServiceHost"] + "/user/subscription"
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(dataForAPI), 
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data["status"] == "success") {
+            updatePopUpOptionForSubscription(data, iter_id);
+            resetPopUps();
+        } else {
+            alert(`User unsubscription FAILED, ERROR: ", ${data["message"]}`)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        alert(error)
+    })    
+
+}
+
+function subscribeUserToNotification(e) {
+
+    let userEmail = document.querySelector(".notify-email").value
+    let list_id = e.currentTarget.getAttribute("list-id")
+    let iter_id = e.currentTarget.getAttribute("iter-id")
+    let is_checked = document.querySelector("#checkbox-input").checked
+
+    document.querySelector(".modal-loader").style.display = "block";
+    let dataForAPI = {"user_id": localStorage.getItem("user-id"), "list_id": list_id}
+    if(is_checked) {
+        dataForAPI["email_id"] = userEmail
+    } 
+    url = configTestEnv["userServiceHost"] + "/user/subscription"
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(dataForAPI), 
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data["status"] == "success") {
+            closeNotifyModal();
+            updatePopUpOptionForSubscription(data, iter_id);
+            resetPopUps();
+        } else {
+            alert(`User Subscription FAILED, ERROR: ", ${data["message"]}`)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        alert(error)
+    })    
+
+}
+
+function updatePopUpOptionForSubscription(responseData, iter_id) {
+    let feedItemContainer = document.getElementsByClassName("dynamic-feeds-outer-container")[iter_id]
+    let subscription_status = ""
+    if(responseData["subscription_status"] == "ACTIVE") {
+        subscription_status = "Unsubscribe to creator"
+    } else {
+        subscription_status = "Subscribe to creator"
+    }
+    feedItemContainer.children[1].children[0].children[0].children[0].children[0].innerText = subscription_status
+}
+
+function updatePopUpOptionForReport(responseData, iter_id) {
+    let feedItemContainer = document.getElementsByClassName("dynamic-feeds-outer-container")[iter_id]
+    let feed_flagged_status = ""
+    if(responseData["flagged_status"] == "TRUE") {
+        feed_flagged_status = "Unreport"
+    } else {
+        feed_flagged_status = "Report"
+    }
+    feedItemContainer.children[1].children[0].children[0].children[0].children[1].innerText = feed_flagged_status
+}
+
+function updatePopUpOptionsAfterFlag(responseData, cmtBlockInContext) {
+    let cmt_flagged_status = ""
+    if(responseData["flagged_status"] == "TRUE") {
+        cmt_flagged_status = "Unflag"
+    } else {
+        cmt_flagged_status = "Flag"
+    }
+    cmtBlockInContext.children[1].children[0].children[0].children[1].children[0].children[0].children[0].children[0].innerText = cmt_flagged_status
+}
+
+function resetPopUps() {
+    document.querySelectorAll(".task-bucket-sidenav").forEach((item) => {
+        item.style.display = "none";
+    })
 }

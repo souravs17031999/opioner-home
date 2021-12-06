@@ -22,8 +22,6 @@ if(btns.length > 0) {
             btn.addEventListener('click', handlelogoutUserClick)
         } else if(btn.classList.contains("upload-btn")) {
             btn.addEventListener('click', handleUploadProfile)
-        } else if(btn.classList.contains("notify-push-btn")) {
-            btn.addEventListener('click', subscribeUserToNotification)
         }
     }
 }
@@ -32,8 +30,6 @@ if(btns.length > 0) {
 document.querySelectorAll("#close").forEach((item) => {
     if(item.classList.contains("close-sign-up-modal")) {
         item.addEventListener('click', closeSignUpModal)
-    } else if(item.classList.contains("close-notify-modal")) {
-        item.addEventListener('click', closeNotifyModal)
     } else if(item.classList.contains("close-update-data-modal")) {
         item.addEventListener('click', closeUpdateDataModal)
     } else if(item.classList.contains("close-unsubscribe-notify-modal")) {
@@ -161,14 +157,10 @@ function insertDivMenuItem(item, initialLoadForProfilePage) {
         divMenuItem = document.createElement("div")
         divMenuItem.classList.add("task-bucket")
         divMenuItem.setAttribute("id", `${item.id}`)
-        divMenuItem.setAttribute("is_reminder_set", `${item.is_reminder_set}`)
         divMenuItem.setAttribute("privacy_status", `${item.privacy_status}`)
-        divMenuItem.setAttribute("status", `${item.status}`)
 
         divMenuItem.innerHTML = `
                 <div class="task-bucket-header">
-                    <i class="fas fa-calendar-check"></i>
-                    <p class="status-tag">${item.status}</p>
                     <div class="task-item-options">
                         <svg width="24" height="24" viewBox="0 0 24 24" role="presentation" class="svg-task-item-popup">
                             <g fill="currentColor" fill-rule="evenodd">
@@ -195,9 +187,7 @@ function insertDivMenuItem(item, initialLoadForProfilePage) {
         `
         taskInnerContainer.appendChild(divMenuItem)
 
-        divMenuItem.children[0].children[1].style.background = tagColorMap[item.status]
-
-        divMenuItem.children[0].children[2].addEventListener('click', openPopupOptionsOnClick)
+        divMenuItem.children[0].children[0].addEventListener('click', openPopupOptionsOnClick)
 
         divMenuItem.children[1].children[0].children[0].children[0].children[0].addEventListener('click', handleEditBucketDataModal)
         divMenuItem.children[1].children[0].children[0].children[0].children[1].addEventListener('click', handleOnClickRemoveBtn)
@@ -219,11 +209,7 @@ function insertDivMenuItem(item, initialLoadForProfilePage) {
 function updateDivMenuItem(item) {
     let taskBucketContainer = document.getElementById(item.id)
     taskBucketContainer.children[2].children[0].innerText = item['item']
-    taskBucketContainer.children[0].children[1].innerText = item['status']
-    taskBucketContainer.children[0].children[1].style.background = tagColorMap[item['status']]
     taskBucketContainer.setAttribute("privacy_status", item['privacy_status'])
-    taskBucketContainer.setAttribute("is_reminder_set", item['reminder_set'])
-    taskBucketContainer.setAttribute("status", item['status'])
 
 }
 
@@ -252,30 +238,6 @@ function showUserLists(data) {
 
     document.querySelector(".user-added-input").focus()
 
-}
-
-function handlePushNotifyModal(e) {
-
-    let modal = document.getElementById("notify-push-modal")
-    modal.style.display = "block";
-
-    document.querySelector("#close").addEventListener('click', closeNotifyModal)
-    let task_id = e.currentTarget.parentElement.parentElement.getAttribute("id")
-    document.querySelector(".notify-push-btn").setAttribute("task-id", task_id) 
-    document.querySelectorAll(".checkmark").forEach((item) => {
-        item.addEventListener('click', handleCheckBox)
-    })
-
-    fetchUserData();
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            document.querySelector(".notify-push-btn").removeAttribute("task-id") 
-            document.querySelector(".notify-email").style.borderColor = "#3c1bc0"
-            document.querySelector(".notify-phone").style.borderColor = "#3c1bc0"
-            modal.style.display = "none";
-        }
-    }
 }
 
 function fetchUserLists() {
@@ -508,14 +470,6 @@ function closeSignUpModal() {
     document.getElementById("sign-up-modal").style.display = "none";
 }
 
-function closeNotifyModal() {
-
-    document.querySelector(".modal-loader").style.display = "none";
-    document.getElementById("notify-push-modal").style.display = "none";
-    document.querySelector(".notify-email").style.borderColor = "#3c1bc0"
-    document.querySelector(".notify-phone").style.borderColor = "#3c1bc0"
-}
-
 function closeUpdateDataModal() {
 
     document.querySelector(".update-status-btn").removeAttribute("task-id")
@@ -550,73 +504,6 @@ function showUploadProfileModal() {
             modal.style.display = "none";
         }
     }
-}
-
-function handleCheckBox(e) {
-    let checkbox = e.currentTarget.parentElement.children[0].checked
-
-    if(checkbox) {
-        document.getElementsByClassName("notify-email")[1].style.display = "block"
-    } else {
-        document.getElementsByClassName("notify-email")[1].style.display = "none"
-    }
-}
-
-function handleEmailInput(e) {
-    if(e.currentTarget.value === "") {
-        e.currentTarget.style.border="2px solid #ff0037"
-    } else {
-        e.currentTarget.style.border="2px solid #3c1bc0"
-    }
-}
-
-function subscribeUserToNotification(e) {
-
-    let userPhone = document.querySelector(".notify-phone").value
-    let userEmail = document.querySelector(".notify-email").value
-    let task_id = e.currentTarget.getAttribute("task-id")
-
-    let isEmailChecked = e.currentTarget.parentElement.parentElement.children[1].children[0].children[0].checked ? 1 : 0
-    let isPhoneChecked = e.currentTarget.parentElement.parentElement.children[1].children[1].children[0].checked ? 1 : 0
-
-    isValidationFailed = false 
-    if(isEmailChecked && userEmail === "") {
-        document.querySelector(".notify-email").style.borderColor = "red"
-        isValidationFailed = true
-    }
-
-    if(isPhoneChecked && userPhone === "") {
-        document.querySelector(".notify-phone").style.borderColor = "red"
-        isValidationFailed = true
-    }
-
-    if(isValidationFailed) {
-        return;
-    }
-
-    document.querySelector(".modal-loader").style.display = "block";
-    let dataForAPI = {"user_id": localStorage.getItem("user-id"), "phone": userPhone, "email": userEmail, "task_id": task_id, "is_phone": isPhoneChecked, "is_email": isEmailChecked}
-
-    url = configTestEnv["notificationServiceHost"] + "/notification/subscribe-notification"
-    fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(dataForAPI), 
-    })
-    .then(response => response.json())
-    .then(data => {
-        if(data["status"] == "success") {
-            resetPushNotifyForTask(true);
-            closeNotifyModal();
-            handleInitiateNotification({"user_id": localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1,"event_type": userEventsTrackingData[1].ename, "event_description": userEventsTrackingData[1].etext})
-        } else {
-            alert(`PUSH REMINDERS FAILED, ERROR: ", ${data["message"]}`)
-        }
-    })
-    .catch((error) => {
-        console.log(error)
-        alert(error)
-    })    
-
 }
 
 function handleUnsubscribeNotifyModal(e) {
@@ -915,23 +802,12 @@ function handleEditBucketDataModal(e) {
     modal.style.display = "block";
     let taskBucketContainer = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement
     let taskDescription = taskBucketContainer.children[2].children[0].innerText
-    let taskStatus = taskBucketContainer.getAttribute("status")
     let taskPrivacyStatus = taskBucketContainer.getAttribute("privacy_status")
-    let isReminderSet = taskBucketContainer.getAttribute("is_reminder_set") === "true" ? true : false
 
     modal.children[0].children[1].children[1].value = taskDescription
-    modal.children[0].children[2].children[1].children[0].children[0].checked = isReminderSet 
-    modal.children[0].children[4].children[0].value = taskPrivacyStatus
-    modal.children[0].children[6].children[0].value = taskStatus
-    modal.children[0].children[9].children[0].setAttribute('task-id', taskBucketContainer.getAttribute('id'))
-    modal.children[0].children[9].children[0].addEventListener('click', handleUpdateTaskBucketDataBtn)
-
-    // show or hide input email on load of edit/update data modal
-    if(isReminderSet) {
-        document.getElementsByClassName("notify-email")[1].style.display = "block"
-    } else {
-        document.getElementsByClassName("notify-email")[1].style.display = "none"
-    }
+    modal.children[0].children[3].children[0].value = taskPrivacyStatus
+    modal.children[0].children[6].children[0].setAttribute('task-id', taskBucketContainer.getAttribute('id'))
+    modal.children[0].children[6].children[0].addEventListener('click', handleUpdateTaskBucketDataBtn)
 
     window.onclick = function(event) {
         if (event.target == modal) {
@@ -947,23 +823,11 @@ function handleUpdateTaskBucketDataBtn(e) {
     let taskId = e.currentTarget.getAttribute("task-id");
     let modal = e.currentTarget.parentElement.parentElement.parentElement    
 
-    // CHECK IF CHECKBOX IS ENABLED, THEN EMAIL SHOULD BE FILLED 
-    if (modal.children[0].children[2].children[1].children[0].children[0].checked && modal.children[0].children[2].children[1].children[1].value === "") {
-        alert("EMPTY EMAIL OF USER FOUND, CAN'T PROCEED FURTHER");
-        return;
-    }
-
     let dataForAPI = {"id": taskId,"user_id": localStorage.getItem("user-id"), 
                     "item": modal.children[0].children[1].children[1].value, 
-                    "privacy_status": modal.children[0].children[4].children[0].value, 
-                    "reminder_set": modal.children[0].children[2].children[1].children[0].children[0].checked, 
-                    "status": modal.children[0].children[6].children[0].value,
+                    "privacy_status": modal.children[0].children[3].children[0].value, 
                     "update_flag": true}
     
-    if(dataForAPI["reminder_set"]) {
-        dataForAPI["email"] = modal.children[0].children[2].children[1].children[1].value
-    }
-
     insertUserLists(dataForAPI)
 }
 

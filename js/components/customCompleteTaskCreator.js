@@ -5,7 +5,7 @@ class customCompleteTaskCreator extends HTMLElement {
         `<section id="form-outer-container">
             <section id="form-inner-container">
                 <div id="header">
-                    <h1>Your tasks</h1>
+                    <h1>Your opinion</h1>
                 </div>
                 <div id="user-input-panel">
                     <input placeholder="What's on your mind ?" class="user-added-input"></input>
