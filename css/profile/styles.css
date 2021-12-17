@@ -348,6 +348,9 @@ header {
     display: flex;
     place-items: center;
     justify-content: space-between;
+    transform: translate(326px, 4px) translate(90%, 0px);
+    position: absolute;
+    margin-right: -9999px;
 }
 
 .status-tag {
@@ -400,7 +403,7 @@ header {
 }
 
 .sidenav-outer-container {
-    transform: translate(220px, -20px) translate(90%, 0px);
+    transform: translate(220px, 24px) translate(90%, 0px);
     position: absolute;
     margin-right: -9999px;
 }
@@ -1203,8 +1206,13 @@ header a img {
     .task-bucket {
         width: 350px;
     }
+
+    .task-bucket-header {
+        transform: translate(300px, 4px) translate(90%, 0px);
+    }
+
     .sidenav-outer-container {
-        transform: translate(150px, -20px) translate(90%, 0px);
+        transform: translate(160px, 25px) translate(90%, 0px);
     }
 
 }
@@ -1233,8 +1241,13 @@ header a img {
     .task-bucket {
         width: 280px;
     }
+
+    .task-bucket-header {
+        transform: translate(220px, 4px) translate(90%, 0px);
+    }
+
     .sidenav-outer-container {
-        transform: translate(95px, -20px) translate(90%, 0px);
+        transform: translate(85px, 25px) translate(90%, 0px);
     }
 }
 
@@ -1248,8 +1261,13 @@ header a img {
     .task-bucket {
         width: 250px;
     }
+
+    .task-bucket-header {
+        transform: translate(198px, 4px) translate(90%, 0px);
+    }
+
     .sidenav-outer-container {
-        transform: translate(50px, -20px) translate(90%, 0px);
+        transform: translate(45px, 25px) translate(90%, 0px);
     }
 
 }
