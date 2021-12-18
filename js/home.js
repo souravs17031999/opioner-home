@@ -214,8 +214,8 @@ function renderFeedsForUser(feedData, shouldInsertSingleFeed) {
                         <div class="render-sidenav-outer-container">
                             <div class="sidenav-outer-shadow-box">
                                 <div class="sidenav-inner-container">
-                                    <div class="sidenav-items-options-for-feed">${feed.has_subscribed ? "Unsubscribe to creator" : "Subscribe to creator"}</div>
-                                    <div class="sidenav-items-options-for-feed">${feed.is_flagged ? "Unreport" : "Report"}</div>
+                                    <div class="sidenav-items-options-for-feed">${feedData.has_subscribed ? "Unsubscribe to creator" : "Subscribe to creator"}</div>
+                                    <div class="sidenav-items-options-for-feed">${feedData.is_flagged ? "Unreport" : "Report"}</div>
                                 </div>
                             </div>
                         </div>
