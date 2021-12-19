@@ -762,30 +762,33 @@ function subscribeUserToNotification(e) {
     let iter_id = e.currentTarget.getAttribute("iter-id")
     let is_checked = document.querySelector("#checkbox-input").checked
 
-    document.querySelector(".modal-loader").style.display = "block";
-    let dataForAPI = {"user_id": localStorage.getItem("user-id"), "list_id": list_id}
-    if(is_checked) {
-        dataForAPI["email_id"] = userEmail
-    } 
-    url = configTestEnv["userServiceHost"] + "/user/subscription"
-    fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(dataForAPI), 
-    })
-    .then(response => response.json())
-    .then(data => {
-        if(data["status"] == "success") {
-            closeNotifyModal();
-            updatePopUpOptionForSubscription(data, iter_id);
-            resetPopUps();
-        } else {
-            alert(`User Subscription FAILED, ERROR: ", ${data["message"]}`)
-        }
-    })
-    .catch((error) => {
-        console.log(error)
-        alert(error)
-    })    
+    if(is_checked && userEmail != "") {
+
+        document.querySelector(".modal-loader").style.display = "block";
+        let dataForAPI = {"user_id": localStorage.getItem("user-id"), "list_id": list_id}
+        if(is_checked) {
+            dataForAPI["email_id"] = userEmail
+        } 
+        url = configTestEnv["userServiceHost"] + "/user/subscription"
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(dataForAPI), 
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data["status"] == "success") {
+                closeNotifyModal();
+                updatePopUpOptionForSubscription(data, iter_id);
+                resetPopUps();
+            } else {
+                alert(`User Subscription FAILED, ERROR: ", ${data["message"]}`)
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            alert(error)
+        })    
+    }
 
 }
 
