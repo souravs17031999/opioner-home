@@ -1013,7 +1013,10 @@ header a img {
 /*Loader for modals*/
 .modal-loader,
 .modal-loader:before,
-.modal-loader:after {
+.modal-loader:after,
+.modal-first-loader,
+.modal-first-loader:before,
+.modal-first-loader:after {
     border-radius: 50%;
     width: 2.5em;
     height: 2.5em;
@@ -1022,7 +1025,7 @@ header a img {
     -webkit-animation: load-modal-anime 1.8s infinite ease-in-out;
     animation: load-modal-anime 1.8s infinite ease-in-out;
 }
-.modal-loader {
+.modal-loader, .modal-first-loader {
     color: #2196f3;
     font-size: 6px;
     margin: 2px auto;
@@ -1035,29 +1038,31 @@ header a img {
     animation-delay: -0.16s;
 }
 .modal-loader:before,
-.modal-loader:after {
+.modal-loader:after,
+.modal-first-loader:before,
+.modal-first-loader:after {
     content: '';
     position: absolute;
     top: 0;
 }
-.modal-loader:before {
+.modal-loader:before, .modal-first-loader:before {
     left: -3.5em;
     -webkit-animation-delay: -0.32s;
     animation-delay: -0.32s;
 }
-.modal-loader:after {
+.modal-loader:after, .modal-first-loader:after {
     left: 3.5em;
 }
 
-.modal-loader {
+.modal-loader, .modal-first-loader {
     display: none;
 }
 
-.modal-loader:before {
+.modal-loader:before, .modal-first-loader:before {
     color: red;
 }
 
-.modal-loader::after {
+.modal-loader::after, .modal-first-loader::after {
     color: yellow;
 }
 @-webkit-keyframes load-modal-anime {

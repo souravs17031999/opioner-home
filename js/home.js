@@ -10,8 +10,7 @@ function initialLoadForFeedPage() {
     document.querySelectorAll(".menu-dropdown-container")[1].addEventListener('click', handleMenuDropdownPanel)
     // rendering menu panel dropdown
     document.querySelectorAll(".dropdown-btn-container")[0].addEventListener('click', handleMyProfileClickAction)
-    document.querySelectorAll(".dropdown-btn-container")[1].addEventListener('click', handleShowProgress)
-    document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', handlelogoutUserClick)
+    document.querySelectorAll(".dropdown-btn-container")[1].addEventListener('click', handlelogoutUserClick)
 
     fetchUserData();
     fetchUnreadCountForNotifications(customPageName="Opioner | Home");
@@ -51,7 +50,11 @@ function loadAllPublicFeeds(page=1, size=10) {
     url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : "null"}`
     url += `&page=${page}&size=${size}`
 
-    document.getElementsByClassName("modal-loader")[0].style.display = 'flex';
+    if(page == 1) {
+        document.querySelector(".modal-first-loader").style.display = 'flex';
+    } else {
+        document.getElementsByClassName("modal-loader")[0].style.display = 'flex';
+    }
 
     fetch(url, {
         method: 'GET',
@@ -65,15 +68,18 @@ function loadAllPublicFeeds(page=1, size=10) {
     .then(data => {
         if(data["status"] == "success") {
             document.getElementsByClassName("modal-loader")[0].style.display = 'none';
+            document.querySelector(".modal-first-loader").style.display = 'none';
             renderFeedsForUser(data, false);
         } else {
             console.log(`ERROR: ", ${data["message"]}`)
+            document.querySelector(".modal-first-loader").style.display = 'none';
             document.getElementsByClassName("modal-loader")[0].style.display = 'none';
             allFetched = true;
         }
     })
     .catch((error) => {
         console.log(error)
+        alert("ERROR: Error loading user feeds, ", error)
     })
 }
 

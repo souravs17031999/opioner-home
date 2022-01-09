@@ -56,8 +56,7 @@ function initialLoadForProfilePage() {
     document.querySelectorAll(".menu-dropdown-container")[1].addEventListener('click', handleMenuDropdownPanel)
     // rendering menu panel dropdown
     document.querySelectorAll(".dropdown-btn-container")[0].addEventListener('click', handleMyProfileClickAction)
-    document.querySelectorAll(".dropdown-btn-container")[1].addEventListener('click', handleShowProgress)
-    document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', handlelogoutUserClick)
+    document.querySelectorAll(".dropdown-btn-container")[1].addEventListener('click', handlelogoutUserClick)
     // document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', handleShowNotifications)
 
     fetchUserData();
