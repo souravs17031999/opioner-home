@@ -18,7 +18,7 @@ introSectionParaData = {
     },
     "2": {
         "items": ["Lifecycle of a thought - from your brain to everyone"],
-        "src" : "images/lifecycle.png",
+        "src" : "images/lifecycle.jpg",
         "styles" : {
             "para" :"background: radial-gradient(rgb(153 226 248), #c8fafa);width: 80%;",
             "container": "flex-direction: column; padding-bottom: 0px",
@@ -30,7 +30,7 @@ introSectionParaData = {
     },
     "3": {
         "items": ["We keep you posted and up-to-date using timely notifications"],
-        "src" : "images/notify_new.gif",
+        "src" : "images/subscribe.gif",
         "styles" : {
             "para" :"background:radial-gradient(rgb(190 248 153), rgb(191 255 175));width: 80%;",
             "container": "flex-direction: column; padding-bottom: 0px",

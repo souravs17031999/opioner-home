@@ -14,8 +14,8 @@ class loginContainer extends HTMLElement {
                 </div>
                 <form id="reg-form">
                     <div id="user-basic-details">
-                        <input class="new-user-first-name" placeholder="first name ...." oninput="handleOnChangeInput(event)"></input>
-                        <input class="new-user-last-name" placeholder="last name ...." oninput="handleOnChangeInput(event)"></input>
+                        <input class="new-user-first-name" placeholder="first name ...." oninput="handleOnChangeInput(event)" required></input>
+                        <input class="new-user-last-name" placeholder="last name ...." oninput="handleOnChangeInput(event)" required></input>
                     </div>
                     <div id="form-block-separator"></div>
                     <div id="user-credentials">
@@ -30,16 +30,43 @@ class loginContainer extends HTMLElement {
                         </div>
                         
                     </div>
+                    <div id="user-contact">
+                        <div class="tooltip">
+                            <input autocomplete="on" class="user-contact-email" placeholder="Enter valid email ...." type="email" oninput="handleOnChangeInput(event)" required></input>
+                            <span class="tooltiptext" style="left: 132px;top: 70px;">Enter a valid email so that we can send you OTP</span>
+                        </div>
+                    </div>
+                    <div id="otp-by-email">
+                        <div class="digit-group">
+                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
+                        </div>
+                    </div>
                     <div class="signup-error-section">
                         <!-- <ul id="signup-error-section-items">
                             Dynamic error lists
                         </ul> -->
                     </div>
-                    <div id="form-block-separator"></div>
+                    <div class="api-error-section">
+                        <p id="api-error-msg-sign-up">OTP failed</p>
+                    </div>
+                    <div class="api-msg-section">
+                        <p id="api-msg-sign-up">OTP success</p>
+                    </div>
                     <div class="modal-loader-signup">
+                    </div>
+                    <div id=verify-otp-btn>
+                        <button type="submit" id="verify-otp">Send OTP</button>
                     </div>
                     <div id=submit-reg-form>
                         <button type="submit" id="sign-up-user">Sign Up</button>
+                    </div>
+                    <div id="otp-timer-section">
+                        <p id="otp-counter"></p>
                     </div>
                 </form>
             </div>

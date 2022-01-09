@@ -131,8 +131,9 @@ function clearEmptyErrorValue() {
 }
 
 function handlelogoutUserClick(e) {
+    const user_id = localStorage.getItem("user-id")
     localStorage.clear()
-    window.location.href = "index.html"
+    removeUserSessions(loggedInUsername, user_id);
 }
 
 function handleClearBtn() {
@@ -834,5 +835,26 @@ function handleUpdateTaskBucketDataBtn(e) {
 function resetAllPopup() {
     document.querySelectorAll(".task-bucket").forEach((item) => {
             item.children[1].style.display = 'none';
+    })
+}
+
+function removeUserSessions(loggedInUsername, user_id) {
+
+    let url = configTestEnv["authServiceHost"] + "/auth/logout-user"
+    let dataForAPI = {"user_id": user_id, "username": loggedInUsername}
+
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(dataForAPI), 
+    })
+    .then(response => {
+        if(response.status != 204) {
+            return Error("ERROR: Logout failed !");
+        }
+        console.log("USER LOGGED OUT SUCCESSFULLY ! ALL YOUR SESSIONS AND COOKIES ARE CLEARED.")
+        window.location.href = "index.html" 
+    })
+    .catch((error) => {
+        alert(error)
     })
 }

@@ -87,12 +87,16 @@ h1 {
     font-weight: 600;
 }
 
-.username, .password {
+.username, .password, .user-email {
     background-color: #eee;
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
     border-radius: 6px;
+}
+
+.user-email {
+    cursor: not-allowed;
 }
 
 .password {
@@ -110,7 +114,7 @@ h1 {
     text-align: center;
 }
 
-.search-account-btn {
+.search-account-btn, .send-otp-btn {
     background-color: #1877f2;
     border: none;
     border-radius: 6px;
@@ -149,6 +153,12 @@ h1 {
 #validated-user-container {
     display: none;
 }
+
+#show-second-auth-container {
+    display: none;
+}
+
+
 
 #error-value-login {
     border-bottom: 1px solid #ff0037;
@@ -190,8 +200,38 @@ h1 {
     font-size: 13.5px;
 }
 
+.error-otp-section {
+    display: none;
+    color: red;
+    font-size: 13.5px;
+}
+
+
 .error-value-section a {
     color: blue;
+}
+
+#otp-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.digit-group input{
+    width: 30px;
+    height: 50px;
+    border: none;
+    line-height: 50px;
+    text-align: center;
+    font-size: 24px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    color: #673ab7;
+    margin: 0 2px;
+    outline: none;
+    border-radius: 4px;
+    background: #e4e8fa;
+    margin-bottom: 1rem;
 }
 
 .update-password-error-section {
@@ -248,9 +288,12 @@ footer {
 .modal-loader,
 .modal-loader:before,
 .modal-loader:after, 
-.modal-loader-signup, 
-.modal-loader-signup:before, 
-.modal-loader-signup:after {
+.modal-loader-otp, 
+.modal-loader-otp:before, 
+.modal-loader-otp:after,
+.modal-loader-password, 
+.modal-loader-password:before, 
+.modal-loader-password:after {
     border-radius: 50%;
     width: 2.5em;
     height: 2.5em;
@@ -259,7 +302,7 @@ footer {
     -webkit-animation: load-modal-anime 1.8s infinite ease-in-out;
     animation: load-modal-anime 1.8s infinite ease-in-out;
 }
-.modal-loader, .modal-loader-signup {
+.modal-loader, .modal-loader-otp, .modal-loader-password {
     color: #2196f3;
     font-size: 6px;
     margin: 2px auto;
@@ -273,30 +316,32 @@ footer {
 }
 .modal-loader:before,
 .modal-loader:after, 
-.modal-loader-signup:before, 
-.modal-loader-signup:after {
+.modal-loader-otp:before, 
+.modal-loader-otp:after,
+.modal-loader-password:before, 
+.modal-loader-password:after {
     content: '';
     position: absolute;
     top: 0;
 }
-.modal-loader:before, .modal-loader-signup:before {
+.modal-loader:before, .modal-loader-otp:before, .modal-loader-password:before {
     left: -3.5em;
     -webkit-animation-delay: -0.32s;
     animation-delay: -0.32s;
 }
-.modal-loader:after, .modal-loader-signup:after {
+.modal-loader:after, .modal-loader-otp:after, .modal-loader-password:after {
     left: 3.5em;
 }
 
-.modal-loader, .modal-loader-signup {
+.modal-loader, .modal-loader-otp, .modal-loader-password {
     display: none;
 }
 
-.modal-loader:before, .modal-loader-signup:before {
+.modal-loader:before, .modal-loader-otp:before, .modal-loader-password:before {
     color: red;
 }
 
-.modal-loader::after, .modal-loader-signup:after {
+.modal-loader::after, .modal-loader-otp:after, .modal-loader-password:after {
     color: yellow;
 }
 @-webkit-keyframes load-modal-anime {
@@ -349,6 +394,19 @@ footer {
 @media only screen and (max-width: 426px) {
 
     header img {
-        width: 150px;
+        width: 130px !important;
+        height: 60px !important;
+    }
+
+    .search-account-btn, .send-otp-btn {
+        line-height: 24px;
+    }
+
+    .digit-group input {
+        width: 24px;
+    }
+
+    .password {
+        width: 86%;
     }
 }

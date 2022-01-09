@@ -76,6 +76,21 @@ h1 {
     color: #216fdb;
 }
 
+#user-contact {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.user-contact-email {
+    width: 90%;
+    height: 40px;
+    background-color: #eee;
+    padding: 12px 15px;
+    margin: 8px 0;
+    font-size: 15px;
+}
+
 /* .password-inner-container {
     display: flex;
 } */
