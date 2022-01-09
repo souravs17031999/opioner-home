@@ -841,6 +841,7 @@ function removeUserSessions(loggedInUsername, user_id) {
 
     let url = configTestEnv["authServiceHost"] + "/auth/logout-user"
     let dataForAPI = {"user_id": user_id, "username": loggedInUsername}
+    document.querySelector(".modal-first-loader").style.display = 'flex';
 
     fetch(url, {
         method: 'POST',
@@ -851,6 +852,7 @@ function removeUserSessions(loggedInUsername, user_id) {
             return Error("ERROR: Logout failed !");
         }
         console.log("USER LOGGED OUT SUCCESSFULLY ! ALL YOUR SESSIONS AND COOKIES ARE CLEARED.")
+        document.querySelector(".modal-first-loader").style.display = 'none';
         window.location.href = "index.html" 
     })
     .catch((error) => {

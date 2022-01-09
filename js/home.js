@@ -79,7 +79,6 @@ function loadAllPublicFeeds(page=1, size=10) {
     })
     .catch((error) => {
         console.log(error)
-        alert("ERROR: Error loading user feeds, ", error)
     })
 }
 
