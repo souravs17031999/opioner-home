@@ -130,6 +130,16 @@
     padding-right: 20%;
 }
 
+#dropdown-icon-profile {
+    background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/5AbLIFMspEl.png);
+    background-position: -0px -162px;
+    background-size: 26px 260px;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
 #feed-comments-pic {
     background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/yf/r/MMPPe44OBGB.png);
     background-position: 0px -192px;
