@@ -521,7 +521,8 @@ function onSignIn(googleUser) {
         "google_profile_url": profile.getImageUrl(),
         "google_token_id": googleUser.getAuthResponse().id_token,
     }
-    document.querySelector(".modal-loader-signup").style.display = "block"
+    googleUser.disconnect()
+    document.querySelector(".modal-loader").style.display = "block"
 
     fetch(url, {
         method: 'POST',
@@ -531,8 +532,10 @@ function onSignIn(googleUser) {
     .then(data => {
         if(data["status"] == "success") {
             localStorage.setItem("user-id", data["user_data"]["user_id"])
-            localStorage.setItem("new-user", true)
-            document.querySelector(".modal-loader-signup").style.display = "none"
+            if(data["is_new_user"]) {
+                localStorage.setItem("new-user", true)
+            }
+            document.querySelector(".modal-loader").style.display = "none"
             window.location.href = "home.html"
         } else {
             handleOnFailureSignUp(data)
@@ -540,7 +543,7 @@ function onSignIn(googleUser) {
     })
     .catch((error) => {
         console.log(error)
-        document.querySelector(".modal-loader-signup").style.display = "none"
+        document.querySelector(".modal-loader").style.display = "none"
     })
 
   }

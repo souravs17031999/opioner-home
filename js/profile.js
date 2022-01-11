@@ -376,7 +376,11 @@ function setUserDataInContext(userData) {
 
     userAvatarImage.src = userData["user_data"]["profile_picture_url"]
     userAvatarImage.onerror = function () {
-        userAvatarImage.src = getImagePath(firstname)
+        if(userData["user_data"]["google_profile_url"] != null) {
+            userAvatarImage.src = userData["user_data"]["google_profile_url"]
+        } else {
+            userAvatarImage.src = getImagePath(firstname)
+        }
     }
     userAvatarImage.addEventListener('click', showUploadProfileModal)
 
