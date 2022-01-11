@@ -508,3 +508,42 @@ function toggleShowPasswordOnSignup(e) {
         e.currentTarget.classList.add("fa-eye-slash")
     }
 }
+
+function onSignIn(googleUser) {
+
+    let profile = googleUser.getBasicProfile();
+    localStorage.setItem("is_google_signed", true)
+    url = configTestEnv["authServiceHost"] + "/auth/verify/google/sign"
+    let dataForAPI = {
+        "username": profile.getEmail(),
+        "firstname": profile.getName(),
+        "email": profile.getEmail(),
+        "google_profile_url": profile.getImageUrl(),
+        "google_token_id": googleUser.getAuthResponse().id_token,
+    }
+    googleUser.disconnect()
+    document.querySelector(".modal-loader").style.display = "block"
+
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(dataForAPI),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data["status"] == "success") {
+            localStorage.setItem("user-id", data["user_data"]["user_id"])
+            if(data["is_new_user"]) {
+                localStorage.setItem("new-user", true)
+            }
+            document.querySelector(".modal-loader").style.display = "none"
+            window.location.href = "home.html"
+        } else {
+            handleOnFailureSignUp(data)
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        document.querySelector(".modal-loader").style.display = "none"
+    })
+
+  }

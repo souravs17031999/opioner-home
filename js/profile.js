@@ -131,8 +131,9 @@ function clearEmptyErrorValue() {
 
 function handlelogoutUserClick(e) {
     const user_id = localStorage.getItem("user-id")
+    const is_google_signed = localStorage.getItem("is_google_signed")
     localStorage.clear()
-    removeUserSessions(loggedInUsername, user_id);
+    removeUserSessions(loggedInUsername, user_id, is_google_signed);
 }
 
 function handleClearBtn() {
@@ -375,7 +376,11 @@ function setUserDataInContext(userData) {
 
     userAvatarImage.src = userData["user_data"]["profile_picture_url"]
     userAvatarImage.onerror = function () {
-        userAvatarImage.src = getImagePath(firstname)
+        if(userData["user_data"]["google_profile_url"] != null) {
+            userAvatarImage.src = userData["user_data"]["google_profile_url"]
+        } else {
+            userAvatarImage.src = getImagePath(firstname)
+        }
     }
     userAvatarImage.addEventListener('click', showUploadProfileModal)
 
@@ -837,7 +842,14 @@ function resetAllPopup() {
     })
 }
 
-function removeUserSessions(loggedInUsername, user_id) {
+function onLoad() {
+    gapi.load('auth2', function() {
+      gapi.auth2.init();
+      googleSignOutByUser()
+    });
+}
+
+function removeUserSessions(loggedInUsername, user_id, is_google_signed) {
 
     let url = configTestEnv["authServiceHost"] + "/auth/logout-user"
     let dataForAPI = {"user_id": user_id, "username": loggedInUsername}
@@ -851,6 +863,9 @@ function removeUserSessions(loggedInUsername, user_id) {
         if(response.status != 204) {
             return Error("ERROR: Logout failed !");
         }
+        if(is_google_signed != null) {
+            onLoad();
+        }
         console.log("USER LOGGED OUT SUCCESSFULLY ! ALL YOUR SESSIONS AND COOKIES ARE CLEARED.")
         document.querySelector(".modal-first-loader").style.display = 'none';
         window.location.href = "index.html" 
@@ -858,4 +873,12 @@ function removeUserSessions(loggedInUsername, user_id) {
     .catch((error) => {
         alert(error)
     })
+}
+
+function googleSignOutByUser() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+      auth2.disconnect();
+    });
 }

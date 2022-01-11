@@ -87,6 +87,7 @@ class loginContainer extends HTMLElement {
                         </div>
                     </div>
                     <button class="login-btn">Login</button>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
                     <div class="modal-loader">
                     </div>
                     <p class="forgot-password-container"><a href="password-change.html">Forgotten password?</a></p>
