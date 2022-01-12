@@ -9,7 +9,7 @@ https://souravs17031999.github.io/opioner-home
 
 # This project is meant to maintain the frontend code for the [Opioner - Make Your Opinion Count And Share With World](https://souravs17031999.github.io/opioner-home).
 Currently, the project is deployed using Github servers and all requests are served through Github API gateway.
-Backend of Opioner app is served through Heroku servers.
+Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(private repo) is served through Heroku servers.
 
 # Running project locally:
 
