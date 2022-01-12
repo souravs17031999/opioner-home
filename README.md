@@ -13,5 +13,7 @@ Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(pri
 
 # Running project locally:
 
+* Clone this repo    
+  `git clone git@github.com:souravs17031999/opioner-home.git`      
 * Start the web server locally on any port (ex. 5500).
 * your app should be visible on http://127.0.0.1:5500/opioner-home
