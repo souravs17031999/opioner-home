@@ -1,25 +1,17 @@
-# taskly-frontend
-Complete codebase for taskly frontend web app in vanilla JS
+# Opioner-frontend
+Complete codebase for Opioner frontend web app in vanilla JS
 
-# Goal - Make your day productive with us
+# Goal - MAKE YOUR OPINION COUNT AND SHARE WITH WORLD
 
-https://souravs17031999.github.io/taskly-home
+https://souravs17031999.github.io/opioner-home
 
-# taskly-frontend-docker-app
+# Opioner-frontend-docker-app
 
-# This project is meant to maintain the frontend code for the [taskly - best online task manager app](https://souravs17031999.github.io/taskly-home/).
+# This project is meant to maintain the frontend code for the [Opioner - Make Your Opinion Count And Share With World](https://souravs17031999.github.io/opioner-home).
 Currently, the project is deployed using Github servers and all requests are served through Github API gateway.
-Backend of [taskly app](https://github.com/souravs17031999/taskly-home) is served through Heroku servers.
+Backend of Opioner app is served through Heroku servers.
 
-## New to [Hacktoberfest-2021](https://hacktoberfest.digitalocean.com/) ?
+# Running project locally:
 
-* Make your first PR:
-- If you are adding a feature, checkout a branch name to Feature/<PR-TITLE>. Ex. "Feature/add-feature"
-- If you are fixing a bug, checkout a branch name to Bugfix/<Bug-title-fix>. Ex. "Bugfix/fix-bug"
-- Commit message should be following [these practices](https://chris.beams.io/posts/git-commit/).
-  
-* Your PR's will be reviewed within a week and be released on weekends with changes updated in changelog.MD 
-
-## Objective for Hacktoberfest-2021
-* Dockerize the current app
-* Convert the JS App to Angular app.
+* Start the web server locally on any port (ex. 5500).
+* your app should be visible on http://127.0.0.1:5500/opioner-home
