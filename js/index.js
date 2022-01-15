@@ -550,6 +550,7 @@ function onSignIn(googleUser) {
   }
 
   FB.login(function(response) {
+    console.log(response)
     if (response.status === 'connected') {
       console.log("Logged into your webpage and Facebook.")
     } else {
