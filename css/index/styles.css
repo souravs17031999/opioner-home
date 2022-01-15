@@ -525,26 +525,6 @@ header {
     font-size: 13px;
 }
 
-footer {
-    height: auto;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    position: absolute;
-    left: 0;
-}
-
-/* .footer-dashboard {
-    display: flex;
-    place-items: center;
-    flex-direction: column;
-    justify-content: center;
-} */
-
-.footer-dashboard p {
-    text-align: center;
-    font-family: system-ui;
-}
-
 #signup-error-section-items li {
     padding: 0.25rem;
 }
@@ -755,9 +735,6 @@ footer {
     h1 {
         font-size: 15px;
         padding-bottom: 2rem;
-    }
-    .footer-dashboard p {
-        font-size: 15px;
     }
     header img {
         width: 130px !important;

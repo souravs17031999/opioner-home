@@ -14,6 +14,7 @@ document.querySelector(".fas").addEventListener('click', toggleShowPasswordOnLog
 document.querySelector(".far").addEventListener('click', toggleShowPasswordOnSignup);
 
 document.querySelectorAll(".home-nav-links a")[1].addEventListener('click', showSignUpModal);
+document.querySelector(".cta-footer-sign-up").addEventListener('click', showSignUpModal);
 
 function handleOnLogin(e) {
 

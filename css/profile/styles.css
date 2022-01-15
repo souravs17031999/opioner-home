@@ -1,6 +1,5 @@
 body {
     background-color: rgb(242 248 248);
-    font-family: monospace;
     margin: 0 auto;
 }
 
@@ -336,7 +335,7 @@ header {
     border-radius: 30px;
     transition: all 0.3s linear;
     width: 400px;
-    background: radial-gradient(#fbc1cc, #fa99b2);
+    background: linear-gradient(to right, #ffe8fd 0%, #fce3fa 100%);
     box-shadow: 2px 6px 10px -1px rgb(171 88 219 / 50%);
 }
 
@@ -464,14 +463,6 @@ header {
 .push-notify-btn:hover, .unsubscribe-notify-btn:hover {
     transform: translateY(2px);
     background: yellow;
-}
-
-footer {
-    height: auto;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    position: absolute;
-    left: 0;
 }
 
 /* .footer-dashboard {
