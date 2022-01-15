@@ -87,7 +87,11 @@ class loginContainer extends HTMLElement {
                         </div>
                     </div>
                     <button class="login-btn">Login</button>
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <p id="break-para-for-social-media">OR</p>
+                    <div class="social-media-accounts">
+                        <div class="g-signin2" data-onsuccess="onSignIn" data-width="300" data-height="36"></div>
+                        <div class="fb-login-button" data-width="260px" data-height="26px" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="true"></div>
+                    </div>
                     <div class="modal-loader">
                     </div>
                     <p class="forgot-password-container"><a href="password-change.html">Forgotten password?</a></p>

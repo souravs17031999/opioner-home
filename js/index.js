@@ -548,3 +548,12 @@ function onSignIn(googleUser) {
     })
 
   }
+
+  FB.login(function(response) {
+    if (response.status === 'connected') {
+      console.log("Logged into your webpage and Facebook.")
+    } else {
+        console.log("The person is not logged into your webpage or we are unable to tell. ")
+      // The person is not logged into your webpage or we are unable to tell. 
+    }
+  });
