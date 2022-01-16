@@ -256,11 +256,17 @@ function handleVerifyOTP(e) {
 
 }
 
-function handleOnFailureSignUp(data) {
-    document.querySelector(".modal-loader-signup").style.display = "none"
-    document.querySelector(".api-error-section").style.display = "flex"
-    document.querySelector("#api-error-msg-sign-up").innerHTML = data["message"]
-    document.querySelector(".api-msg-section").style.display = "none"
+function handleOnFailureSignUp(data, is_signup=true) {
+    if(is_signup) {
+        document.querySelector(".modal-loader-signup").style.display = "none"
+        document.querySelector(".api-error-section").style.display = "flex"
+        document.querySelector("#api-error-msg-sign-up").innerHTML = data["message"]
+        document.querySelector(".api-msg-section").style.display = "none" 
+    } else {
+        document.querySelector(".modal-loader").style.display = "none"
+        document.querySelector(".failure-lottie").style.display = flex;
+        document.querySelector(".failure-lottie").innerHTML = data["message"]
+    }
 }
 
 function setToState1() {
@@ -514,15 +520,17 @@ function onSignIn(googleUser) {
 
     let profile = googleUser.getBasicProfile();
     localStorage.setItem("is_google_signed", true)
-    url = configTestEnv["authServiceHost"] + "/auth/verify/google/sign"
+    url = configTestEnv["authServiceHost"] + "/auth/verify/social/sign"
     let dataForAPI = {
+        "action_event_source": "google",
         "username": profile.getEmail(),
-        "firstname": profile.getName(),
+        "firstname": profile.getName().split(" "),
         "email": profile.getEmail(),
         "google_profile_url": profile.getImageUrl(),
         "google_token_id": googleUser.getAuthResponse().id_token,
     }
     googleUser.disconnect()
+    document.querySelector(".failure-lottie").style.display = "none";
     document.querySelector(".modal-loader").style.display = "block"
 
     fetch(url, {
@@ -539,22 +547,73 @@ function onSignIn(googleUser) {
             document.querySelector(".modal-loader").style.display = "none"
             window.location.href = "home.html"
         } else {
-            handleOnFailureSignUp(data)
+            if(data["is_new_user"]) {
+                handleOnFailureSignUp(data)
+            } else {
+                handleOnFailureSignUp(data, false)
+            }
         }
     })
     .catch((error) => {
         console.log(error)
-        document.querySelector(".modal-loader").style.display = "none"
+        handleOnFailureSignUp({"message": error})
     })
 
   }
 
-  FB.login(function(response) {
-    console.log(response)
-    if (response.status === 'connected') {
-      console.log("Logged into your webpage and Facebook.")
-    } else {
-        console.log("The person is not logged into your webpage or we are unable to tell. ")
-      // The person is not logged into your webpage or we are unable to tell. 
-    }
-  });
+  function signInViaFacebookAPI(response) { 
+    
+    document.querySelector(".failure-lottie").style.display = "none";
+    const authResponse = response.authResponse
+    const fbUserId = authResponse["userID"]
+    FB.api(`${fbUserId}?fields=id,name,email,picture,gender,first_name`,function(response) {
+        let dataForAPI = {
+            "action_event_source": "facebook",
+            "name": response.name,
+            "email": response.email,
+            "facebook_profile_url": response.picture.data.url,
+            "facebook_token_id": authResponse["accessToken"],
+            "facebook_user_id": fbUserId,
+            "gender": response.gender,
+            "firstname": response.first_name,
+            "username": response.email,
+        }
+        localStorage.setItem("is_facebook_signed", true)
+        url = configTestEnv["authServiceHost"] + "/auth/verify/social/sign"
+
+        FB.api(`/${fbUserId}/permissions`, 'DELETE', function(response) {
+            console.log('revoke response' + response);
+        });
+        document.querySelector(".modal-loader").style.display = "block"
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(dataForAPI),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data["status"] == "success") {
+                localStorage.setItem("user-id", data["user_data"]["user_id"])
+                if(data["is_new_user"]) {
+                    localStorage.setItem("new-user", true)
+                }
+                document.querySelector(".modal-loader").style.display = "none"
+                window.location.href = "home.html"
+            } else {
+                if(data["is_new_user"]) {
+                    handleOnFailureSignUp(data)
+                } else {
+                    handleOnFailureSignUp(data, false)
+                }
+                
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            handleOnFailureSignUp({"message": error})
+        })
+
+    });
+
+    
+  }

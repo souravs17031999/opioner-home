@@ -132,8 +132,9 @@ function clearEmptyErrorValue() {
 function handlelogoutUserClick(e) {
     const user_id = localStorage.getItem("user-id")
     const is_google_signed = localStorage.getItem("is_google_signed")
+    const is_facebook_verified = localStorage.getItem("is_facebook_signed")
     localStorage.clear()
-    removeUserSessions(loggedInUsername, user_id, is_google_signed);
+    removeUserSessions(loggedInUsername, user_id, is_google_signed, is_facebook_verified);
 }
 
 function handleClearBtn() {
@@ -376,8 +377,10 @@ function setUserDataInContext(userData) {
 
     userAvatarImage.src = userData["user_data"]["profile_picture_url"]
     userAvatarImage.onerror = function () {
-        if(userData["user_data"]["google_profile_url"] != null) {
+        if(userData["user_data"]["is_google_verified"] && userData["user_data"]["google_profile_url"] != null) {
             userAvatarImage.src = userData["user_data"]["google_profile_url"]
+        } else if(userData["user_data"]["is_facebook_verified"] && userData["user_data"]["facebook_profile_url"] != null) {
+            userAvatarImage.src = userData["user_data"]["facebook_profile_url"]
         } else {
             userAvatarImage.src = getImagePath(firstname)
         }
@@ -849,7 +852,7 @@ function onLoad() {
     });
 }
 
-function removeUserSessions(loggedInUsername, user_id, is_google_signed) {
+function removeUserSessions(loggedInUsername, user_id, is_google_signed, is_facebook_verified) {
 
     let url = configTestEnv["authServiceHost"] + "/auth/logout-user"
     let dataForAPI = {"user_id": user_id, "username": loggedInUsername}
@@ -865,6 +868,8 @@ function removeUserSessions(loggedInUsername, user_id, is_google_signed) {
         }
         if(is_google_signed != null) {
             onLoad();
+        } else if(is_facebook_verified != null) {
+            signOutFacebook();
         }
         console.log("USER LOGGED OUT SUCCESSFULLY ! ALL YOUR SESSIONS AND COOKIES ARE CLEARED.")
         document.querySelector(".modal-first-loader").style.display = 'none';
