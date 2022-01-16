@@ -14,7 +14,6 @@ window.fbAsyncInit = function() {
   };
 
 function statusChangeCallback(response) {  
-    console.log(response);                   
     if (response.status === 'connected') {   
       signInViaFacebookAPI(response);  
     } else {                                 
@@ -30,7 +29,6 @@ function statusChangeCallback(response) {
 
   function signOutFacebook() {
     FB.logout(function(response) {
-        console.log(response)
         console.log("=========== user logged out .....")
     });
 }
