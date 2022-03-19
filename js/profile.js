@@ -244,7 +244,7 @@ function showUserLists(data) {
 
 function fetchUserLists() {
     
-    url = configTestEnv["productServiceHost"] + "/product/fetch-list?"
+    url = configTestEnv["productServiceHost"] + "/product/my/feed?"
     url += `user_id=${localStorage.getItem("user-id")}`
     fetch(url, {
         method: 'GET',
@@ -280,7 +280,7 @@ function insertEmptyPromptOnEmptyList() {
 }
 
 function insertUserLists(itemData) {
-    url = configTestEnv["productServiceHost"] + "/product/upsert-task"
+    url = configTestEnv["productServiceHost"] + "/product/feed/upsert"
     // loader if updating flow 
     if(itemData["update_flag"]) {
         document.querySelectorAll(".modal-loader")[2].style.display = "flex";
@@ -320,9 +320,9 @@ function removeEmptyTaskPromptList() {
 
 function removeItemFromList(itemData) {
 
-    url = configTestEnv["productServiceHost"] + "/product/delete-task"
+    url = configTestEnv["productServiceHost"] + "/product/my/feed"
     fetch(url, {
-        method: 'POST',
+        method: 'DELETE',
         body: JSON.stringify(itemData),
     })
     .then(response => response.json())

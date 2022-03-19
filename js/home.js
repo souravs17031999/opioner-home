@@ -46,7 +46,7 @@ function initialLoadForFeedPage() {
 }
 
 function loadAllPublicFeeds(page=1, size=10) {
-    url = configTestEnv["productServiceHost"] + "/product/fetch-feeds?"
+    url = configTestEnv["productServiceHost"] + "/product/public/feeds?"
     url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : "null"}`
     url += `&page=${page}&size=${size}`
 
@@ -292,9 +292,9 @@ function handleClickOnLikeBtn(e) {
         "update_status_event": "like_event"
     }
     let iterId = e.currentTarget.parentElement.parentElement.getAttribute("iter-id")
-    url = configTestEnv["productServiceHost"] + "/product/update-feedtask-status"
+    url = configTestEnv["productServiceHost"] + "/product/feed/status"
     fetch(url, {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(dataForAPI), 
     })
     .then(response => response.json())
@@ -446,7 +446,7 @@ function updateUserEventsForList(iterId){
 function insertUserPublicFeed(e) {
 
     if (e.currentTarget.parentElement.children[0].value != "") {
-        url = configTestEnv["productServiceHost"] + "/product/upsert-task"
+        url = configTestEnv["productServiceHost"] + "/product/feed/upsert"
         let dataForAPI = {"user_id": localStorage.getItem("user-id"), 
                         "item": e.currentTarget.parentElement.children[0].value,
                         "update_flag": 0, 

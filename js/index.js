@@ -57,6 +57,7 @@ function handleOnLogin(e) {
             document.querySelector(".modal-loader").style.display = "none"
             window.location.href = "home.html"
             localStorage.setItem("user-id", data["user_data"]["user_id"])
+            localStorage.setItem("auth-token", data["user_data"]["token"])
         } else {
             document.querySelector(".modal-loader").style.display = "none"
             document.querySelector(".failure-lottie").style.display = "flex";
