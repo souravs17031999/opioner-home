@@ -1,6 +1,6 @@
 var configTestEnv = {
-    "authServiceHost" : "https://auth-service-taskly-staged.herokuapp.com", 
-    "userServiceHost" : "https://user-service-taskly-staged.herokuapp.com",
-    "productServiceHost": "https://product-service-taskly-staged.herokuapp.com",
-    "notificationServiceHost": "https://notification-taskly-staged.herokuapp.com"
+    "authServiceHost" : "https://auth-service-prd.herokuapp.com", 
+    "userServiceHost" : "https://user-service-prd01.herokuapp.com",
+    "productServiceHost": "https://product-service-prd.herokuapp.com",
+    "notificationServiceHost": "https://notification-service-prd.herokuapp.com"
 }
