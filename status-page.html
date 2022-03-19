@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Opioner | Home</title>
+        <meta name="description" content="Opioner - Make Your Opinion Count And Share With World">
+        <meta name="keywords" content="opioner,opinions,thoughts,views,shares,posts,feeds">
+        <meta name="author" content="Sourav Kumar">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-signin-client_id" content="744235340029-uaqmq600lr3p6viapa9nqj9f4tb95u21.apps.googleusercontent.com">
+        <meta property="og:image" content="https://github.com/souravs17031999/opioner-home/blob/master/images/logo-home.png">
+        <meta property="og:description" content="Opioner - Make Your Opinion Count And Share With World">
+        <link rel="icon" type="image/png" href="images/favicon.png"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap&family=Ubuntu:ital,wght@1,300" rel="stylesheet">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/status/styles.css">
+    </head>
+    <body>
+        <header class='siteHeader'>
+
+            <div class='container'>
+              <p class='siteHeader__title'>Opioner server status page</p>
+            </div>
+          </header>
+          
+          <div class='container'>
+          
+            <section class='ongoingIssues'>
+              <a href='#!' class='issueBanner issueBanner--monitoring'>
+                <p class='issueBanner__state'>Monitoring</p>
+                <h2>Network Connectivity Issues</h2>
+                <p class='issueBanner__time'>last updated <time id="time">[Next ping in 1min]....</time></p>
+              </a>
+            </section>
+          
+            <section class='serviceGroup'>
+              <ul class='serviceList serviceGroup__list'>
+                <li class='serviceList__item'>
+                  <p class='serviceList__status'><span class="tooltip"><img id="auth" src="images/green-circle.png" width="35px" height="35px"><span class="tooltiptext">1 min....</span></span></p>
+                  <p class='serviceList__name'>
+                    Authentication service
+                  </p>
+                </li>
+                <li class='serviceList__item'>
+                  <p class='serviceList__status'><span class="tooltip"><img id="product" src="images/green-circle.png" width="35px" height="35px"><span class="tooltiptext">1 min....</span></span></p>
+                  <p class='serviceList__name'>
+                    Product service 
+                  </p>
+                </li>
+                <li class='serviceList__item'>
+                  <p class='serviceList__status'><span class="tooltip"><img id="user" src="images/green-circle.png" width="35px" height="35px"><span class="tooltiptext">1 min....</span></span></p>
+                  <p class='serviceList__name'>
+                    User service 
+                  </p>
+                </li>
+                      <li class='serviceList__item'>
+                  <p class='serviceList__status'><span class="tooltip"><img id="notification" src="images/green-circle.png" width="35px" height="35px"><span class="tooltiptext">1 min....</span></span></p>
+                  <p class='serviceList__name'>
+                    Notification service 
+                  </p>
+                </li>
+                <li class='serviceList__item'>
+                  <p class='serviceList__status'><span class="tooltip"><img id="cron" src="images/green-circle.png" width="35px" height="35px"><span class="tooltiptext">1 min....</span></span></p>
+                  <p class='serviceList__name'>
+                    Cron service 
+                  </p>
+                </li>
+              </ul>
+            </section>
+          </div>
+          
+          <footer class='siteFooter'>
+            <div class='container'>
+            </div>
+          </footer>
+          <script src="js/config.js" defer></script>
+          <script src="js/status-page.js" defer></script>
+    </body>
+</html>

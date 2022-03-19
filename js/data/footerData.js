@@ -34,6 +34,11 @@ footerData = {
             "customClass": "cta-footer-sign-up",
         },
         {
+            "title": "Check Status ?",
+            "link": "/opioner-home/status-page.html",
+            "customClass": "cta-footer-sign-up",
+        },
+        {
             "title": "Contact Us",
             "link": "https://docs.google.com/forms/d/e/1FAIpQLScoRoBhPBTTQAJdw-_5bpEpKWNA-QSo4aqm-lKHsTqEUVffIw/viewform?usp=sf_link",
             "customClass": "cta-footer-contact-us",
