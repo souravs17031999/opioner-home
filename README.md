@@ -17,3 +17,8 @@ Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(pri
   `git clone git@github.com:souravs17031999/opioner-home.git`      
 * Start the web server locally on any port (ex. 5500).
 * your app should be visible on http://127.0.0.1:5500/opioner-home
+
+### GDPR compliance:
+All the data processed for user is transparent and is explained on terms and privacy policy page of (Opioner-home website)[https://souravs17031999.github.io/opioner-home]
+
+_whats next ? Deployment using k8s via dockerized image (use npm package manager, better security, react components)_
