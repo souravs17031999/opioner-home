@@ -1,6 +1,6 @@
 var configTestEnv = {
-    "authServiceHost" : "http://localhost:8081", 
-    "userServiceHost" : "http://localhost:8082",
-    "productServiceHost": "http://localhost:8083",
-    "notificationServiceHost": "http://localhost:8084"
+    "authServiceHost" : "https://auth-service-prd.herokuapp.com", 
+    "userServiceHost" : "https://user-service-prd01.herokuapp.com",
+    "productServiceHost": "https://product-service-prd.herokuapp.com",
+    "notificationServiceHost": "https://notification-service-prd.herokuapp.com"
 }
