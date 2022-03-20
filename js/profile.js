@@ -342,10 +342,13 @@ function removeItemFromList(itemData) {
 
 function fetchUserData() {
 
-    url = configTestEnv["userServiceHost"] + "/user/fetch-user-data?"
-    url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1}`
+    url = configTestEnv["userServiceHost"] + "/user/data"
+    // url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1}`
     fetch(url, {
         method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('auth-token') != undefined ? localStorage.getItem('auth-token') : ""}` 
+        }
     })
     .then(response => {
         if(response.status === 401) {
@@ -447,9 +450,9 @@ function handleUploadProfile(e) {
     
     document.querySelector(".loader").style.display = "block"
 
-    url = configTestEnv["userServiceHost"] + "/user/update-profile-pic"
+    url = configTestEnv["userServiceHost"] + "/user/profile-pic"
     fetch(url, {
-        method: 'POST',
+        method: 'PUT',
         body: formData, 
     })
     .then(response => response.json())
@@ -617,7 +620,7 @@ function resetDropdownPanel() {
 
 function fetchUserNotifications(allFlag) {
     
-    let url = configTestEnv["notificationServiceHost"] + "/notification/fetch-notifications?"
+    let url = configTestEnv["notificationServiceHost"] + "/notification/all?"
     url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1}`
     url += `&all_flag=${allFlag}`
     fetch(url, {
@@ -696,9 +699,9 @@ function updateNotificationStatus(e) {
     
         let dataForAPI = {"user_id": localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1, "event_id": e.currentTarget.getAttribute("event-id")}
         
-        url = configTestEnv["notificationServiceHost"] + "/notification/update-status-notifications"
+        url = configTestEnv["notificationServiceHost"] + "/notification/status"
         fetch(url, {
-            method: 'POST',
+            method: 'PUT',
             body: JSON.stringify(dataForAPI), 
         })
         .then(response => response.json())
@@ -733,10 +736,12 @@ function showAllNotificationsForUser(e) {
 
 function fetchUnreadCountForNotifications(customPageName) {
 
-    let url = configTestEnv["notificationServiceHost"] + "/notification/unread-count-notifications?"
-    url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1}`
+    let url = configTestEnv["notificationServiceHost"] + "/notification/unread-count"
     fetch(url, {
         method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('auth-token') != undefined ? localStorage.getItem('auth-token') : ""}` 
+        }
     })
     .then(response => {
         return response.json()})
@@ -765,7 +770,7 @@ function updateNotificationsInContext(unreadCount, customPageName) {
 
 function handleInitiateNotification(dataForAPI) {
 
-    url = configTestEnv["notificationServiceHost"] + "/notification/insert-notification"
+    url = configTestEnv["notificationServiceHost"] + "/notification/me"
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(dataForAPI), 
@@ -854,7 +859,7 @@ function onLoad() {
 
 function removeUserSessions(loggedInUsername, user_id, is_google_signed, is_facebook_verified) {
 
-    let url = configTestEnv["authServiceHost"] + "/auth/logout-user"
+    let url = configTestEnv["authServiceHost"] + "/auth/logout/user"
     let dataForAPI = {"user_id": user_id, "username": loggedInUsername}
     document.querySelector(".modal-first-loader").style.display = 'flex';
 

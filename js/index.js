@@ -45,7 +45,7 @@ function handleOnLogin(e) {
     document.querySelector(".failure-lottie").style.display = "none";
     document.querySelector(".modal-loader").style.display = "block"
 
-    url = configTestEnv["authServiceHost"] + "/auth/login-user"
+    url = configTestEnv["authServiceHost"] + "/auth/login/user"
     const credentials = {username: username.value, password: password.value}
     fetch(url, {
         method: 'POST',

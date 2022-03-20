@@ -39,7 +39,7 @@ function handleSearchAccountBtn(e) {
     document.querySelector(".modal-loader").style.display = "block"
     let dataForAPI = {"username": username}
     
-    url = configTestEnv["userServiceHost"] + "/user/fetch/user-status"
+    url = configTestEnv["userServiceHost"] + "/user/status"
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(dataForAPI), 
@@ -140,9 +140,9 @@ function handleSubmitPasswordChange(e) {
     document.querySelector(".modal-loader-password").style.display = "block"
     let password = document.querySelectorAll(".password")[0].value
     let dataForAPI = {"password": password, "username": username, "email": userEmail, "secret_token": "SECRET_TOKEN", "otp": otpEnteredByUser}
-    url = configTestEnv["authServiceHost"] + "/auth/update-password-user"
+    url = configTestEnv["authServiceHost"] + "/auth/password/user"
     fetch(url, {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(dataForAPI), 
     })
     .then(response => response.json())

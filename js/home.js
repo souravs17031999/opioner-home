@@ -45,9 +45,26 @@ function initialLoadForFeedPage() {
     })
 }
 
+function generateToken(userId) {
+    const header = JSON.stringify(
+    {
+        "alg": "HS256",
+        "typ": "JWT"
+    });
+
+    const payload = JSON.stringify(
+    {
+        "sub": userId
+    });
+
+    const headerBase64 = Buffer.from(header).toString('base64').replace(/=/g, '');
+    const payloadBase64 = Buffer.from(payload).toString('base64').replace(/=/g, '');
+    const signature = crypto.HmacSHA256(headerBase64 + '.' + payloadBase64, TOKEN_SECRET);
+    return headerBase64 + '.' + payloadBase64 + '.' + signature;
+}
+
 function loadAllPublicFeeds(page=1, size=10) {
     url = configTestEnv["productServiceHost"] + "/product/public/feeds?"
-    url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : "null"}`
     url += `&page=${page}&size=${size}`
 
     if(page == 1) {
@@ -58,6 +75,9 @@ function loadAllPublicFeeds(page=1, size=10) {
 
     fetch(url, {
         method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('auth-token') != undefined ? localStorage.getItem('auth-token') : ""}` 
+        }
     })
     .then(response => {
         if(response.status === 401) {
@@ -345,7 +365,7 @@ function handleClickOnCmtBtn(e) {
         userInputCmt.addEventListener('keyup', handleUserEnteredComment)
 
         // API call for rendering comments
-        url = configTestEnv["productServiceHost"] + "/product/fetch-all-comments?"
+        url = configTestEnv["productServiceHost"] + "/product/comments?"
         url += `list_id=${e.currentTarget.parentElement.parentElement.getAttribute("list-id")}`
         url += `&user_id=${parseInt(localStorage.getItem("user-id"))}`
         
@@ -499,9 +519,9 @@ function handleUserEnteredComment(e) {
         }
         e.currentTarget.value = ""
         let iterId = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("iter-id")
-        url = configTestEnv["productServiceHost"] + "/product/upsert-comments"
+        url = configTestEnv["productServiceHost"] + "/product/public/comments"
         fetch(url, {
-            method: 'POST',
+            method: 'PUT',
             body: JSON.stringify(dataForAPI), 
         })
         .then(response => response.json())
@@ -652,9 +672,9 @@ function FlagCommentByUser(e) {
         "comment_id": e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute("comment-id")
     }
 
-    url = configTestEnv["productServiceHost"] + "/product/upsert-comments"
+    url = configTestEnv["productServiceHost"] + "/product/public/comments"
     fetch(url, {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(dataForAPI), 
     })
     .then(response => response.json())
