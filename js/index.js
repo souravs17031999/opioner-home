@@ -245,6 +245,7 @@ function handleVerifyOTP(e) {
         if(data["status"] == "success") {
             localStorage.setItem("user-id", data["user_data"]["user_id"])
             localStorage.setItem("new-user", true)
+            localStorage.setItem("auth-token", data["user_data"]["token"])
             window.location.href = "home.html"
         } else {
             handleOnFailureSignUp(data)
@@ -542,6 +543,7 @@ function onSignIn(googleUser) {
     .then(data => {
         if(data["status"] == "success") {
             localStorage.setItem("user-id", data["user_data"]["user_id"])
+            localStorage.setItem("auth-token", data["user_data"]["token"])
             if(data["is_new_user"]) {
                 localStorage.setItem("new-user", true)
             }
@@ -595,6 +597,7 @@ function onSignIn(googleUser) {
         .then(data => {
             if(data["status"] == "success") {
                 localStorage.setItem("user-id", data["user_data"]["user_id"])
+                localStorage.setItem("auth-token", data["user_data"]["token"])
                 if(data["is_new_user"]) {
                     localStorage.setItem("new-user", true)
                 }
