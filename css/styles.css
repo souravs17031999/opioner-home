@@ -984,4 +984,32 @@ footer {
         width: 80%;
     }
 
+    .cta-footer-sign-up {
+        margin: .375rem;
+        padding: 0.64rem 0.5rem;
+        word-wrap: normal;
+    }
+
+    .cta-footer-contact-us {
+        margin: .375rem;
+        padding: 0.64rem 0.5rem;
+        word-wrap: normal;
+    }
+
+}
+
+@media only screen and (max-width: 376px) {
+
+    .cta-footer-sign-up {
+        margin: .375rem;
+        padding: 0.3rem 0.14rem;
+        word-wrap: normal;
+    }
+
+    .cta-footer-contact-us {
+        margin: .375rem;
+        padding: 0.3rem 0.14rem;
+        word-wrap: normal;
+    }
+
 }
