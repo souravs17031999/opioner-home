@@ -21,7 +21,7 @@ Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(pri
 ### Token based authentication
 - All the REST API calls are made with authentication JWT based token mechanism of Bearer type which makes your user's data exchanges secure and robust.
 
-_I bet you will love the backend of the project, check it here (https://github.com/souravs17031999/opioner-backend)[Opioner-backend]_
+_I bet you will love the backend of the project, check it here [Opioner-backend](https://github.com/souravs17031999/opioner-backend)_
 
 ### GDPR compliance:
 All the data processed for user is transparent and is explained on terms and privacy policy page of (Opioner-home website)[https://souravs17031999.github.io/opioner-home]
