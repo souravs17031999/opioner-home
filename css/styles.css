@@ -375,6 +375,16 @@ header {
     border-top: 2px solid #f32d07;
 }
 
+.profile-pic-menu {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border-left: 2px solid #e2ff00;
+    border-right: 2px solid #0017ff;
+    border-bottom: 2px solid #23ff00;
+    border-top: 2px solid #f32d07;
+}
+
 .profile-pic:hover {
     opacity: 0.6;
     cursor: pointer;

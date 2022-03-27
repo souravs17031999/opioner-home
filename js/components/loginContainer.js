@@ -14,17 +14,17 @@ class loginContainer extends HTMLElement {
                 </div>
                 <form id="reg-form">
                     <div id="user-basic-details">
-                        <input class="new-user-first-name" placeholder="first name ...." oninput="handleOnChangeInput(event)" required></input>
-                        <input class="new-user-last-name" placeholder="last name ...." oninput="handleOnChangeInput(event)" required></input>
+                        <input class="new-user-first-name" placeholder="first name ...." oninput="appController.handleOnChangeInput(event)" required></input>
+                        <input class="new-user-last-name" placeholder="last name ...." oninput="appController.handleOnChangeInput(event)" required></input>
                     </div>
                     <div id="form-block-separator"></div>
                     <div id="user-credentials">
                         <div class="tooltip">
-                            <input class="new-username" placeholder="choose username ...." oninput="handleOnChangeInput(event)" required></input>
+                            <input class="new-username" placeholder="choose username ...." oninput="appController.handleOnChangeInput(event)" required></input>
                             <span class="tooltiptext">Username must be non empty and minimum 8 characters</span>
                         </div>
                         <div class="tooltip">
-                            <input autocomplete="on" class="new-password" placeholder="choose password ...." type="password" oninput="handleOnChangeInput(event)" required></input>
+                            <input autocomplete="on" class="new-password" placeholder="choose password ...." type="password" oninput="appController.handleOnChangeInput(event)" required></input>
                             <span class="tooltiptext">Password must be non empty and between 7 to 15 characters including atleast one numeric and one special character</span>
                             <i class="far fa-eye" id="sign-up-eye-icon"></i>
                         </div>
@@ -32,18 +32,18 @@ class loginContainer extends HTMLElement {
                     </div>
                     <div id="user-contact">
                         <div class="tooltip">
-                            <input autocomplete="on" class="user-contact-email" placeholder="Enter valid email ...." type="email" oninput="handleOnChangeInput(event)" required></input>
+                            <input autocomplete="on" class="user-contact-email" placeholder="Enter valid email ...." type="email" oninput="appController.handleOnChangeInput(event)" required></input>
                             <span class="tooltiptext" style="left: 132px;top: 70px;">Enter a valid email so that we can send you OTP</span>
                         </div>
                     </div>
                     <div id="otp-by-email">
                         <div class="digit-group">
-                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
-                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
-                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
-                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
-                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
-                            <input class="otp-box" type="text" maxlength="1" oninput="handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="appController.handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="appController.handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="appController.handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="appController.handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="appController.handleOnChangeInput(event)"></input>
+                            <input class="otp-box" type="text" maxlength="1" oninput="appController.handleOnChangeInput(event)"></input>
                         </div>
                     </div>
                     <div class="signup-error-section">
@@ -77,12 +77,12 @@ class loginContainer extends HTMLElement {
                     <h1 class="login-header-title">Sign in</h1>
                     <div class="username-container">
                         <label>Username</label>
-                        <input class="username" oninput="handleOnChangeInput(event)" required></input>
+                        <input class="username" oninput="appController.handleOnChangeInput(event)" required></input>
                     </div>
                     <div class="password-outer-container">
                         <label>Password</label>
                         <div class="password-inner-container">
-                            <input autocomplete="on" type="password" class="password" oninput="handleOnChangeInput(event)" required></input>
+                            <input autocomplete="on" type="password" class="password" oninput="appController.handleOnChangeInput(event)" required></input>
                             <i class="fas fa-eye"></i>
                         </div>
                     </div>
