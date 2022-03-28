@@ -3,11 +3,11 @@ Complete codebase for Opioner frontend web app in vanilla JS
 
 # Goal - MAKE YOUR OPINION COUNT AND SHARE WITH WORLD
 
-https://souravs17031999.github.io/opioner-home
+https://souravs17031999.github.io/opioner-home/index
 
 # Opioner-frontend-docker-app
 
-# This project is meant to maintain the frontend code for the [Opioner - Make Your Opinion Count And Share With World](https://souravs17031999.github.io/opioner-home).
+# This project is meant to maintain the frontend code for the [Opioner - Make Your Opinion Count And Share With World](https://souravs17031999.github.io/opioner-home/index).
 Currently, the project is deployed using Github servers and all requests are served through Github API gateway.
 Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(private repo) is served through Heroku servers.
 
