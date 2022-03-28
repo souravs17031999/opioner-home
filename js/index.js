@@ -524,34 +524,106 @@ class AppController extends AuthController {
             e.currentTarget.classList.add("fa-eye-slash")
         }
     }
+
+}
+
+window.onload = initialLoadForIndexPage
+
+var appController = new AppController()
+
+function initialLoadForIndexPage() {
+
+}
+
+function onSignIn(googleUser) {
     
-    onSignIn(googleUser) {
+    let profile = googleUser.getBasicProfile();
+    localStorage.setItem("is_google_signed", true)
+    let url = configTestEnv["authServiceHost"] + "/auth/verify/social/sign"
+    let firstName = ""
+    let lastName = ""
+    if (profile.getName().split(" ").length > 1) {
+        firstName = profile.getName().split(" ")[0]
+        lastName = profile.getName().split(" ")[1]
+    } else {
+        firstName = profile.getName()
+    }
     
-        let profile = googleUser.getBasicProfile();
-        localStorage.setItem("is_google_signed", true)
-        let url = configTestEnv["authServiceHost"] + "/auth/verify/social/sign"
-        let firstName = ""
-        let lastName = ""
-        if (profile.getName().split(" ").length > 1) {
-            firstName = profile.getName().split(" ")[0]
-            lastName = profile.getName().split(" ")[1]
+    let dataForAPI = {
+        "action_event_source": "google",
+        "username": profile.getEmail(),
+        "firstname": firstName,
+        "lastname": lastName,
+        "email": profile.getEmail(),
+        "google_profile_url": profile.getImageUrl(),
+        "google_token_id": googleUser.getAuthResponse().id_token,
+    }
+    googleUser.disconnect()
+    document.querySelector(".failure-lottie").style.display = "none";
+    document.querySelector(".modal-loader").style.display = "block"
+
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(dataForAPI),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data["status"] == "success") {
+            localStorage.setItem("user-id", data["user_data"]["user_id"])
+            localStorage.setItem("signed-in", true)
+            if(data["is_new_user"]) {
+                localStorage.setItem("new-user", true)
+            }
+            document.querySelector(".modal-loader").style.display = "none"
+            window.location.href = "home.html"
         } else {
-            firstName = profile.getName()
+            if(data["is_new_user"]) {
+                appController.handleOnFailureSignUp(data)
+            } else {
+                appController.handleOnFailureSignUp(data, false)
+            }
         }
-        
-        let dataForAPI = {
-            "action_event_source": "google",
-            "username": profile.getEmail(),
-            "firstname": firstName,
-            "lastname": lastName,
-            "email": profile.getEmail(),
-            "google_profile_url": profile.getImageUrl(),
-            "google_token_id": googleUser.getAuthResponse().id_token,
-        }
-        googleUser.disconnect()
-        document.querySelector(".failure-lottie").style.display = "none";
-        document.querySelector(".modal-loader").style.display = "block"
+    })
+    .catch((error) => {
+        console.log(error)
+        appController.handleOnFailureSignUp({"message": error})
+    })
+
+  }
+
+function  signInViaFacebookAPI(response) { 
     
+    document.querySelector(".failure-lottie").style.display = "none";
+    const authResponse = response.authResponse
+    const fbUserId = authResponse["userID"]
+    
+    FB.api(`${fbUserId}?fields=id,name,email,picture,gender,first_name`,function(response) {
+
+        let lastName = ""
+        if (response.name.split(" ").length > 1) {
+            lastName = response.name.split(" ")[1]
+        }
+
+        let dataForAPI = {
+            "action_event_source": "facebook",
+            "name": response.name,
+            "email": response.email,
+            "facebook_profile_url": response.picture.data.url,
+            "facebook_token_id": authResponse["accessToken"],
+            "facebook_user_id": fbUserId,
+            "gender": response.gender,
+            "firstname": response.first_name,
+            "lastname": lastName,
+            "username": response.email,
+        }
+        localStorage.setItem("is_facebook_signed", true)
+        url = configTestEnv["authServiceHost"] + "/auth/verify/social/sign"
+
+        FB.api(`/${fbUserId}/permissions`, 'DELETE', function(response) {
+            console.log('revoke response' + response);
+        });
+        document.querySelector(".modal-loader").style.display = "block"
+
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI),
@@ -568,91 +640,19 @@ class AppController extends AuthController {
                 window.location.href = "home.html"
             } else {
                 if(data["is_new_user"]) {
-                    this.handleOnFailureSignUp(data)
+                    appController.handleOnFailureSignUp(data)
                 } else {
-                    this.handleOnFailureSignUp(data, false)
+                    appController.handleOnFailureSignUp(data, false)
                 }
+                
             }
         })
         .catch((error) => {
             console.log(error)
-            this.handleOnFailureSignUp({"message": error})
+            appController.handleOnFailureSignUp({"message": error})
         })
+
+    });
+
     
-      }
-    
-      signInViaFacebookAPI(response) { 
-        
-        document.querySelector(".failure-lottie").style.display = "none";
-        const authResponse = response.authResponse
-        const fbUserId = authResponse["userID"]
-        
-        FB.api(`${fbUserId}?fields=id,name,email,picture,gender,first_name`,function(response) {
-
-            let lastName = ""
-            if (response.name.split(" ").length > 1) {
-                lastName = response.name.split(" ")[1]
-            }
-
-            let dataForAPI = {
-                "action_event_source": "facebook",
-                "name": response.name,
-                "email": response.email,
-                "facebook_profile_url": response.picture.data.url,
-                "facebook_token_id": authResponse["accessToken"],
-                "facebook_user_id": fbUserId,
-                "gender": response.gender,
-                "firstname": response.first_name,
-                "lastname": lastName,
-                "username": response.email,
-            }
-            localStorage.setItem("is_facebook_signed", true)
-            url = configTestEnv["authServiceHost"] + "/auth/verify/social/sign"
-    
-            FB.api(`/${fbUserId}/permissions`, 'DELETE', function(response) {
-                console.log('revoke response' + response);
-            });
-            document.querySelector(".modal-loader").style.display = "block"
-    
-            fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(dataForAPI),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data["status"] == "success") {
-                    localStorage.setItem("user-id", data["user_data"]["user_id"])
-                    localStorage.setItem("signed-in", true)
-                    if(data["is_new_user"]) {
-                        localStorage.setItem("new-user", true)
-                    }
-                    document.querySelector(".modal-loader").style.display = "none"
-                    window.location.href = "home.html"
-                } else {
-                    if(data["is_new_user"]) {
-                        this.handleOnFailureSignUp(data)
-                    } else {
-                        this.handleOnFailureSignUp(data, false)
-                    }
-                    
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-                this.handleOnFailureSignUp({"message": error})
-            })
-    
-        });
-    
-        
-      }
-
-}
-
-window.onload = initialLoadForIndexPage
-
-var appController = new AppController()
-
-function initialLoadForIndexPage() {
-
-}
+  }
