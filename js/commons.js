@@ -274,9 +274,9 @@ class BaseController extends AuthController {
                 return Error("ERROR: Logout failed !");
             }
             if(is_google_signed != null) {
-                this.onLoad();
+                onLoad();
             } else if(is_facebook_verified != null) {
-                this.signOutFacebook();
+                signOutFacebook();
             }
             console.log("USER LOGGED OUT SUCCESSFULLY ! ALL YOUR SESSIONS AND COOKIES ARE CLEARED.")
             document.querySelector(".modal-first-loader").style.display = 'none';
@@ -285,21 +285,6 @@ class BaseController extends AuthController {
         .catch((error) => {
             alert(error)
         })
-    }
-
-    onLoad() {
-        gapi.load('auth2', function() {
-          gapi.auth2.init();
-          this.googleSignOutByUser()
-        });
-    }
-
-    googleSignOutByUser() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-          auth2.disconnect();
-        });
     }
 
     fetchUserData() {
@@ -437,6 +422,21 @@ class BaseController extends AuthController {
         }
     }
 
+}
+
+function onLoad() {
+    gapi.load('auth2', function() {
+      gapi.auth2.init();
+      googleSignOutByUser();
+    });
+}
+
+function googleSignOutByUser() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+      auth2.disconnect();
+    });
 }
 
 function getImagePath(firstname) {
