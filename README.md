@@ -23,6 +23,8 @@ Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(pri
 
 ### Token based authentication
 - All the REST API calls are made with authentication JWT based token mechanism of Bearer type which makes your user's data exchanges secure and robust.
+- All environment variables in Dockerfile are just default values, actual values are injected on the fly while deployment (not commited due to security reasons).
+
 
 _I bet you will love the backend of the project, check it here [Opioner-backend](https://github.com/souravs17031999/opioner-backend)_
 
