@@ -16,6 +16,10 @@ if [[ -z ${DOCKER_HUB_USERNAME} ]]; then
     DOCKER_HUB_USERNAME="souravkumardevadmin"
 fi
 
+if [[ -z ${TAGNAME} ]]; then
+    TAGNAME=${GITHUB_CI_TAG}
+fi
+
 docker tag opioner-home_opioner_home:latest ${DOCKER_HUB_USERNAME}/opioner-home_opioner_home:$TAGNAME
 docker push ${DOCKER_HUB_USERNAME}/opioner-home_opioner_home:$TAGNAME
 echo "==================================*********==================================="

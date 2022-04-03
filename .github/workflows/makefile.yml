@@ -11,6 +11,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      GITHUB_CI_TAG: ${{github.ref_name}}
+
     steps:
     - uses: actions/checkout@v3
       
