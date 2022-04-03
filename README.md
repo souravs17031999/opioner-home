@@ -11,12 +11,24 @@ https://souravs17031999.github.io/opioner-home/index
 Currently, the project is deployed using Github servers and all requests are served through Github API gateway.
 Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(private repo) is served through Heroku servers.
 
+# Deliverables
+This project contains two types of deliverables : 
+- Vanilla JS webapp (no framework) [The last released version is 6.0.0]
+- Express powered dockerized webapp [Versions starting from 7.0.0]
+
 # Running project locally:
 
-* Clone this repo    
-  `git clone git@github.com:souravs17031999/opioner-home.git`      
-* Start the web server locally on any port (ex. 5500).
-* your app should be visible on http://127.0.0.1:5500/opioner-home
+- Vanilla JS [6.0.0]:   
+  * Clone this repo      
+    `git clone git@github.com:souravs17031999/opioner-home.git`        
+  * Start the web server locally on any port (ex. 5500).  
+  * your app should be visible on http://127.0.0.1:5500/opioner-home  
+
+- Dockerized webapp [>=7.0.0]   
+  * run `make local`  
+  * Your webapp should start on http://localhost:3000/index.html
+  * Provide required configurations and env vars through your shell as defined in `docker-compose.yml`  
+
 
 ### Easy configuration
 * For local development and production, both configuration can be handled using js/config.js where hosts/URL for staging, local and production can be managed.
