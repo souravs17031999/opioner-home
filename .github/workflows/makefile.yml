@@ -22,5 +22,8 @@ jobs:
     - name: Build docker image
       run: make build
     
+    - name: Test docker image
+      run: make test
+    
     - name: Publish docker image
       run: make publish
