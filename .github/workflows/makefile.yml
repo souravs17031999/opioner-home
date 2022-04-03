@@ -27,3 +27,6 @@ jobs:
     
     - name: Publish docker image
       run: make publish
+      
+    - name: Cleanup workspace
+      run: make clean
