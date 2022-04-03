@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  apitest:
+    build:
+      context: ${TOPDIR}/test
+      dockerfile: Dockerfile
+    depends_on:
+      - opioner_home
+    environment:
+      - CYPRESS_BASE_URL=http://localhost:3000/index.html
