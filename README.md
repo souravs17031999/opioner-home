@@ -18,20 +18,20 @@ This project contains two types of deliverables :
 
 # Running project locally:
 
-- Vanilla JS [6.0.0]:   
+- Vanilla JS [6.0.0](https://github.com/souravs17031999/opioner-home/releases/tag/6.0.0):   
   * Clone this repo      
     `git clone git@github.com:souravs17031999/opioner-home.git`        
   * Start the web server locally on any port (ex. 5500).  
   * your app should be visible on http://127.0.0.1:5500/opioner-home  
 
-- Dockerized webapp [>=7.0.0]   
+- Dockerized webapp [>=7.0.0](https://github.com/souravs17031999/opioner-home/releases/tag/7.0.1)   
   * run `make local`  
   * Your webapp should start on http://localhost:3000/index.html
   * Provide required configurations and env vars through your shell as defined in `docker-compose.yml`  
 
 
 ### Easy configuration
-* For local development and production, both configuration can be handled using js/config.js where hosts/URL for staging, local and production can be managed.
+* For local development and production, both configuration can be handled using js/config.js where hosts/URL for staging, local and production can be managed. Currently, config.js is random localhost ports which is expected by devs to inject/update the values when the opioner-backend services are up accordingly.
 
 ### Token based authentication
 - All the REST API calls are made with authentication JWT based token mechanism of Bearer type which makes your user's data exchanges secure and robust.
