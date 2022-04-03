@@ -8,7 +8,7 @@ else
 fi
 
 echo "Publishing to docker hub....."
-# docker login -u $dockerHubUsername -p $dockerHubPassword
+docker login -u $dockerHubUsername -p $dockerHubPassword
 
 echo "==================================*********==================================="
 
