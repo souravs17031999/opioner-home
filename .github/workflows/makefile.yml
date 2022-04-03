@@ -13,6 +13,8 @@ jobs:
 
     env:
       GITHUB_CI_TAG: ${{github.ref_name}}
+      dockerHubUsername: ${{secrets.dockerHubUsername}}
+      dockerHubPassword: ${{secrets.dockerHubPassword}}
 
     steps:
     - uses: actions/checkout@v3
