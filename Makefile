@@ -15,7 +15,7 @@ test_postdeploy:
 
 publish:
 	@echo "MAKE publish ==========================================="
-	# build-scripts/publish.sh  
+	build-scripts/publish.sh  
 
 clean:
 	@echo "MAKE clean ===========================================" 
