@@ -35,7 +35,7 @@ footerData = {
         },
         {
             "title": "Check Status ?",
-            "link": "/opioner-home/status-page.html",
+            "link": "status-page.html",
             "customClass": "cta-footer-sign-up",
         },
         {

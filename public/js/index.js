@@ -532,7 +532,10 @@ window.onload = initialLoadForIndexPage
 var appController = new AppController()
 
 function initialLoadForIndexPage() {
-
+    // fix index page href link
+    if (window.location.href.indexOf('index') <= 0) {
+        window.location.replace("index.html")
+    }
 }
 
 function onSignIn(googleUser) {
