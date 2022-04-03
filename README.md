@@ -1,5 +1,5 @@
 # Opioner-frontend
-Complete codebase for Opioner frontend web app in vanilla JS
+Complete codebase for Opioner frontend web app
 
 # Goal - MAKE YOUR OPINION COUNT AND SHARE WITH WORLD
 
@@ -13,8 +13,9 @@ Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(pri
 
 # Deliverables
 This project contains two types of deliverables : 
-- Vanilla JS webapp (no framework) [The last released version is 6.0.0]
-- Express powered dockerized webapp [Versions starting from 7.0.0]
+- Vanilla JS webapp (no framework) [The last released version is 6.0.0]   
+- Express powered dockerized webapp [Versions starting from 7.0.0]   
+[Latest Docker image](https://hub.docker.com/repository/docker/souravkumardevadmin/opioner-home_opioner_home) 
 
 # Running project locally:
 
