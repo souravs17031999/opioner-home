@@ -7,4 +7,4 @@ services:
     depends_on:
       - opioner_home
     environment:
-      - CYPRESS_BASE_URL=http://localhost:3000/index.html
+      - CYPRESS_BASE_URL=http://opioner_home:3000/index.html

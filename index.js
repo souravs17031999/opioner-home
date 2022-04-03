@@ -22,7 +22,7 @@ if (fs.existsSync("public")) {
     throw new Error("[ERROR]: Entrypoint App Directory not found !")
 }
 
-app.use(express.static("public"))
+app.use(express.static(path.join(__dirname, 'public')))
 
 if (config.server.port === undefined) {
     debug("SERVER_PORT env var not defined !, using default port 3000")

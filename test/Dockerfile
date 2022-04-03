@@ -6,7 +6,7 @@ WORKDIR /apitest
 
 RUN npm install -g wait-on
 
-COPY . .
+COPY e2e/ docker-entrypoint.sh /apitest/
 
 ENV CYPRESS_BASE_URL="http://localhost:3000/index.html"
 
