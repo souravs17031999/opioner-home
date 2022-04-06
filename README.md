@@ -1,6 +1,8 @@
 # Opioner-frontend
 Complete codebase for Opioner frontend web app
 
+![MAKEFILE CI](https://github.com/souravs17031999/opioner-home/actions/workflows/makefile.yml/badge.svg)
+
 # Goal - MAKE YOUR OPINION COUNT AND SHARE WITH WORLD
 
 https://souravs17031999.github.io/opioner-home/index
