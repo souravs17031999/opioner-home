@@ -13,6 +13,7 @@ app.use(morgan('combined'))
 app.use(morgan('combined', { stream: accessLogStream }))
 // app.use(helmet());
 app.use(cors())
+app.options('*', cors())
 
 // check if directory exists
 if (fs.existsSync("public")) {
