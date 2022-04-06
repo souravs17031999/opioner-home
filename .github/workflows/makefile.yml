@@ -29,4 +29,5 @@ jobs:
       run: make publish
       
     - name: Cleanup workspace
+      if: always()
       run: make clean
