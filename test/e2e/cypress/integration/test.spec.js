@@ -3,16 +3,25 @@ describe('Opioner GUI app', () => {
 
         before(() => {
 
+            cy.intercept('GET', 'https://www.facebook.com/**', {
+                statusCode: 200
+            }).as('fbStatus')
+
+            cy.intercept('GET', 'https://apis.google.com/**', {
+                statusCode: 200
+            }).as('GStatus')
+
             cy.visit(Cypress.config('baseUrl'))
-          
+            cy.wait('@fbStatus')
+            cy.wait('@GStatus')
         })
           
         it('test #1', () => {
-            // rest of your test
+            cy.contains('Login')
         })
         
         it('test #2', () => {
-            // rest of your test
+            cy.contains('Login')
         })
 
     })
