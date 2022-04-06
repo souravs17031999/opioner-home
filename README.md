@@ -17,6 +17,10 @@ This project contains two types of deliverables :
 - Express powered dockerized webapp [Versions starting from 7.0.0]   
 [Latest Docker image](https://hub.docker.com/repository/docker/souravkumardevadmin/opioner-home_opioner_home) 
 
+### Github CI pipeline:
+- Every push to master branch triggers github Makefile CI actions workflow which builds, test and deploy container images.
+- [Cypress](https://www.cypress.io/) is integrated for GUI test automation.
+
 # Running project locally:
 
 - Vanilla JS [6.0.0](https://github.com/souravs17031999/opioner-home/releases/tag/6.0.0):   
