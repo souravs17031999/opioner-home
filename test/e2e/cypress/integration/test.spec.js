@@ -3,7 +3,7 @@ describe('Opioner GUI app', () => {
 
         before(() => {
 
-            cy.visit('http://opioner_home:3000/index.html')
+            cy.visit(Cypress.config('baseUrl'))
           
         })
           
