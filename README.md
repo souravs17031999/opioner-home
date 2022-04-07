@@ -6,12 +6,13 @@ Complete codebase for Opioner frontend web app
 
 # Goal - MAKE YOUR OPINION COUNT AND SHARE WITH WORLD
 
-https://souravs17031999.github.io/opioner-home/index
+http://opioner-home.vercel.app/
 
 # Opioner-frontend-docker-app
 
-# This project is meant to maintain the frontend code for the [Opioner - Make Your Opinion Count And Share With World](https://souravs17031999.github.io/opioner-home/index).
-Currently, the project is deployed using Github servers and all requests are served through Github API gateway.
+# This project is meant to maintain the frontend code for the [Opioner - Make Your Opinion Count And Share With World](http://opioner-home.vercel.app/).  
+[Older versions] The project is deployed using Github servers and all requests are served through Github API gateway.
+[Latest versions] The Current versions are deployed using [vercel](https://vercel.com/) platform which is integrated with master branch.
 Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(private repo) is served through Heroku servers.
 
 # Deliverables
