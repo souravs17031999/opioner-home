@@ -40,6 +40,10 @@ This project contains two types of deliverables :
   * Provide required configurations and env vars through your shell as defined in `docker-compose.yml`  
 
 
+# DEMO (Preview of all features)
+
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/index.PNG)
+
 ### Easy configuration
 * For local development and production, both configuration can be handled using js/config.js where hosts/URL for staging, local and production can be managed. Currently, config.js is random localhost ports which is expected by devs to inject/update the values when the opioner-backend services are up accordingly.
 
