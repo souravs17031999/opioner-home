@@ -31,6 +31,9 @@ class HomeController extends BaseController {
         .then(data => {
             if(data["status"] == "success") {
                 this.setAuthTokenInContext(data["token"])
+                this.fetchUserData();
+                this.fetchUnreadCountForNotifications("Opioner | Home");
+                this.loadAllPublicFeeds();
             } 
             else {
                 window.location.href = "index.html"
@@ -865,10 +868,6 @@ function resetPopUps() {
 var homeController = new HomeController();
 
 function initialLoadForFeedPage() {
-
-    homeController.fetchUserData();
-    homeController.fetchUnreadCountForNotifications("Opioner | Home");
-    homeController.loadAllPublicFeeds()
 
     // infinite scrolling loading 10 items at a time, each time user reaches the end of page
     window.addEventListener('scroll', () => {
