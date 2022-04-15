@@ -43,6 +43,17 @@ This project contains two types of deliverables :
 # DEMO (Preview of all features)
 
 ![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/index.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/index2.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/login.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/signup.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/home.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/footer.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/profile.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/notification.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/menus.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/status.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/subscriptions.PNG)
+![This is an image](https://github.com/souravs17031999/opioner-home/blob/master/public/images/upload.PNG)  
 
 ### Easy configuration
 * For local development and production, both configuration can be handled using js/config.js where hosts/URL for staging, local and production can be managed. Currently, config.js is random localhost ports which is expected by devs to inject/update the values when the opioner-backend services are up accordingly.
