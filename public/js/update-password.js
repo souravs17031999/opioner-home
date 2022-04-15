@@ -116,7 +116,7 @@ class UpdatePasswordController {
     
         e.preventDefault()
         
-        const errorFlag = false 
+        let errorFlag = false 
         const errorParent = document.createElement("ul")
         errorParent.setAttribute("id", "update-password-error-section-items")
         const mainErrorDiv = document.querySelector(".update-password-error-section")
