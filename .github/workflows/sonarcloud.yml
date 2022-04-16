@@ -59,7 +59,7 @@ jobs:
             -Dsonar.projectKey=souravs17031999_opioner-home	
             -Dsonar.organization=souravs17031999
             -Dsonar.scm.provider=git
-            -Dsonar.projectBaseDir=/github/workspace
+            -Dsonar.projectBaseDir=/home/runner/work/opioner-home/opioner-home
             -Dsonar.verbose=true
             # Comma-separated paths to directories containing main source files.
             #-Dsonar.sources= # optional, default is project base directory
