@@ -4,6 +4,8 @@ Complete codebase for Opioner frontend web app
 ![MAKEFILE CI](https://github.com/souravs17031999/opioner-home/actions/workflows/makefile.yml/badge.svg)
 ![Security CI](https://github.com/souravs17031999/opioner-home/actions/workflows/codeql-analysis.yml/badge.svg)
 ![Node.js CI](https://github.com/souravs17031999/opioner-home/actions/workflows/node.js.yml/badge.svg)
+![SonarCloud analysis](https://github.com/souravs17031999/opioner-home/actions/workflows/sonarcloud.yml/badge.svg)
+
 
 # Goal - MAKE YOUR OPINION COUNT AND SHARE WITH WORLD
 
