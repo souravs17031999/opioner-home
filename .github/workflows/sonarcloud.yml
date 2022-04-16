@@ -58,8 +58,7 @@ jobs:
             # mandatory
             -Dsonar.projectKey=souravs17031999_opioner-home	
             -Dsonar.organization=souravs17031999
-            -Dsonar.scm.provider=git
-            -Dsonar.projectBaseDir=public
+            -Dsonar.projectBaseDir=.
             -Dsonar.verbose=true
             # Comma-separated paths to directories containing main source files.
             #-Dsonar.sources= # optional, default is project base directory
