@@ -26,6 +26,7 @@ This project contains two types of deliverables :
 
 ### Github CI pipeline:
 - Every push to master branch triggers github Makefile CI actions workflow which builds, test and deploy container images.
+- Additional CI checks are introduced for Nodejs CI builds, SONAR code quality checks.
 - [Cypress](https://www.cypress.io/) is integrated for GUI test automation.
 
 # Running project locally:
