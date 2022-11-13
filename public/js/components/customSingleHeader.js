@@ -29,7 +29,9 @@ class customSingleHeader extends HTMLElement {
           let aLink = document.createElement("a");
           let linkText = document.createTextNode(link.text)
           aLink.appendChild(linkText);
-          aLink.href = link.src;
+          if(link.src != undefined) {
+            aLink.href = link.src;
+          }
           
           if(link.styles != null) {
             aLink.style.cssText = link.styles;

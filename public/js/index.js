@@ -5,98 +5,21 @@ class AppController extends AuthController {
         this.timerId = "";
 
         if(window.location.href.indexOf("index") > 0) {
-            this.btns = document.querySelectorAll("button")
-            for(let btn of this.btns) {
-                if(btn.classList.contains("login-btn")) {
-                    btn.addEventListener('click', this.handleOnLogin.bind(this))
-                } else if(btn.classList.contains("sign-up-btn")) {
-                    btn.addEventListener('click', this.showSignUpModal.bind(this))
-                }
-            }
-
-            document.querySelector(".fas").addEventListener('click', this.toggleShowPasswordOnLogin.bind(this));
-            document.querySelector(".far").addEventListener('click', this.toggleShowPasswordOnSignup.bind(this));
-
-            document.querySelectorAll(".home-nav-links a")[1].addEventListener('click', this.showSignUpModal.bind(this));
-            document.querySelector(".cta-footer-sign-up").addEventListener('click', this.showSignUpModal.bind(this));
+            this.login = document.querySelectorAll("button")
+            
+            document.querySelectorAll(".home-nav-links a")[0].addEventListener('click', handleOnLogin);
+            document.querySelectorAll(".home-nav-links a")[1].addEventListener('click', handleOnLogin);
+            document.querySelector(".cta-footer-sign-up").addEventListener('click', handleOnLogin);
         }
-    }
-
-    handleOnLogin(e) {
-
-        e.preventDefault()
-        
-        const username = document.querySelector(".username")
-        const password = document.querySelector(".password") 
-    
-        let errorFlag = false
-    
-        if(username.value === "") {
-            username.setAttribute("id", "error-value-login")
-            errorFlag = true
-        }
-    
-        if(password.value === "") {
-            password.setAttribute("id", "error-value-login")
-            errorFlag = true
-        }
-    
-        if(username.getAttribute("id") === "error-value-login" || password.getAttribute("id") === "error-value-login") {
-            errorFlag = true
-        }
-    
-        if(errorFlag) {
-            return;
-        }
-        document.querySelector(".failure-lottie").style.display = "none";
-        document.querySelector(".modal-loader").style.display = "block"
-    
-        let url = configTestEnv["authServiceHost"] + "/auth/login/user"
-        const credentials = {username: username.value, password: password.value}
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(credentials),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data["status"] == "success") {
-                document.querySelector(".modal-loader").style.display = "none"
-                window.location.href = "home.html"
-                localStorage.setItem("user-id", data["user_data"]["user_id"])
-                localStorage.setItem("signed-in", true)
-                this.setAuthTokenInContext(data["user_data"]["token"])
-            } else {
-                document.querySelector(".modal-loader").style.display = "none"
-                document.querySelector(".failure-lottie").style.display = "flex";
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-            document.querySelector(".modal-loader").style.display = "none"
-            alert(error)
-        })
-    
     }
     
     showSignUpModal(e) {
     
-        e.preventDefault()
-    
-        this.clearEmptyErrorValue();
-        
-        const modal = document.getElementById("sign-up-modal")
-        modal.style.display = "block"
-        document.querySelector(".sign-up-close").addEventListener('click', this.closeSignUpModal.bind(this))
-        document.querySelector("#sign-up-user").addEventListener('click', this.handleVerifyOTP.bind(this))
-        document.querySelector("#verify-otp").addEventListener('click', this.handleGenerateOTP.bind(this))
-    
-        this.setToState1()
-    
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+        // keycloak.logout().then((success) => {
+        //     console.log("--> log: logout success ", success );
+        // }).catch((error) => {
+        //         console.log("--> log: logout error ", error );
+        // });
     
     }
     
@@ -532,10 +455,7 @@ window.onload = initialLoadForIndexPage
 var appController = new AppController()
 
 function initialLoadForIndexPage() {
-    // fix index page href link
-    if (window.location.href.indexOf('index') <= 0) {
-        window.location.replace("index.html")
-    }
+
 }
 
 function onSignIn(googleUser) {

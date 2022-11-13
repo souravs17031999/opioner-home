@@ -2,14 +2,17 @@ class BaseController extends AuthController {
 
     constructor() {
         super();
-        
+
         if(window.location.href.indexOf("home") > 0 || window.location.href.indexOf("profile") > 0) {
+
+            
+            handleOnLogin()
 
             document.querySelectorAll(".menu-dropdown-container")[0].addEventListener('click', this.handleNotificationDropdownPanel.bind(this))
             document.querySelectorAll(".menu-dropdown-container")[1].addEventListener('click', this.handleMenuDropdownPanel.bind(this))
             // rendering menu panel dropdown
             document.querySelectorAll(".dropdown-btn-container")[1].addEventListener('click', this.handleMyProfileClickAction.bind(this))
-            document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', this.handlelogoutUserClick.bind(this))
+            document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', handleOnLogout)
 
             this.notificationDropdownRef = document.getElementsByClassName("dropdown-items-notification")[0];
             this.dropDownContentContainerNotification = document.getElementsByClassName("dropdown-content-container-notification")[0];
@@ -44,6 +47,47 @@ class BaseController extends AuthController {
         }
     }
 
+    wait = ms => new Promise((resolve) => {
+        setTimeout(() => resolve(), ms);
+      });
+
+    retryWithDelay = async (
+        fn, retries = 2, interval = 1000,
+        finalErr = 'Retry failed'
+      ) => {
+        try {
+          // try
+          let profileData = await fn();
+          return profileData
+        } catch (err) {
+          // if no retries left
+          // throw error
+          if (retries <= 0) {
+            return Promise.reject(finalErr);
+          }
+          
+          //delay the next call
+          await this.wait(interval);
+          
+          //recursively call the same func
+          return this.retryWithDelay(fn, (retries - 1), interval, finalErr);
+        }
+    }
+
+    isAuthenticated() {
+        return new Promise(function(resolve, reject) {
+          const profileData = sessionStorage.getItem("profile_data");
+          const isLoggedInAttempt = sessionStorage.getItem("start_login_flow");
+
+          if(profileData != undefined && isLoggedInAttempt === "true") {
+            resolve(profileData);
+          } else {
+            reject(new Error(`User not authenticated !`));
+          }
+        });
+      }
+
+
     handleUploadProfile(e) {
 
         e.preventDefault()
@@ -62,6 +106,10 @@ class BaseController extends AuthController {
         fetch(url, {
             method: 'PUT',
             body: formData, 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -91,6 +139,10 @@ class BaseController extends AuthController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -144,6 +196,9 @@ class BaseController extends AuthController {
         url += `&all_flag=${allFlag}`
         fetch(url, {
             method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this.authToken}` 
+            }
         })
         .then(response => {
             return response.json()})
@@ -171,6 +226,10 @@ class BaseController extends AuthController {
             fetch(url, {
                 method: 'PUT',
                 body: JSON.stringify(dataForAPI), 
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}`,
+                    "Content-Type": "application/json"
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -268,6 +327,10 @@ class BaseController extends AuthController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => {
             if(response.status != 204) {
@@ -319,13 +382,15 @@ class BaseController extends AuthController {
     setUserDataInContext(userData) {
     
     
-        firstname = userData["user_data"]["firstname"]
-        lastname = userData["user_data"]["lastname"]
-        loggedInUsername = userData["user_data"]["username"]
-        loggedInUserEmailId = userData["user_data"]["email"]
+        firstname = userData["firstName"]
+        lastname = userData["lastName"]
+        loggedInUsername = userData["username"]
+        loggedInUserEmailId = userData["email"]
 
         let userAvatarImage = document.querySelector(".profile-pic")
-        userAvatarImage.src = userData["user_data"]["profile_picture_url"]
+        if(userData["attributes"]["profile_pic"].length > 0) {
+            userAvatarImage.src = userData["attributes"]["profile_pic"][0]
+        }
 
         if(document.getElementsByClassName('dropdown-btn-outer-container')[0].children[0].children[1].children[0] != undefined) {
             document.getElementsByClassName('dropdown-btn-outer-container')[0].children[0].children[1].children[0].innerText = `Welcome ${this.toTitleCase(firstname)}`
@@ -333,7 +398,7 @@ class BaseController extends AuthController {
 
         if(document.getElementsByClassName('dropdown-btn-outer-container')[0].children[0].children[0].children[0] != undefined) {
             document.getElementsByClassName('dropdown-btn-outer-container')[0].children[0].children[0].children[0].innerHTML = `
-            <img class="profile-pic-menu" src=${userData["user_data"]["profile_picture_url"]} onerror="this.onerror=null;this.src='images/avatar.gif';">
+            <img class="profile-pic-menu" src=${userData["attributes"]["profile_pic"][0]} onerror="this.onerror=null;this.src='images/avatar.gif';">
             `
         }
 
@@ -349,7 +414,7 @@ class BaseController extends AuthController {
         userAvatarImage.addEventListener('click', this.showUploadProfileModal.bind(this))
     
         if (document.querySelectorAll(".notify-email")[1] != undefined) {
-            document.querySelectorAll(".notify-email")[1].value = userData["user_data"]["email"]
+            document.querySelectorAll(".notify-email")[1].value = userData["email"]
         }
     }
 

@@ -1,7 +1,7 @@
 class AuthController {
     constructor() {
 
-        this.authToken = ""
+        this.authToken = sessionStorage.getItem("access_token");
         this.loggedInUserEmailId = ""
         this.loggedInUsername = ""
     }

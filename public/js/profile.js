@@ -19,7 +19,7 @@ class ProfileController extends BaseController {
                     } else if(btn.classList.contains("clear-btn")) {
                         btn.addEventListener('click', this.handleClearBtn.bind(this))
                     } else if(btn.classList.contains("dropdown-btn")) {
-                        btn.addEventListener('click', this.handlelogoutUserClick.bind(this))
+                        btn.addEventListener('click', handleOnLogout)
                     }
                 }
             }
@@ -38,29 +38,19 @@ class ProfileController extends BaseController {
             })
         }
 
+        this.authenticateUser();
+
     }
 
     authenticateUser() {
-        const url = configTestEnv["authServiceHost"] + "/auth/open-id/connect/token"
-        const apiData = {"user-id": localStorage.getItem("user-id")}
-
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(apiData), 
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data["status"] == "success") {
-                this.setAuthTokenInContext(data["token"])
-            } 
-            else {
-                //window.location.href = "index.html"
-            }
+        this.retryWithDelay(this.isAuthenticated)
+        .then(response => JSON.parse(response))
+        .then(profileData => {
+            this.setUserDataInContext(profileData)
         })
         .catch((error) => {
             console.log(error)
-            //window.location.href = "index.html"
-        })    
+        })
     }
 
     handleOnClickSubmitBtn(e) {
@@ -145,7 +135,7 @@ class ProfileController extends BaseController {
 
         const deleteItem = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement
     
-        let dataForAPI = {"user_id": localStorage.getItem("user-id"), "id": deleteItem.getAttribute("id"), "all_flag": 0}
+        let dataForAPI = {"id": deleteItem.getAttribute("id"), "all_flag": 0}
     
         this.removeItemFromList(dataForAPI)
     }
@@ -276,6 +266,10 @@ class ProfileController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(itemData),
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -312,6 +306,10 @@ class ProfileController extends BaseController {
         fetch(url, {
             method: 'DELETE',
             body: JSON.stringify(itemData),
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -338,6 +336,10 @@ class ProfileController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -415,6 +417,10 @@ class ProfileController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {

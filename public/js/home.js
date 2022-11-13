@@ -16,33 +16,28 @@ class HomeController extends BaseController {
                 }
             }
         }
-        this.authenticateUser()
+
+        this.authenticateUser();
+        
     }
 
     authenticateUser() {
-        const url = configTestEnv["authServiceHost"] + "/auth/open-id/connect/token"
-        const apiData = {"user-id": localStorage.getItem("user-id")}
-
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(apiData), 
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data["status"] == "success") {
-                this.setAuthTokenInContext(data["token"])
-                this.fetchUserData();
-                this.fetchUnreadCountForNotifications("Opioner | Home");
-                this.loadAllPublicFeeds();
-            } 
-            else {
-                window.location.href = "index.html"
-            }
+        this.retryWithDelay(this.isAuthenticated)
+        .then(response => JSON.parse(response))
+        .then(profileData => {
+            this.setUserDataInContext(profileData)
+            // this.fetchUserData();
+            this.fetchUnreadCountForNotifications("Opioner | Home");
+            this.loadAllPublicFeeds();
         })
         .catch((error) => {
             console.log(error)
-            window.location.href = "index.html"
         })    
+
+        // (async () => {
+        // const profileData = await this.retryWithDelay(this.isAuthenticated)
+        // console.log(profileData)
+        // })();
     }
 
     loadAllPublicFeeds(page=1, size=10) {
@@ -288,14 +283,19 @@ class HomeController extends BaseController {
 
         if (e.currentTarget.parentElement.children[0].value != "") {
             let url = configTestEnv["productServiceHost"] + "/product/feed/upsert"
-            let dataForAPI = {"user_id": localStorage.getItem("user-id"), 
+            let dataForAPI = { 
                             "item": e.currentTarget.parentElement.children[0].value,
                             "update_flag": 0, 
-                            "privacy_status": "public"}
+                            "privacy_status": "public"
+                        }
             
             fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(dataForAPI),
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}`,
+                    "Content-Type": "application/json"
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -342,6 +342,10 @@ class HomeController extends BaseController {
         fetch(url, {
             method: 'PUT',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -422,6 +426,9 @@ class HomeController extends BaseController {
             
             fetch(url, {
                 method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}` 
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -516,6 +523,10 @@ class HomeController extends BaseController {
         fetch(url, {
             method: 'PUT',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -555,6 +566,10 @@ class HomeController extends BaseController {
             fetch(url, {
                 method: 'PUT',
                 body: JSON.stringify(dataForAPI), 
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}`,
+                    "Content-Type": "application/json"
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -698,6 +713,10 @@ class HomeController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -727,6 +746,10 @@ class HomeController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -762,6 +785,10 @@ class HomeController extends BaseController {
             fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(dataForAPI), 
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}`,
+                    "Content-Type": "application/json"
+                }
             })
             .then(response => response.json())
             .then(data => {

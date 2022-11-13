@@ -9,11 +9,11 @@ services:
       - "3000:3000"
     environment:
       - SECRET_KEY
-      - SERVER_PORT
+      - SERVER_PORT=3000
       - NODE_ENV
-      - DEBUG
-    volumes:
-        - opioner-data:/app
-
-volumes:
-  opioner-data:
+      - DEBUG=*
+      - LOG_LEVEL=debug
+      - AUTH_SERVICE_URL=http://localhost:8081
+      - USER_SERVICE_URL=http://localhost:8082
+      - PRODUCT_SERVICE_URL=http://localhost:8083
+      - NOTIFICATION_SERVICE_URL=http://localhost:8086

@@ -2,3 +2,5 @@ node_modules
 access.log
 .vercel
 dist
+server.log
+swagger_output.json
