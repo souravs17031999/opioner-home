@@ -19,7 +19,7 @@ class ProfileController extends BaseController {
                     } else if(btn.classList.contains("clear-btn")) {
                         btn.addEventListener('click', this.handleClearBtn.bind(this))
                     } else if(btn.classList.contains("dropdown-btn")) {
-                        btn.addEventListener('click', this.handlelogoutUserClick.bind(this))
+                        btn.addEventListener('click', handleOnLogout)
                     }
                 }
             }

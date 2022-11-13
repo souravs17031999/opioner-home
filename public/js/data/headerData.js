@@ -13,11 +13,10 @@ headerData = {
             "links": [
                 {
                     "text": "Login",
-                    "src": "#login-inner-container"
+                    "styles": "cursor: pointer"
                 }, 
                 {
                     "text": "Signup",
-                    "src": "#", 
                     "styles": "background: #0065ff; border-radius: 6px; color: white;"
                 }
             ], 

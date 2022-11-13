@@ -2,14 +2,17 @@ class BaseController extends AuthController {
 
     constructor() {
         super();
-        
+
         if(window.location.href.indexOf("home") > 0 || window.location.href.indexOf("profile") > 0) {
+
+            
+            handleOnLogin()
 
             document.querySelectorAll(".menu-dropdown-container")[0].addEventListener('click', this.handleNotificationDropdownPanel.bind(this))
             document.querySelectorAll(".menu-dropdown-container")[1].addEventListener('click', this.handleMenuDropdownPanel.bind(this))
             // rendering menu panel dropdown
             document.querySelectorAll(".dropdown-btn-container")[1].addEventListener('click', this.handleMyProfileClickAction.bind(this))
-            document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', this.handlelogoutUserClick.bind(this))
+            document.querySelectorAll(".dropdown-btn-container")[2].addEventListener('click', handleOnLogout)
 
             this.notificationDropdownRef = document.getElementsByClassName("dropdown-items-notification")[0];
             this.dropDownContentContainerNotification = document.getElementsByClassName("dropdown-content-container-notification")[0];

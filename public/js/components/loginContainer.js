@@ -75,23 +75,7 @@ class loginContainer extends HTMLElement {
             <section id="login-inner-container">
                 <form id="login-user-container">
                     <h1 class="login-header-title">Sign in</h1>
-                    <div class="username-container">
-                        <label>Username</label>
-                        <input class="username" oninput="appController.handleOnChangeInput(event)" required></input>
-                    </div>
-                    <div class="password-outer-container">
-                        <label>Password</label>
-                        <div class="password-inner-container">
-                            <input autocomplete="on" type="password" class="password" oninput="appController.handleOnChangeInput(event)" required></input>
-                            <i class="fas fa-eye"></i>
-                        </div>
-                    </div>
-                    <button class="login-btn">Login</button>
-                    <p id="break-para-for-social-media">OR</p>
-                    <div class="social-media-accounts">
-                        <div class="g-signin2" data-onsuccess="onSignIn" data-width="300" data-height="36"></div>
-                        <div class="fb-login-button" data-width="260px" data-height="26px" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email,user_gender" onlogin="checkLoginState();"></div>
-                    </div>
+                    <button class="login-btn" onclick="handleOnLogin()">Login</button>
                     <div class="modal-loader">
                     </div>
                     <p class="forgot-password-container"><a href="password-change.html">Forgotten password?</a></p>
@@ -100,7 +84,7 @@ class loginContainer extends HTMLElement {
                         <p>We could not find you ! Do you want to sign up instead ?</p>
                     </div>
                     <div id="separator"></div>
-                    <button class="sign-up-btn">Create New Account</button>
+                    <button class="sign-up-btn" onclick="loadProfileData()">Create New Account</button>
                 </form>
                 <div class="login-image-container">
                     <img src="images/login_3.png">

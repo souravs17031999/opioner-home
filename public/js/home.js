@@ -16,33 +16,32 @@ class HomeController extends BaseController {
                 }
             }
         }
-        this.authenticateUser()
     }
 
     authenticateUser() {
-        const url = configTestEnv["authServiceHost"] + "/auth/open-id/connect/token"
-        const apiData = {"user-id": localStorage.getItem("user-id")}
+        // const url = configTestEnv["authServiceHost"] + "/auth/open-id/connect/token"
+        // const apiData = {"user-id": localStorage.getItem("user-id")}
 
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(apiData), 
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data["status"] == "success") {
-                this.setAuthTokenInContext(data["token"])
-                this.fetchUserData();
-                this.fetchUnreadCountForNotifications("Opioner | Home");
-                this.loadAllPublicFeeds();
-            } 
-            else {
-                window.location.href = "index.html"
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-            window.location.href = "index.html"
-        })    
+        // fetch(url, {
+        //     method: 'POST',
+        //     body: JSON.stringify(apiData), 
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     if(data["status"] == "success") {
+        //         this.setAuthTokenInContext(data["token"])
+        //         this.fetchUserData();
+        //         this.fetchUnreadCountForNotifications("Opioner | Home");
+        //         this.loadAllPublicFeeds();
+        //     } 
+        //     else {
+        //         window.location.href = "index.html"
+        //     }
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        //     window.location.href = "index.html"
+        // })    
     }
 
     loadAllPublicFeeds(page=1, size=10) {
