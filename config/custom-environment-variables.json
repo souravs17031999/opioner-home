@@ -1,6 +1,4 @@
 {
-    "server": {
-      "port": "SERVER_PORT"
-    },
+    "port": "PORT",
     "env": "NODE_ENV"
 }
