@@ -13,7 +13,7 @@ module.exports = class AuthService {
 
     async getLivenessStatus(obj) {
         try {
-            let resp = await this.genericRestServiceClient.get(this.getLivenessStateUrl)
+            let resp = await this.genericRestServiceClient.get(this.getLivenessStateUrl, obj.headers.authorization)
             logger.info(`[getLivenessStatus] resp: ${resp}`,)
             return resp
         } catch (error) {
@@ -24,7 +24,7 @@ module.exports = class AuthService {
 
     async getHealthStatus(obj) {
         try {
-            let resp = await this.genericRestServiceClient.get(this.getStatusUrl)
+            let resp = await this.genericRestServiceClient.get(this.getStatusUrl, obj.headers.authorization)
             logger.info(`[getHealthStatus] resp: ${resp}`)
             return resp
         } catch (error) {

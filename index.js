@@ -28,6 +28,14 @@ if (fs.existsSync("public")) {
     throw new Error("[ERROR]: Entrypoint App Directory not found !")
 }
 
+// redirect to home page from root (index) page
+app.use(function(req, res, next) {
+    if(req.path == "/") {
+        res.redirect('/index.html');
+    }
+  next();
+})
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 if (config.port === undefined) {

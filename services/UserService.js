@@ -6,8 +6,7 @@ module.exports = class UserService {
     constructor() {
         this.userServiceUrl = (process.env.USER_SERVICE_URL || "http://localhost") + "/user"
         this.genericRestServiceClient = new genericRestService()
-        this.profilePicUrl = this.userServiceUrl + "/profile-pic"
-        this.dataUserUrl = this.userServiceUrl + "/data"
+        this.upsertUserUrl = this.userServiceUrl + "/data"
         this.subscriptionUrl = this.userServiceUrl + "/subscription"
         this.getLivenessUrl = this.userServiceUrl + "/status/live"
         this.getUserStatusUrl = this.userServiceUrl + "/status"
@@ -15,24 +14,13 @@ module.exports = class UserService {
         logger.info(`[init] Register UserService at ${this.userServiceUrl}`)
     }
 
-    async updateProfilePic(obj) {
+    async checkUpsertUser(obj) {
         try {
-            let resp = await this.genericRestServiceClient.put(this.profilePicUrl, obj.body, obj.headers.authorization)
-            logger.info(`[updateProfilePic] resp: ${resp}`)
+            let resp = await this.genericRestServiceClient.post(this.upsertUserUrl, obj.body, obj.headers.authorization)
+            logger.info(`[checkUpsertUser] resp: ${resp}`)
             return resp
         } catch (error) {
-            logger.error(`[updateProfilePic] ERROR: ${error}`)
-            throw new Error(error)
-        }
-    }
-
-    async getUserData(obj) {
-        try {
-            let resp = await this.genericRestServiceClient.get(this.dataUserUrl, obj.headers.authorization)
-            logger.info(`[getUserData] resp: ${resp}`)
-            return resp
-        } catch (error) {
-            logger.error(`[getUserData] ERROR: ${error}`)
+            logger.error(`[checkUpsertUser] ERROR: ${error}`)
             throw new Error(error)
         }
     }
@@ -61,7 +49,7 @@ module.exports = class UserService {
 
     async getLivenessStatus(obj) {
         try {
-            let resp = await this.genericRestServiceClient.get(this.getLivenessUrl)
+            let resp = await this.genericRestServiceClient.get(this.getLivenessUrl, obj.headers.authorization)
             logger.info(`[getLivenessStatus] resp: ${resp}`)
             return resp
         } catch (error) {
@@ -72,7 +60,7 @@ module.exports = class UserService {
 
     async getHealthStatus(obj) {
         try {
-            let resp = await this.genericRestServiceClient.get(this.getStatusUrl)
+            let resp = await this.genericRestServiceClient.get(this.getStatusUrl, obj.headers.authorization)
             logger.info(`[getHealthStatus] resp: ${resp}`)
             return resp
         } catch (error) {

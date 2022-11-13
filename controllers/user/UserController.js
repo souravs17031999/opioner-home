@@ -6,23 +6,13 @@ module.exports = class UserController {
     constructor() {
         this.userService = new userService()
     }
-    
-    updateProfilePic = async (req, res) => {
-        try {
-            const resp = await this.userService.updateProfilePic(req)
-            res.status(200).send(resp)
-        } catch (error) {
-            logger.debug("updateProfilePic error: ", error)
-            res.status(500).send(error)
-        }
-    }
 
-    getUserData = async (req, res) => {
+    checkUpsertUser = async (req, res) => {
         try {
-            const resp = await this.userService.getUserData(req)
+            const resp = await this.userService.checkUpsertUser(req)
             res.status(200).send(resp)
         } catch (error) {
-            logger.debug("getUserData error: ", error)
+            logger.debug("checkUpsertUser error: ", error)
             res.status(500).send(error)
         }
     }

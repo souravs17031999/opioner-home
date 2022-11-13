@@ -25,19 +25,15 @@ class HomeController extends BaseController {
         this.retryWithDelay(this.isAuthenticated)
         .then(response => JSON.parse(response))
         .then(profileData => {
+            this.setAuthTokenInContext()
             this.setUserDataInContext(profileData)
-            // this.fetchUserData();
+            this.checkAndUpsertUserData(profileData);
             this.fetchUnreadCountForNotifications("Opioner | Home");
             this.loadAllPublicFeeds();
         })
         .catch((error) => {
             console.log(error)
         })    
-
-        // (async () => {
-        // const profileData = await this.retryWithDelay(this.isAuthenticated)
-        // console.log(profileData)
-        // })();
     }
 
     loadAllPublicFeeds(page=1, size=10) {
@@ -94,7 +90,7 @@ class HomeController extends BaseController {
                 feedItemContainer.innerHTML = `
                         <div id="dynamic-feeds-outer-header">
                             <div id="dynamic-header-profile-pic">
-                                <img class="dynamic-feed-user-profile-pic" src="" onerror="this.onerror=null;this.src='images/avatar.gif';">
+                                <img class="dynamic-feed-user-profile-pic" src="${feed.profile_pic_url_creator}" onerror="this.onerror=null;this.src='images/avatar.gif';">
                             </div>
                             <div id="dynamic-header-user-info">
                                 <div id="dynamic-header-user-name">
@@ -192,7 +188,7 @@ class HomeController extends BaseController {
             feedItemContainer.innerHTML = `
                         <div id="dynamic-feeds-outer-header">
                             <div id="dynamic-header-profile-pic">
-                                <img class="dynamic-feed-user-profile-pic" src="" onerror="this.onerror=null;this.src='images/avatar.gif';">
+                                <img class="dynamic-feed-user-profile-pic" src="${profilePicUrl}" onerror="this.onerror=null;this.src='images/avatar.gif';">
                             </div>
                             <div id="dynamic-header-user-info">
                                 <div id="dynamic-header-user-name">
