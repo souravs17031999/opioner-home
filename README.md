@@ -61,10 +61,31 @@ This project contains two types of deliverables :
 ### Easy configuration
 * For local development and production, both configuration can be handled using js/config.js where hosts/URL for staging, local and production can be managed. Currently, config.js is random localhost ports which is expected by devs to inject/update the values when the opioner-backend services are up accordingly.
 
-### Token based authentication
-- All the REST API calls are made with authentication JWT based token mechanism of Bearer type which makes your user's data exchanges secure and robust.
+### ENV VARIABLES FOR RUNNING (before starting the service):
+
+- SECRET_KEY
+- PORT
+- NODE_ENV
+- DEBUG 
+- LOG_LEVEL
+- AUTH_SERVICE_URL
+- USER_SERVICE_URL
+- PRODUCT_SERVICE_URL
+- NOTIFICATION_SERVICE_URL
+
+### [Keycloak](https://github.com/souravs17031999/keycloak-opioner) based authentication and authorization
+- All routes are protected with JWT based token authentication which is expected by client to send in `Authorization` headers.
+- Tokens are issued by Keycloak which acts as identity broker and uses social logins which are identity providers (IdP).
+- Currently, browser authorization code flow is used.
+- Access tokens are issued by Keycloak and ID tokens are issued by IdP.
 - All environment variables are just default values, actual values are injected on the fly while deployment (not commited due to security reasons).
 
+### Notes
+- All the routes are served by ```express``` backend server including static files using middleware and other 
+  configured routes.  
+- Frontend and backend layers are decoupled such that frontend only concerns about public views and backend 
+  controllers and services concerns how to call actual backend and take care of authn and authz required to 
+  invoke API's.  
 
 _I bet you will love the backend of the project, check it here [Opioner-backend](https://github.com/souravs17031999/opioner-backend)_
 
