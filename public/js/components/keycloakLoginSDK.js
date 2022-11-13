@@ -36,6 +36,8 @@ keycloak.onAuthSuccess = function() {
     keycloak.loadUserProfile()
     .then(function(profile) {
         sessionStorage.setItem("profile_data", JSON.stringify(profile))
+        sessionStorage.setItem("access_token", keycloak.token)
+        sessionStorage.setItem("id_token", keycloak.idToken)
 
         // if(window.location.href.indexOf("index") > 0) {
         //     window.location.href = "home.html"

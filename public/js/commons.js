@@ -47,6 +47,47 @@ class BaseController extends AuthController {
         }
     }
 
+    wait = ms => new Promise((resolve) => {
+        setTimeout(() => resolve(), ms);
+      });
+
+    retryWithDelay = async (
+        fn, retries = 2, interval = 1000,
+        finalErr = 'Retry failed'
+      ) => {
+        try {
+          // try
+          let profileData = await fn();
+          return profileData
+        } catch (err) {
+          // if no retries left
+          // throw error
+          if (retries <= 0) {
+            return Promise.reject(finalErr);
+          }
+          
+          //delay the next call
+          await this.wait(interval);
+          
+          //recursively call the same func
+          return this.retryWithDelay(fn, (retries - 1), interval, finalErr);
+        }
+    }
+
+    isAuthenticated() {
+        return new Promise(function(resolve, reject) {
+          const profileData = sessionStorage.getItem("profile_data");
+          const isLoggedInAttempt = sessionStorage.getItem("start_login_flow");
+
+          if(profileData != undefined && isLoggedInAttempt === "true") {
+            resolve(profileData);
+          } else {
+            reject(new Error(`User not authenticated !`));
+          }
+        });
+      }
+
+
     handleUploadProfile(e) {
 
         e.preventDefault()
@@ -322,13 +363,15 @@ class BaseController extends AuthController {
     setUserDataInContext(userData) {
     
     
-        firstname = userData["user_data"]["firstname"]
-        lastname = userData["user_data"]["lastname"]
-        loggedInUsername = userData["user_data"]["username"]
-        loggedInUserEmailId = userData["user_data"]["email"]
+        firstname = userData["firstName"]
+        lastname = userData["lastName"]
+        loggedInUsername = userData["username"]
+        loggedInUserEmailId = userData["email"]
 
         let userAvatarImage = document.querySelector(".profile-pic")
-        userAvatarImage.src = userData["user_data"]["profile_picture_url"]
+        if(userData["attributes"]["profile_pic"].length > 0) {
+            userAvatarImage.src = userData["attributes"]["profile_pic"][0]
+        }
 
         if(document.getElementsByClassName('dropdown-btn-outer-container')[0].children[0].children[1].children[0] != undefined) {
             document.getElementsByClassName('dropdown-btn-outer-container')[0].children[0].children[1].children[0].innerText = `Welcome ${this.toTitleCase(firstname)}`
@@ -336,7 +379,7 @@ class BaseController extends AuthController {
 
         if(document.getElementsByClassName('dropdown-btn-outer-container')[0].children[0].children[0].children[0] != undefined) {
             document.getElementsByClassName('dropdown-btn-outer-container')[0].children[0].children[0].children[0].innerHTML = `
-            <img class="profile-pic-menu" src=${userData["user_data"]["profile_picture_url"]} onerror="this.onerror=null;this.src='images/avatar.gif';">
+            <img class="profile-pic-menu" src=${userData["attributes"]["profile_pic"][0]} onerror="this.onerror=null;this.src='images/avatar.gif';">
             `
         }
 
@@ -352,7 +395,7 @@ class BaseController extends AuthController {
         userAvatarImage.addEventListener('click', this.showUploadProfileModal.bind(this))
     
         if (document.querySelectorAll(".notify-email")[1] != undefined) {
-            document.querySelectorAll(".notify-email")[1].value = userData["user_data"]["email"]
+            document.querySelectorAll(".notify-email")[1].value = userData["email"]
         }
     }
 

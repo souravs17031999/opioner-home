@@ -38,29 +38,19 @@ class ProfileController extends BaseController {
             })
         }
 
+        this.authenticateUser();
+
     }
 
     authenticateUser() {
-        const url = configTestEnv["authServiceHost"] + "/auth/open-id/connect/token"
-        const apiData = {"user-id": localStorage.getItem("user-id")}
-
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(apiData), 
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data["status"] == "success") {
-                this.setAuthTokenInContext(data["token"])
-            } 
-            else {
-                //window.location.href = "index.html"
-            }
+        this.retryWithDelay(this.isAuthenticated)
+        .then(response => JSON.parse(response))
+        .then(profileData => {
+            this.setUserDataInContext(profileData)
         })
         .catch((error) => {
             console.log(error)
-            //window.location.href = "index.html"
-        })    
+        })
     }
 
     handleOnClickSubmitBtn(e) {
