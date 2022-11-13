@@ -25,15 +25,8 @@
         "responses": {}
       }
     },
-    "/user/profile-pic": {
-      "put": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/user/data": {
-      "get": {
+      "post": {
         "description": "",
         "parameters": [],
         "responses": {}

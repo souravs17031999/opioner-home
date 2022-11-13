@@ -1,13 +1,13 @@
 class AuthController {
     constructor() {
 
-        this.authToken = sessionStorage.getItem("access_token");
+        this.authToken = "";
         this.loggedInUserEmailId = ""
         this.loggedInUsername = ""
     }
 
-    setAuthTokenInContext(jwtToken) {
-        this.authToken = jwtToken
+    setAuthTokenInContext() {
+        this.authToken = sessionStorage.getItem("access_token")
     }
 
     getAuthTokenInContext(jwtToken) {

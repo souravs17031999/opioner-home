@@ -73,7 +73,7 @@ module.exports = class NotificationService {
 
     async getLivenessStatus(obj) {
         try {
-            let resp = await this.genericRestServiceClient.get(this.getLivenessUrl)
+            let resp = await this.genericRestServiceClient.get(this.getLivenessUrl, obj.headers.authorization)
             logger.info(`[getLivenessStatus] resp: ${resp}`)
             return resp
         } catch (error) {
@@ -84,7 +84,7 @@ module.exports = class NotificationService {
 
     async getHealthStatus(obj) {
         try {
-            let resp = await this.genericRestServiceClient.get(this.getStatusUrl)
+            let resp = await this.genericRestServiceClient.get(this.getStatusUrl, obj.headers.authorization)
             logger.info(`[getHealthStatus] resp: ${resp}`)
             return resp
         } catch (error) {

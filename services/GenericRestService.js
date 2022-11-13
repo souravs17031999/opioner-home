@@ -33,7 +33,7 @@ module.exports = class GenericRestService {
             url: url,
             body: JSON.stringify(body),
             auth: {
-                bearer: token.split(" ")[1]
+                bearer: token != undefined ? token.split(" ")[1] : ""
             },
             headers: headers
         }).catch((error) => {

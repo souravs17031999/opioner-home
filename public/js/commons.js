@@ -22,7 +22,7 @@ class BaseController extends AuthController {
             if(btns.length > 0) {
                 for(let btn of btns) {
                     if(btn.classList.contains("upload-btn")) {
-                        btn.addEventListener('click', this.handleUploadProfile.bind(this))
+                        // btn.addEventListener('click', this.handleUploadProfile.bind(this))
                     }
                 }
             }
@@ -78,8 +78,9 @@ class BaseController extends AuthController {
         return new Promise(function(resolve, reject) {
           const profileData = sessionStorage.getItem("profile_data");
           const isLoggedInAttempt = sessionStorage.getItem("start_login_flow");
+          const token = sessionStorage.getItem("access_token");
 
-          if(profileData != undefined && isLoggedInAttempt === "true") {
+          if(profileData != undefined && token != undefined  && isLoggedInAttempt === "true") {
             resolve(profileData);
           } else {
             reject(new Error(`User not authenticated !`));
@@ -90,41 +91,7 @@ class BaseController extends AuthController {
 
     handleUploadProfile(e) {
 
-        e.preventDefault()
-        let file = document.querySelector(".upload-btn").files[0]
-        if(file === undefined) {
-            alert("NO FILE SELECTED, CANNOT PROCEED FOR UPLOADING !")
-            return;
-        }
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('user_id', localStorage.getItem("user-id"))
-        
-        document.querySelector(".loader").style.display = "block"
-    
-        const url = configTestEnv["userServiceHost"] + "/user/profile-pic"
-        fetch(url, {
-            method: 'PUT',
-            body: formData, 
-            headers: {
-                'Authorization': `Bearer ${this.authToken}`,
-                "Content-Type": "application/json"
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data["status"] == "success") {
-                this.clearProgressBar();
-                setTimeout(this.closeSignUpModal, 3000);
-                this.fetchUserData();
-                this.handleInitiateNotification({"user_id": localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1,"event_type": userEventsTrackingData[0].ename, "event_description": userEventsTrackingData[0].etext})
-            } else {
-                alert(`Uploading of profile failed, ERROR: ", ${data["message"]}`)
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-        })    
+        // deprecated
         
     }
 
@@ -350,14 +317,16 @@ class BaseController extends AuthController {
         })
     }
 
-    fetchUserData() {
+    checkAndUpsertUserData(profileData) {
 
         const url = configTestEnv["userServiceHost"] + "/user/data"
         // url += `user_id=${localStorage.getItem("user-id") != null ? localStorage.getItem("user-id") : -1}`
         fetch(url, {
-            method: 'GET',
+            method: 'POST',
+            body: JSON.stringify({"profile_pic": profileData["attributes"]["profile_pic"][0]}),
             headers: {
-                'Authorization': `Bearer ${this.authToken}` 
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
             }
         })
         .then(response => {
@@ -368,9 +337,10 @@ class BaseController extends AuthController {
             return response.json()})
         .then(data => {
             if(data["status"] == "success") {
-                this.setUserDataInContext(data);
+                // this.setUserDataInContext(data);
+                console.log(data);
             } else {
-                alert(`No data found, ERROR: ", ${data["message"]}`)
+                console.log(data)
             }
         })
         .catch((error) => {
@@ -388,8 +358,9 @@ class BaseController extends AuthController {
         loggedInUserEmailId = userData["email"]
 
         let userAvatarImage = document.querySelector(".profile-pic")
-        if(userData["attributes"]["profile_pic"].length > 0) {
+        if(userData["attributes"] != undefined && userData["attributes"]["profile_pic"].length > 0) {
             userAvatarImage.src = userData["attributes"]["profile_pic"][0]
+            profilePicUrl = userData["attributes"]["profile_pic"][0]
         }
 
         if(document.getElementsByClassName('dropdown-btn-outer-container')[0].children[0].children[1].children[0] != undefined) {

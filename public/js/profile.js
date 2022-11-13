@@ -46,7 +46,9 @@ class ProfileController extends BaseController {
         this.retryWithDelay(this.isAuthenticated)
         .then(response => JSON.parse(response))
         .then(profileData => {
+            this.setAuthTokenInContext()
             this.setUserDataInContext(profileData)
+            this.checkAndUpsertUserData(profileData)
         })
         .catch((error) => {
             console.log(error)
@@ -103,7 +105,9 @@ class ProfileController extends BaseController {
     }
 
     fetchUserLists() {
-    
+        
+        document.getElementsByClassName("modal-first-loader")[0].style.display="flex"
+        
         let url = configTestEnv["productServiceHost"] + "/product/my/feed"
         fetch(url, {
             method: 'GET',
@@ -119,13 +123,16 @@ class ProfileController extends BaseController {
         })
         .then(data => {
             if(data["status"] == "success") {
+                document.getElementsByClassName("modal-first-loader")[0].style.display="none"
                 this.showUserLists(data)
             } else {
+                document.getElementsByClassName("modal-first-loader")[0].style.display="none"
                 console.log(`No data found, ERROR: ", ${data["message"]}`)
                 this.insertEmptyPromptOnEmptyList();
             }
         })
         .catch((error) => {
+            document.getElementsByClassName("modal-first-loader")[0].style.display="none"
             console.log(error)
         })
     
@@ -526,7 +533,7 @@ class ProfileController extends BaseController {
 
 window.onload = initialLoadForProfilePage
 
-var loggedInUsername, loggedInUserEmailId, firstname, lastname;
+var loggedInUsername, loggedInUserEmailId, firstname, lastname, profilePicUrl;
 
 
 var tagColorMap = {
@@ -554,7 +561,6 @@ function initialLoadForProfilePage() {
     }
     profileController.authenticateUser();
     sleep(1000).then(() => {
-        profileController.fetchUserData();
         profileController.fetchUserLists();
         profileController.fetchUnreadCountForNotifications(customPageName="Opioner | My profile");
     })
