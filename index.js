@@ -9,6 +9,9 @@ const logger = require('./helpers/Logger')
 var cors = require('cors')
 const config = require('config');
 const controllers = require('./controllers/Routes')
+const rateLimit = require('express-rate-limit')
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
 
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 app.use(morgan('combined'))
@@ -43,7 +46,26 @@ app.all('*', function(req, res, next) {
     next();
 });
 
+// Apply ratelimiting based on IP
+const rateLimiter = rateLimit({
+    windowMs: 24 * 60 * 60 * 1000, // 24 hrs in milliseconds
+    max: 10000,
+    message: 'You have exceeded the 10000 requests in 24 hrs limit!', 
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+app.use(rateLimiter)
+
 app.use(controllers)
+
+// serve swaggerUI on /doc
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
+app.use((err, req, res, next) => {
+    logger.error(err.stack)
+    next(err)
+})
 
 app.listen(config.server.port, () => {
     logger.info(`Opioner app listening on port ${config.server.port}`)
