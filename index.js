@@ -30,8 +30,8 @@ if (fs.existsSync("public")) {
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-if (config.server.port === undefined) {
-    logger.debug("SERVER_PORT env var not defined !, using default port 3000")
+if (config.port === undefined) {
+    logger.debug("PORT env var not defined !, using default port 3000")
 } else if (config.env === undefined) {
     logger.debug("NODE_ENV env var not defined !")
     throw new Error("[ERROR]: NODE_ENV env var not defined !")
@@ -74,8 +74,8 @@ app.use((err, req, res, next) => {
     next(err)
 })
 
-app.listen(config.server.port, () => {
-    logger.info(`Opioner app listening on port ${config.server.port}`)
+app.listen(config.port, () => {
+    logger.info(`Opioner app listening on port ${config.port}`)
     logger.info(`Serving opioner app in environment: ${config.env}`)
     logger.info("==========================================")
 })
