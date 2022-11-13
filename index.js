@@ -11,7 +11,7 @@ const config = require('config');
 const controllers = require('./controllers/Routes')
 const rateLimit = require('express-rate-limit')
 const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('./swagger_output.json')
+const bodyParser = require('body-parser');
 
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 app.use(morgan('combined'))
@@ -57,9 +57,16 @@ const rateLimiter = rateLimit({
 
 app.use(rateLimiter)
 
+app.use(bodyParser.json())
+
 app.use(controllers)
 
+// generate swagger 
+require('./generate-swagger.js');
+
 // serve swaggerUI on /doc
+const swaggerFile = require('./swagger_output.json')
+
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 app.use((err, req, res, next) => {

@@ -4,26 +4,26 @@ let genericRestService = require('./GenericRestService')
 module.exports = class ProductService {
 
     constructor() {
-        logger.info("[init] Register ProductService")
         this.productServiceUrl = (process.env.PRODUCT_SERVICE_URL || "http://localhost") + "/product"
         this.genericRestServiceClient = new genericRestService()
-        this.loadPublicFeedsUrl = this.productServiceUrl + "/product/public/feeds"
-        this.insertPublicFeedUrl = this.productServiceUrl + "/product/feed/upsert"
-        this.handleLikeFeedBtnUrl = this.productServiceUrl + "/product/feed/status"
-        this.getAllCommentsUrl = this.productServiceUrl + "/product/comments"
-        this.updateCommentsUrl = this.productServiceUrl + "/product/public/comments" 
-        this.handleBlockFeedUrl = this.productServiceUrl + "/product/feed/flag"
-        this.renderAllPublicFeedsUrl = this.productServiceUrl + "/product/my/feed"
-        this.deletePublicFeedsUrl = this.productServiceUrl + "/product/my/feed"
-        this.updateUserStatusUrl = this.productServiceUrl + "/product/update-task-status"
+        this.loadPublicFeedsUrl = this.productServiceUrl + "/public/feeds"
+        this.insertPublicFeedUrl = this.productServiceUrl + "/feed/upsert"
+        this.handleLikeFeedBtnUrl = this.productServiceUrl + "/feed/status"
+        this.getAllCommentsUrl = this.productServiceUrl + "/comments"
+        this.updateCommentsUrl = this.productServiceUrl + "/public/comments" 
+        this.handleBlockFeedUrl = this.productServiceUrl + "/feed/flag"
+        this.renderAllPublicFeedsUrl = this.productServiceUrl + "/my/feed"
+        this.deletePublicFeedsUrl = this.productServiceUrl + "/my/feed"
+        this.updateUserStatusUrl = this.productServiceUrl + "/update-task-status"
         this.getLivenessUrl = this.productServiceUrl + "/status/live"
         this.getStatusUrl = this.productServiceUrl + "/status/health"
+        logger.info(`[init] Register ProductService at ${this.productServiceUrl}`)
     }
 
     async loadPublicFeeds(obj) {
         try {
-            let resp = await this.genericRestServiceClient.get(this.loadPublicFeedsUrl + `?&page=${obj.query.page}&size=${obj.query.size}`)
-            logger.info("[loadPublicFeeds] resp: ", resp)
+            let resp = await this.genericRestServiceClient.get(this.loadPublicFeedsUrl + `?&page=${obj.query.page}&size=${obj.query.size}`, obj.headers.authorization)
+            logger.info(`[loadPublicFeeds] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[loadPublicFeeds] ERROR: ${error}`)
@@ -33,8 +33,8 @@ module.exports = class ProductService {
 
     async insertPublicFeed(obj) {
         try {
-            let resp = await this.genericRestServiceClient.post(this.insertPublicFeedUrl, obj.body)
-            logger.info("[insertPublicFeed] resp: ", resp)
+            let resp = await this.genericRestServiceClient.post(this.insertPublicFeedUrl, obj.body, obj.headers.authorization)
+            logger.info(`[insertPublicFeed] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[insertPublicFeed] ERROR: ${error}`)
@@ -44,8 +44,8 @@ module.exports = class ProductService {
 
     async handleLikeFeedBtn(obj) {
         try {
-            let resp = await this.genericRestServiceClient.put(this.handleLikeFeedBtnUrl, obj.body)
-            logger.info("[handleLikeFeedBtn] resp: ", resp)
+            let resp = await this.genericRestServiceClient.put(this.handleLikeFeedBtnUrl, obj.body, obj.headers.authorization)
+            logger.info(`[handleLikeFeedBtn] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[handleLikeFeedBtn] ERROR: ${error}`)
@@ -55,8 +55,8 @@ module.exports = class ProductService {
 
     async getAllComments(obj) {
         try {
-            let resp = await this.genericRestServiceClient.get(this.getAllCommentsUrl + `?list_id=${obj.query.list_id}&user_id=${obj.query.user_id}`)
-            logger.info("[getAllComments] resp: ", resp)
+            let resp = await this.genericRestServiceClient.get(this.getAllCommentsUrl + `?list_id=${obj.query.list_id}&user_id=${obj.query.user_id}`, obj.headers.authorization)
+            logger.info(`[getAllComments] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[getAllComments] ERROR: ${error}`)
@@ -66,8 +66,8 @@ module.exports = class ProductService {
 
     async updateComments(obj) {
         try {
-            let resp = await this.genericRestServiceClient.put(this.updateCommentsUrl, obj.body)
-            logger.info("[updateComments] resp: ", resp)
+            let resp = await this.genericRestServiceClient.put(this.updateCommentsUrl, obj.body, obj.headers.authorization)
+            logger.info(`[updateComments] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[updateComments] ERROR: ${error}`)
@@ -77,8 +77,8 @@ module.exports = class ProductService {
 
     async handleBlockFeed(obj) {
         try {
-            let resp = await this.genericRestServiceClient.post(this.handleBlockFeedUrl, obj.body)
-            logger.info("[handleBlockFeed] resp: ", resp)
+            let resp = await this.genericRestServiceClient.post(this.handleBlockFeedUrl, obj.body, obj.headers.authorization)
+            logger.info(`[handleBlockFeed] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[handleBlockFeed] ERROR: ${error}`)
@@ -88,8 +88,8 @@ module.exports = class ProductService {
 
     async renderAllPublicFeeds(obj) {
         try {
-            let resp = await this.genericRestServiceClient.get(this.renderAllPublicFeedsUrl)
-            logger.info("[renderAllPublicFeeds] resp: ", resp)
+            let resp = await this.genericRestServiceClient.get(this.renderAllPublicFeedsUrl, obj.headers.authorization)
+            logger.info(`[renderAllPublicFeeds] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[renderAllPublicFeeds] ERROR: ${error}`)
@@ -99,8 +99,8 @@ module.exports = class ProductService {
 
     async deletePublicFeeds(obj) {
         try {
-            let resp = await this.genericRestServiceClient.delete(this.deletePublicFeedsUrl, obj.body)
-            logger.info("[deletePublicFeeds] resp: ", resp)
+            let resp = await this.genericRestServiceClient.delete(this.deletePublicFeedsUrl, obj.body, obj.headers.authorization)
+            logger.info(`[deletePublicFeeds] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[deletePublicFeeds] ERROR: ${error}`)
@@ -110,8 +110,8 @@ module.exports = class ProductService {
 
     async updateUserStatus(obj) {
         try {
-            let resp = await this.genericRestServiceClient.post(this.updateUserStatusUrl, obj.body)
-            logger.info("[updateUserStatus] resp: ", resp)
+            let resp = await this.genericRestServiceClient.post(this.updateUserStatusUrl, obj.body, obj.headers.authorization)
+            logger.info(`[updateUserStatus] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[updateUserStatus] ERROR: ${error}`)
@@ -122,7 +122,7 @@ module.exports = class ProductService {
     async getLivenessStatus(obj) {
         try {
             let resp = await this.genericRestServiceClient.get(this.getLivenessUrl)
-            logger.info("[getLivenessStatus] resp: ", resp)
+            logger.info(`[getLivenessStatus] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[getLivenessStatus] ERROR: ${error}`)
@@ -133,7 +133,7 @@ module.exports = class ProductService {
     async getHealthStatus(obj) {
         try {
             let resp = await this.genericRestServiceClient.get(this.getStatusUrl)
-            logger.info("[getHealthStatus] resp: ", resp)
+            logger.info(`[getHealthStatus] resp: ${resp}`)
             return resp
         } catch (error) {
             logger.error(`[getHealthStatus] ERROR: ${error}`)

@@ -106,6 +106,10 @@ class BaseController extends AuthController {
         fetch(url, {
             method: 'PUT',
             body: formData, 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -135,6 +139,10 @@ class BaseController extends AuthController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -188,6 +196,9 @@ class BaseController extends AuthController {
         url += `&all_flag=${allFlag}`
         fetch(url, {
             method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this.authToken}` 
+            }
         })
         .then(response => {
             return response.json()})
@@ -215,6 +226,10 @@ class BaseController extends AuthController {
             fetch(url, {
                 method: 'PUT',
                 body: JSON.stringify(dataForAPI), 
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}`,
+                    "Content-Type": "application/json"
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -312,6 +327,10 @@ class BaseController extends AuthController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => {
             if(response.status != 204) {

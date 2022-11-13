@@ -27,8 +27,8 @@ class HomeController extends BaseController {
         .then(profileData => {
             this.setUserDataInContext(profileData)
             // this.fetchUserData();
-            // this.fetchUnreadCountForNotifications("Opioner | Home");
-            // this.loadAllPublicFeeds();
+            this.fetchUnreadCountForNotifications("Opioner | Home");
+            this.loadAllPublicFeeds();
         })
         .catch((error) => {
             console.log(error)
@@ -283,14 +283,19 @@ class HomeController extends BaseController {
 
         if (e.currentTarget.parentElement.children[0].value != "") {
             let url = configTestEnv["productServiceHost"] + "/product/feed/upsert"
-            let dataForAPI = {"user_id": localStorage.getItem("user-id"), 
+            let dataForAPI = { 
                             "item": e.currentTarget.parentElement.children[0].value,
                             "update_flag": 0, 
-                            "privacy_status": "public"}
+                            "privacy_status": "public"
+                        }
             
             fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(dataForAPI),
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}`,
+                    "Content-Type": "application/json"
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -337,6 +342,10 @@ class HomeController extends BaseController {
         fetch(url, {
             method: 'PUT',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -417,6 +426,9 @@ class HomeController extends BaseController {
             
             fetch(url, {
                 method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}` 
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -511,6 +523,10 @@ class HomeController extends BaseController {
         fetch(url, {
             method: 'PUT',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -550,6 +566,10 @@ class HomeController extends BaseController {
             fetch(url, {
                 method: 'PUT',
                 body: JSON.stringify(dataForAPI), 
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}`,
+                    "Content-Type": "application/json"
+                }
             })
             .then(response => response.json())
             .then(data => {
@@ -693,6 +713,10 @@ class HomeController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -722,6 +746,10 @@ class HomeController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -757,6 +785,10 @@ class HomeController extends BaseController {
             fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(dataForAPI), 
+                headers: {
+                    'Authorization': `Bearer ${this.authToken}`,
+                    "Content-Type": "application/json"
+                }
             })
             .then(response => response.json())
             .then(data => {

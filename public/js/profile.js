@@ -135,7 +135,7 @@ class ProfileController extends BaseController {
 
         const deleteItem = e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement
     
-        let dataForAPI = {"user_id": localStorage.getItem("user-id"), "id": deleteItem.getAttribute("id"), "all_flag": 0}
+        let dataForAPI = {"id": deleteItem.getAttribute("id"), "all_flag": 0}
     
         this.removeItemFromList(dataForAPI)
     }
@@ -266,6 +266,10 @@ class ProfileController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(itemData),
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -302,6 +306,10 @@ class ProfileController extends BaseController {
         fetch(url, {
             method: 'DELETE',
             body: JSON.stringify(itemData),
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -328,6 +336,10 @@ class ProfileController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -405,6 +417,10 @@ class ProfileController extends BaseController {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(dataForAPI), 
+            headers: {
+                'Authorization': `Bearer ${this.authToken}`,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {

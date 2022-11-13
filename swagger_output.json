@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
+    "title": "Opioner API",
+    "description": "Base developer documentation for Opioner API's",
+    "version": "1.0.0"
   },
   "host": "localhost:3000",
   "basePath": "/",
@@ -67,49 +67,49 @@
         "responses": {}
       }
     },
-    "/product/product/public/feeds": {
+    "/product/public/feeds": {
       "get": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/product/product/feed/upsert": {
+    "/product/feed/upsert": {
       "post": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/product/product/feed/status": {
+    "/product/feed/status": {
       "put": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/product/product/comments": {
+    "/product/comments": {
       "get": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/product/product/public/comments": {
+    "/product/public/comments": {
       "put": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/product/product/feed/flag": {
+    "/product/feed/flag": {
       "post": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/product/product/my/feed": {
+    "/product/my/feed": {
       "get": {
         "description": "",
         "parameters": [],
@@ -121,7 +121,7 @@
         "responses": {}
       }
     },
-    "/product/product/update-task-status": {
+    "/product/update-task-status": {
       "post": {
         "description": "",
         "parameters": [],
@@ -142,35 +142,35 @@
         "responses": {}
       }
     },
-    "/notification/notification/me": {
+    "/notification/me": {
       "post": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/notification/notification/all": {
+    "/notification/all": {
       "get": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/notification/notification/status": {
+    "/notification/status": {
       "put": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/notification/notification/unread-count": {
+    "/notification/unread-count": {
       "get": {
         "description": "",
         "parameters": [],
         "responses": {}
       }
     },
-    "/notification/notification/unsubscribe-notification": {
+    "/notification/unsubscribe-notification": {
       "post": {
         "description": "",
         "parameters": [],

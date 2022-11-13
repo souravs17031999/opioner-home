@@ -8,30 +8,33 @@ module.exports = class GenericRestService {
         this.headers = {'Content-Type': 'application/json'}
     }
 
-    async get(url) {
+    async get(url, token) {
         logger.debug(`[GenericRestService] GET ${url}`)
-        return await this.OpiniorRestClientCall(request.get, url)
+        return await this.OpiniorRestClientCall(request.get, url, token)
     }
 
-    async post(url, body) {
+    async post(url, body, token) {
         logger.debug(`[GenericRestService] POST ${url}`)
-        return await this.OpiniorRestClientCall(request.post, url, body, this.headers)
+        return await this.OpiniorRestClientCall(request.post, url, token, body, this.headers)
     }
 
-    async put(url, body) {
+    async put(url, body, token) {
         logger.debug(`[GenericRestService] PUT ${url}`)
-        return await this.OpiniorRestClientCall(request.put, url, body, this.headers)
+        return await this.OpiniorRestClientCall(request.put, url, token, body, this.headers)
     }
 
-    async delete(url) {
+    async delete(url, body, token) {
         logger.debug(`[GenericRestService] DEL ${url}`)
-        return await this.OpiniorRestClientCall(request.delete, url, token)
+        return await this.OpiniorRestClientCall(request.delete, url, token, body, this.headers)
     }
 
-    async OpiniorRestClientCall(method, url, body, headers) {
+    async OpiniorRestClientCall(method, url, token, body, headers) {
         let resp = await this.OpiniorRestWrapper(method, {
             url: url,
             body: JSON.stringify(body),
+            auth: {
+                bearer: token.split(" ")[1]
+            },
             headers: headers
         }).catch((error) => {
             logger.debug(`[GenericRestService] method ${method} throws an error: ${error}`)
