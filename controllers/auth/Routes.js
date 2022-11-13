@@ -3,6 +3,7 @@ const router = express.Router()
 const authController = require('./AuthController')
 const authRouteHandler = new authController()
 
-router.post('/login/user', authRouteHandler.loginUser)
+router.get('/status/live', authRouteHandler.getLivenessStatus)
+router.get('/status/health', authRouteHandler.getHealthStatus)
 
 module.exports = router;

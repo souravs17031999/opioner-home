@@ -5,7 +5,6 @@ let genericRestResponse = require('../models/GenericRestResponse')
 module.exports = class GenericRestService {
 
     constructor() {
-        logger.debug("[GenericRestService] constructor")
         this.headers = {'Content-Type': 'application/json'}
     }
 
@@ -52,7 +51,7 @@ module.exports = class GenericRestService {
                     reject(err)
                 } else {
                     logger.debug(`[GenericRestService] OpiniorRestWrapper status:${resp.statusCode}`)
-                    resolve(new genericRestResponse(resp.statusCode, body))
+                    resolve(JSON.parse(body))
                 }
             })
         })

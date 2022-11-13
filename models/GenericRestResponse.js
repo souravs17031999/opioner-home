@@ -2,7 +2,7 @@ module.exports = class GenericRestResponse {
 
     constructor(statusCode, body) {
         this.statusCode = statusCode
-        this.model = body.result
+        this.body = JSON.parse(body)
     }
 
     isSuccess() {

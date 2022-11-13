@@ -3,7 +3,7 @@ let logger = require('../helpers/Logger');
 module.exports = class HealthService {
 
     constructor() {
-        logger.info("[init] HealthService")
+        logger.info("[init] Register HealthService")
     }
 
     async getHealthStatus(obj) {

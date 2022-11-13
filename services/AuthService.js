@@ -4,37 +4,31 @@ let genericRestService = require('./GenericRestService')
 module.exports = class AuthService {
 
     constructor() {
-        this.authServiceUrl = process.env.AUTH_SERVICE_URL || "http://localhost"
+        logger.info("[init] Register AuthService")
+        this.authServiceUrl = (process.env.AUTH_SERVICE_URL || "http://localhost") + "/auth"
         this.genericRestServiceClient = new genericRestService()
-        this.loginUserUrl = this.authServiceUrl + "/auth/login/user"
-        this.logoutUserUrl = this.authServiceUrl + "/auth/logout/user"
-        this.generateOTPUrl = this.authServiceUrl + "/auth/generate/otp"
-        this.generateOTPV2Url = this.authServiceUrl + "/auth/v2/generate/otp"
-        this.verifyOTPUrl = this.authServiceUrl + "/auth/verify/otp"
-        this.verifyOTPSocialLoginUrl = this.authServiceUrl + "/auth/verify/social/sign"
-        this.updatePasswordUrl = this.authServiceUrl + "/auth/password/user"
-        this.authOIDCTokenUrl = this.authServiceUrl + "/auth/open-id/connect/token"
-        this.getLivenessStateUrl = this.authServiceUrl + "/auth/status/live"
+        this.getLivenessStateUrl = this.authServiceUrl + "/status/live"
+        this.getStatusUrl = this.authServiceUrl + "/status/health"
     }
 
-    async handleLogin(obj) {
+    async getLivenessStatus(obj) {
         try {
-            let resp = await this.genericRestServiceClient.post(this.loginUserUrl, obj)
-            logger.info("[handleLogin] resp: ", resp)
+            let resp = await this.genericRestServiceClient.get(this.getLivenessStateUrl)
+            logger.info("[getLivenessStatus] resp: ", resp)
             return resp
         } catch (error) {
-            logger.error(`[handleLogin] ERROR: ${error}`)
+            logger.error(`[getLivenessStatus] ERROR: ${error}`)
             throw new Error(error)
         }
     }
 
-    async handleLogout(obj) {
+    async getHealthStatus(obj) {
         try {
-            let resp = await this.genericRestServiceClient.post(this.logoutUserUrl, obj)
-            logger.info("[handleLogin] resp: ", resp)
+            let resp = await this.genericRestServiceClient.get(this.getStatusUrl)
+            logger.info("[getHealthStatus] resp: ", resp)
             return resp
         } catch (error) {
-            logger.error(`[handleLogin] ERROR: ${error}`)
+            logger.error(`[getHealthStatus] ERROR: ${error}`)
             throw new Error(error)
         }
     }
