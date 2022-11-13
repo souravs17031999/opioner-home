@@ -5,8 +5,10 @@ const path = require('path')
 const app = express()
 var debug = require('debug')('app')
 var helmet = require('helmet');
+const logger = require('./helpers/Logger')
 var cors = require('cors')
 const config = require('config');
+const controllers = require('./controllers/Routes')
 
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 app.use(morgan('combined'))
@@ -17,18 +19,18 @@ app.options('*', cors())
 
 // check if directory exists
 if (fs.existsSync("public")) {
-    debug("Checking serving dir ...... App Directory exists!");
+    logger.debug("Checking serving dir ...... App Directory exists!");
 } else {
-    debug("Public Directory not found.");
+    logger.debug("Public Directory not found.");
     throw new Error("[ERROR]: Entrypoint App Directory not found !")
 }
 
 app.use(express.static(path.join(__dirname, 'public')))
 
 if (config.server.port === undefined) {
-    debug("SERVER_PORT env var not defined !, using default port 3000")
+    logger.debug("SERVER_PORT env var not defined !, using default port 3000")
 } else if (config.env === undefined) {
-    debug("NODE_ENV env var not defined !")
+    logger.debug("NODE_ENV env var not defined !")
     throw new Error("[ERROR]: NODE_ENV env var not defined !")
 }
 
@@ -41,8 +43,10 @@ app.all('*', function(req, res, next) {
     next();
 });
 
+app.use(controllers)
+
 app.listen(config.server.port, () => {
-    debug(`Opioner app listening on port ${config.server.port}`)
-    debug(`Serving opioner app in environment: ${config.env}`)
-    debug("==========================================")
+    logger.info(`Opioner app listening on port ${config.server.port}`)
+    logger.info(`Serving opioner app in environment: ${config.env}`)
+    logger.info("==========================================")
 })

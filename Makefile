@@ -27,4 +27,4 @@ heroku_deploy:
 
 local:
 	@echo "MAKE local ==========================================="
-	docker-compose up -d --build  
+	docker-compose up --build  

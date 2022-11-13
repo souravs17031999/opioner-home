@@ -30,7 +30,9 @@
     "debug": "^4.3.4",
     "express": "^4.17.3",
     "helmet": "^5.0.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "request": "^2.88.2",
+    "winston": "^3.8.1"
   },
   "devDependencies": {
     "esbuild": "^0.14.36"
