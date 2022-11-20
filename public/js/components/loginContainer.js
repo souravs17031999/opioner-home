@@ -78,7 +78,6 @@ class loginContainer extends HTMLElement {
                     <button class="login-btn" onclick="handleOnLogin()">Login</button>
                     <div class="modal-loader">
                     </div>
-                    <p class="forgot-password-container"><a href="password-change.html">Forgotten password?</a></p>
                     <div class="failure-lottie">
                         <img src="images/lower-sign-hand.gif">
                         <p>We could not find you ! Do you want to sign up instead ?</p>
