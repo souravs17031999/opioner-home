@@ -1,6 +1,6 @@
 {
   "realm": "OPIONER",
-  "auth-server-url": "https://keycloak-opioner.herokuapp.com/auth/",
+  "auth-server-url": "https://keycloak-opioner.onrender.com/auth/",
   "ssl-required": "external",
   "resource": "frontend-service",
   "public-client": true,
