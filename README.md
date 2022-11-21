@@ -14,16 +14,16 @@ http://opioner-home.vercel.app/
 # Opioner-frontend-docker-app
 
 # This project is meant to maintain the frontend code for the [Opioner - Make Your Opinion Count And Share With World](http://opioner-home.vercel.app/).  
-@Live
-[Latest deployments] Deployed on ```Render``` cloud hosting platform instance.
-@Deprecated  
-[Older versions] The project is deployed using Github servers and all requests are served through Github API gateway.
-@Deprecated  
-[Latest versions] The Current versions are deployed using [vercel](https://vercel.com/) platform which is integrated with master branch.
-@Deprecated  
-Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(private repo) is served through Heroku servers.   
-@Deprecated
-[Latest versions] The Current versions are deployed using ```Heroku``` platform which is integrated with master branch.
+@Live  
+- [Latest deployments] Deployed on ```Render``` cloud hosting platform instance.   
+@Deprecated   
+- [Older versions] The project is deployed using Github servers and all requests are served through Github API gateway.
+@Deprecated   
+- [Latest versions] The Current versions are deployed using [vercel](https://vercel.com/) platform which is integrated with master branch.   
+@Deprecated   
+- Backend of [Opioner app](https://github.com/souravs17031999/opioner-backend)(private repo) is served through Heroku servers.       
+@Deprecated   
+- [Latest versions] The Current versions are deployed using ```Heroku``` platform which is integrated with master branch.    
 
 # Deliverables
 This project contains two types of deliverables : 
