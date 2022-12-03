@@ -1,10 +1,10 @@
 var configTestEnv = {
     "authServiceHost" : "http://localhost:3000", 
-    "userServiceHost" : "http://localhost:3000",
-    "productServiceHost": "http://localhost:3000",
-    "notificationServiceHost": "http://localhost:3000",
-    "logoutRedirectUri": "http://localhost:3000/index.html",
-    "loginIndexRedirectUri": "http://localhost:3000/home.html",
-    "loginHomeRedirectUri": "http://localhost:3000/home.html",
-    "loginProfileRedirectUri": "http://localhost:3000/profile.html"
+    "userServiceHost" : "https://opioner-user-service.onrender.com",
+    "productServiceHost": "https://opioner-product-service.onrender.com",
+    "notificationServiceHost": "https://opioner-notification-service.onrender.com",
+    "logoutRedirectUri": "https://opioner-home.onrender.com/index.html",
+    "loginIndexRedirectUri": "https://opioner-home.onrender.com/home.html",
+    "loginHomeRedirectUri": "https://opioner-home.onrender.com/home.html",
+    "loginProfileRedirectUri": "https://opioner-home.onrender.com/profile.html"
 }
