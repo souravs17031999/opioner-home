@@ -38,6 +38,19 @@ This project contains two types of deliverables :
 - Additional CI checks are introduced for Nodejs CI builds, [SONAR code quality](https://sonarcloud.io/project/overview?id=souravs17031999_opioner-home) checks.
 - [Cypress](https://www.cypress.io/) is integrated for GUI test automation.
 
+## <a name="v09"></a> Planned releases
+
+| Status | Description | Comments |
+| --- | --- |  --- |
+| ✔️| Username and Password form authentication | Basic username, password authentication. Users and passwords (hashed) maintained in opioner DB.  |
+| ✔️| Add Google/FB Sign-in custom providers flow | Custom setup for google, facebook sign-in flows using individual clients (OIDC). Application knows about direct clients integrated.  |
+| ✔️| JWT token based (custom) | JWT token generation in frontend code, token validation in backend for service to service communication authz  |
+| ✔️| JWT token based (keycloak based) + Google/FB 3rd party Identity providers flow | Sign-In using Keycloak (OIDC Oauth authorization server), use keycloak generated token. Application only knews about keycloak and not direct clients, keycloak internally will managed google/fb clients integration flows |
+| 🚩| RBAC | role based access control |
+
+
+
+
 # Running project locally:
 
 - Vanilla JS [6.0.0](https://github.com/souravs17031999/opioner-home/releases/tag/6.0.0):   
