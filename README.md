@@ -45,7 +45,8 @@ This project contains two types of deliverables :
 | ✔️| Username and Password form authentication | Basic username, password authentication. Users and passwords (hashed) maintained in opioner DB.  |
 | ✔️| Add Google/FB Sign-in custom providers flow | Custom setup for google, facebook sign-in flows using individual clients (OIDC). Application knows about direct clients integrated.  |
 | ✔️| JWT token based (custom) | JWT token generation in frontend code, token validation in backend for service to service communication authz  |
-| ✔️| JWT token based (keycloak based) + Google/FB 3rd party Identity providers flow | Sign-In using Keycloak (OIDC Oauth authorization server), use keycloak generated token. Application only knews about keycloak and not direct clients, keycloak internally will managed google/fb clients integration flows |
+| ✔️| JWT token based (keycloak based) + Google/FB 3rd party Identity providers flow | Sign-In using Keycloak (OIDC Oauth authorization server), use keycloak generated token. Application only knews about keycloak and not direct clients, keycloak internally will managed google/fb clients integration flows. Tokens are stored in sessionStorage (no way currently to store in-memory) locally in browser. Once logged out or tabs closed, tokens are not persisted. |
+| 🚩| Cookie based auth for token | Tokens storage needs to be removed from sessionStorage and use cookie based mechanisms |
 | 🚩| RBAC | role based access control |
 
 
